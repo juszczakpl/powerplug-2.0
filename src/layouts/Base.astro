@@ -12,7 +12,7 @@ interface Props {
   footer?: boolean;
 }
 const { title, description = '', noindex = false, header = 'links', footer = true } = Astro.props;
-const kit = import.meta.env.PUBLIC_ADOBE_FONTS_KIT; // tymczasowo do czasu zakupu licencji webfont
+const kit = import.meta.env.PUBLIC_ADOBE_FONTS_KIT || 'gpz4qwf'; // Adobe Fonts „PowerPlug WWW 2026” — tymczasowo do zakupu licencji webfont
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
