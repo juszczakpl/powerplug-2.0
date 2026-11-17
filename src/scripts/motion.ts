@@ -74,3 +74,29 @@ if (!reduced && finePointer) {
   };
   requestAnimationFrame(tick);
 }
+
+// ── Nawigacja: jedna kapsuła podążająca za kursorem (spoczywa na bieżącej stronie) ──
+document.querySelectorAll<HTMLElement>('.nav-links').forEach((list) => {
+  const pill = document.createElement('span');
+  pill.className = 'nav-links__pill'; pill.setAttribute('aria-hidden', 'true');
+  list.prepend(pill);
+  const links = [...list.querySelectorAll<HTMLAnchorElement>('a')];
+  const current = links.find((a) => a.getAttribute('aria-current') === 'page');
+  const moveTo = (a?: HTMLElement, instant = false) => {
+    if (!a) { pill.classList.remove('is-on'); return; }
+    const lr = list.getBoundingClientRect(), r = a.getBoundingClientRect();
+    if (!pill.classList.contains('is-on')) instant = true; // pierwsze pojawienie: bez „wjazdu” z lewej
+    if (instant) pill.style.transition = 'none';
+    pill.style.width = `${r.width}px`;
+    pill.style.transform = `translateX(${r.left - lr.left}px)`;
+    pill.classList.add('is-on');
+    if (instant) { pill.getBoundingClientRect(); pill.style.transition = ''; }
+  };
+  const rest = () => moveTo(current);
+  links.forEach((a) => { a.addEventListener('pointerenter', () => moveTo(a)); a.addEventListener('focus', () => moveTo(a)); });
+  list.addEventListener('pointerleave', rest);
+  list.addEventListener('focusout', (e) => { if (!list.contains(e.relatedTarget as Node)) rest(); });
+  const init = () => moveTo(current, true);
+  document.fonts?.ready.then(init); init();
+  addEventListener('resize', init);
+});
