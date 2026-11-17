@@ -27,7 +27,7 @@ const isCurrent = (href: string) => (href === '/' ? current === '/' : current.st
     </div>
     <div class="site-header__actions">
       <div class="btn-group">
-        <a class="btn btn--primary" href={cta.wycena.href}><Icon name="plus-capsule" /><span>{cta.wycena.label}</span></a>
+        <a class="btn btn--primary" href={cta.wycena.href}><Icon name="plus" /><span>{cta.wycena.label}</span></a>
         <a class="btn btn--secondary btn-hide-sm" href={cta.kontakt.href}>{cta.kontakt.label}</a>
       </div>
     </div>
@@ -50,7 +50,7 @@ const isCurrent = (href: string) => (href === '/' ? current === '/' : current.st
     </ul>
   </nav>
   <div class="btn-group">
-    <a class="btn btn--primary btn--lg" href={cta.wycena.href}><Icon name="plus-capsule" /><span>{cta.wycena.label}</span></a>
+    <a class="btn btn--primary btn--lg" href={cta.wycena.href}><Icon name="plus" /><span>{cta.wycena.label}</span></a>
     <a class="btn btn--light btn--lg" href="tel:+48730882967">730 882 967</a>
   </div>
 </div>
@@ -63,6 +63,7 @@ const isCurrent = (href: string) => (href === '/' ? current === '/' : current.st
     if (!menu) return;
     menu.hidden = !open;
     document.documentElement.style.overflow = open ? 'hidden' : '';
+    const lenis = (window as any).__lenis; if (lenis) open ? lenis.stop() : lenis.start();
     openers.forEach((b) => b.setAttribute('aria-expanded', String(open)));
     (open ? closer : openers[0])?.focus();
   };

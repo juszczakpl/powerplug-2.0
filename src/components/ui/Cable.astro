@@ -1,16 +1,27 @@
 ---
 // Dekoracyjna linia „kabla” (motyw przewodni: splątany kabel → uporządkowany proces).
-// Statyczna w design systemie; animacja GSAP (rysowanie linii) dojdzie później.
-interface Props { variant?: 'loop' | 'wave' | 'tangle' | 'arrow'; class?: string; style?: string }
-const { variant = 'loop', class: cls, style } = Astro.props;
+// Zasady: proporcje zawsze zachowane (nigdy nie rozciągamy), kabel nie biegnie pod tekstem
+// w statycznym układzie (używaj .cable-band albo pustej strefy), rysuje się przy wejściu w widok.
+interface Props {
+  variant?: 'loop' | 'wave' | 'tangle' | 'arrow' | 'band';
+  class?: string;
+  style?: string;
+  /** rysowanie linii przy wejściu w widok (domyślnie tak) */
+  draw?: boolean;
+  /** jak wypełnić pudełko: meet = cały kabel widoczny, slice = wypełnia i przycina */
+  fit?: 'meet' | 'slice';
+}
+const { variant = 'loop', class: cls, style, draw = true, fit = 'meet' } = Astro.props;
 const paths = {
   loop: { vb: '0 0 600 400', d: 'M-20 330 C 120 330, 180 120, 330 120 C 470 120, 520 260, 420 300 C 320 340, 260 200, 360 120 C 440 60, 560 70, 640 20' },
   wave: { vb: '0 0 1200 300', d: 'M-20 220 C 150 40, 300 40, 380 150 C 460 260, 600 260, 690 140 C 780 20, 930 20, 1010 150 C 1080 260, 1160 230, 1220 160' },
   tangle: { vb: '0 0 800 320', d: 'M40 260 C 60 60, 260 40, 300 160 C 340 280, 120 300, 160 180 C 200 60, 420 20, 480 140 C 540 260, 330 300, 380 190 C 430 80, 640 40, 700 150 C 760 260, 560 290, 600 200 C 640 110, 760 120, 780 180' },
+  band: { vb: '0 0 1200 160', d: 'M-20 112 C 180 112, 300 40, 460 62 C 590 80, 640 138, 566 140 C 490 142, 512 44, 640 42 C 800 40, 930 122, 1220 76' },
   arrow: { vb: '0 0 400 300', d: 'M380 20 C 420 160, 300 260, 120 250 M150 215 L115 250 L155 285' },
 } as const;
 const p = paths[variant];
+const [, , w, h] = p.vb.split(' ');
 ---
-<svg class:list={['cable', cls]} style={style} viewBox={p.vb} preserveAspectRatio="none" aria-hidden="true" focusable="false">
-  <path d={p.d} />
+<svg class:list={['cable', `cable--${variant}`, cls]} style={`aspect-ratio:${w}/${h};${style ?? ''}`} viewBox={p.vb} preserveAspectRatio={`xMidYMid ${fit}`} data-draw={draw ? '' : undefined} aria-hidden="true" focusable="false">
+  <path d={p.d} pathLength="1" />
 </svg>

@@ -10,7 +10,6 @@ const oferta = nawigacja.find((n) => n.label === 'Oferta');
 const uslugi = nawigacja.find((n) => n.label === 'Usługi');
 ---
 <footer class="site-footer">
-  <Cable variant="loop" style="right:-4%;top:-10%;width:min(60rem,70%);height:120%" />
   <div class="container">
     <div class="site-footer__grid">
       <div class="stack" style="--stack:1rem">
@@ -44,7 +43,10 @@ const uslugi = nawigacja.find((n) => n.label === 'Usługi');
         </nav>
       )}
     </div>
-    <Logo tone="light" width={1200} class="site-footer__logo" />
+    <div class="site-footer__brand">
+      <Logo tone="light" width={1200} class="site-footer__logo" />
+      <Cable variant="loop" class="site-footer__cable" />
+    </div>
     <div class="site-footer__bottom">
       <span>Wszelkie prawa zastrzeżone © {rok} PowerPlug</span>
       <span>Szczecin · {firma.region}</span>

@@ -18,13 +18,16 @@
 .btn--lg { --btn-h: 3.5rem; padding-inline: 2rem; }
 .btn--block { width: 100%; }
 /* Primary = kapsuła (pill) — [Figma] emerald-500 / tekst emerald-950 */
-.btn--primary { background: var(--emerald-500); color: var(--emerald-950); border-color: var(--emerald-500); border-radius: var(--r-pill); }
+.btn--primary { background: var(--emerald-500); color: var(--emerald-950); border-color: var(--emerald-500); border-radius: calc(var(--btn-h) / 2) var(--r-btn) var(--r-btn) calc(var(--btn-h) / 2); padding-left: 1.75rem; } /* nie 999px: przy sumie promieni > wysokości przeglądarka skaluje też prawe narożniki do zera */
+/* Ikona prowadząca w primary: koło współśrodkowe z łukiem kapsuły, równy odstęp z każdej strony */
+.btn--primary > svg:first-child { --pad: 5px; box-sizing: border-box; width: calc(var(--btn-h) - 2 * var(--pad)); height: calc(var(--btn-h) - 2 * var(--pad)); padding: calc((var(--btn-h) - 2 * var(--pad)) * .24); margin-left: calc(var(--pad) - 1.75rem); border-radius: 50%; background: var(--emerald-950); color: var(--emerald-500); transition: transform .2s var(--ease-out, ease); }
+.btn--primary:hover > svg:first-child { transform: rotate(90deg); }
 .btn--primary:hover { background: var(--emerald-400); border-color: var(--emerald-400); }
 /* Secondary = prostokąt z minimalnym zaokrągleniem — [Figma] emerald-950 / biały, r 3px */
-.btn--secondary { background: var(--emerald-950); color: var(--emerald-0); border-radius: var(--r-xs); font-weight: var(--fw-medium); padding-inline: 1rem; }
+.btn--secondary { background: var(--emerald-950); color: var(--emerald-0); border-radius: var(--r-btn); font-weight: var(--fw-medium); padding-inline: 1rem; }
 .btn--secondary:hover { background: var(--emerald-800); }
 /* Na ciemnym tle */
-.btn--light { background: var(--emerald-0); color: var(--emerald-950); border-radius: var(--r-xs); font-weight: var(--fw-medium); padding-inline: 1rem; }
+.btn--light { background: var(--emerald-0); color: var(--emerald-950); border-radius: var(--r-btn); font-weight: var(--fw-medium); padding-inline: 1rem; }
 .btn--light:hover { background: var(--emerald-25); }
 /* Obrys — kapsuła [Figma: „↓” w sekcji Problem] */
 .btn--outline { background: transparent; color: var(--emerald-800); border: 3px solid var(--emerald-800); border-radius: var(--r-pill); }
@@ -36,9 +39,7 @@
 
 /* Grupa — połączenie dwóch kształtów: kapsuła + prostokąt [Figma 123:325] */
 .btn-group { display: inline-flex; flex-wrap: wrap; align-items: stretch; gap: 6px; max-width: 100%; }
-.btn-group > .btn--primary { border-radius: var(--r-pill) var(--r-xs) var(--r-xs) var(--r-pill); padding-left: .625rem; padding-right: .875rem; }
-.btn-group > .btn--primary:only-child { border-radius: var(--r-pill); }
-.btn-group > .btn--secondary, .btn-group > .btn--light { border-radius: var(--r-xs); }
+/* grupa = pół-kapsuła primary + prostokąt secondary (kształty już zdefiniowane w wariantach) */
 
 /* Przycisk-ikona — okrągły [Figma: strzałki slidera 36 px, emerald-700] */
 .btn-icon {
@@ -69,8 +70,8 @@
 .nav-toggle { display: inline-grid; place-items: center; width: var(--header-h); height: var(--header-h); border: 0; border-radius: 50%; background: var(--emerald-0); color: var(--emerald-900); }
 .nav-toggle svg { width: 60%; }
 .site-header__actions { display: flex; gap: 6px; }
-.site-header__actions .btn { min-height: var(--header-h); }
-@media (max-width: 719px) { .site-header__actions .btn-hide-sm { display: none; } .site-header__actions .btn--primary span { display: none; } .site-header__actions .btn--primary { padding-inline: .5rem; } }
+.site-header__actions .btn { --btn-h: var(--header-h); min-height: var(--header-h); }
+@media (max-width: 719px) { .site-header__actions .btn-hide-sm { display: none; } .site-header__actions .btn--primary span { display: none; } .site-header__actions .btn--primary { padding-right: 5px; border-radius: 50%; aspect-ratio: 1; justify-content: center; } }
 @media (min-width: 1200px) { .nav-links--expandable { display: inline-flex; } .nav-toggle--auto { display: none; } }
 
 /* Menu pełnoekranowe (mobile + wariant „=” na desktopie) */
@@ -98,7 +99,7 @@
 .chip-list { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .75rem; list-style: none; padding: 0; }
 .chip-list > li + li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--emerald-800); margin-right: .75rem; vertical-align: middle; }
 /* Tag-pytanie na ciemnym tle [Figma 12:103 — „ile kW naprawdę potrzebuję?”] */
-.tag { display: inline-flex; align-items: center; padding: .7rem 1.25rem .7rem 1.35rem; border-radius: var(--r-md); background: var(--emerald-950); color: var(--emerald-25); font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: clamp(1rem, .9rem + .45vw, 1.35rem); line-height: 1.1; white-space: nowrap; }
+.tag { display: inline-flex; align-items: center; padding: .7rem 1.25rem .7rem 1.35rem; border-radius: var(--r-sm); background: var(--emerald-950); color: var(--emerald-25); font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: clamp(1rem, .9rem + .45vw, 1.35rem); line-height: 1.1; white-space: nowrap; }
 .tag-cloud { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); list-style: none; padding: 0; }
 /* Segmenty / zakładki odbiorcy [Figma 98:518 — Dla domu / Dla firm / Zarządcy] */
 .segment { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: var(--grid-gap); list-style: none; padding: 0; }
@@ -119,8 +120,7 @@
 /* ---------- Media ---------- */
 .media { position: relative; overflow: hidden; border-radius: var(--r-sm); background: var(--gray-100); }
 .media img { width: 100%; height: 100%; object-fit: cover; }
-.media--r-lg { border-radius: var(--r-lg); }
-.media--r-xl { border-radius: var(--r-xl); }
+/* Konwencja: zwykłe zdjęcie w układzie = r-sm; mocne zaokrąglenia tylko w masce ogniw (.bars). */
 .media--wide { aspect-ratio: 16 / 9; }
 .media--photo { aspect-ratio: 4 / 3; }
 .media--square { aspect-ratio: 1; }
@@ -173,7 +173,7 @@
 
 /* Cecha w sekcji ciemnej [Figma 9:210 — „Dlaczego warto wybrać PowerPlug?”] */
 .feature { display: grid; gap: var(--space-4); align-items: center; }
-.feature .media { border-radius: var(--r-lg); aspect-ratio: 4 / 5; }
+.feature .media { aspect-ratio: 4 / 5; }
 @media (min-width: 768px) { .feature { grid-template-columns: minmax(10rem, 1fr) minmax(8rem, 13rem) minmax(12rem, 1.2fr); } .feature__title { text-align: right; } }
 .feature__title { font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: var(--fs-h4); line-height: 1.1; }
 .feature__text { font-size: var(--fs-body-l); color: rgb(243 248 244 / .88); }
@@ -213,6 +213,7 @@
 .cta-band { display: grid; gap: var(--space-5); align-items: center; padding: clamp(1.5rem, 1rem + 3vw, 3.5rem); border-radius: var(--r-md); background: var(--emerald-900); color: var(--emerald-25); overflow: hidden; position: relative; isolation: isolate; }
 @media (min-width: 960px) { .cta-band { grid-template-columns: 1fr auto; } }
 .cta-band .t-accent { color: var(--emerald-400); }
+.section--dark, .section--deep, .site-footer, .cta-band, .ds-panel--dark { --color-accent: var(--emerald-500); }
 
 /* ---------- FAQ (akordeon na <details>) ---------- */
 .faq { border-top: 1px solid var(--color-line); }
@@ -288,3 +289,12 @@
 .site-footer__social svg { width: 1.5rem; height: 1.5rem; }
 .site-footer__logo { margin-top: var(--space-8); width: min(100%, 38rem); }
 .site-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); margin-top: var(--space-4); font-size: var(--fs-xs); color: rgb(243 248 244 / .55); }
+
+.site-footer__brand { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); margin-top: var(--space-8); }
+.site-footer__brand .site-footer__logo { margin-top: 0; }
+.site-footer__cable { position: relative; flex: none; width: min(26rem, 36%); height: auto; margin-bottom: .5rem; }
+@media (max-width: 899px) { .site-footer__cable { display: none; } }
+
+/* Pas na kabel — kabel nigdy nie biegnie pod tekstem w statycznym układzie; dostaje własną strefę */
+.cable-band { position: relative; pointer-events: none; }
+.cable-band > .cable { position: relative; display: block; width: 100%; height: auto; }

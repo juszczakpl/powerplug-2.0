@@ -38,7 +38,7 @@
   --color-text-soft: var(--emerald-900);
   --color-text-muted: var(--gray-700);
   --color-text-inverse: var(--emerald-25);
-  --color-accent: var(--emerald-500);
+  --color-accent: var(--emerald-600);        /* drugi człon nagłówka na jasnym tle */
   --color-accent-strong: var(--emerald-600); /* zielony tekst ≥ 24 px */
   --color-accent-text: var(--emerald-700);   /* zielony tekst < 24 px (WCAG AA) */
   --color-line: var(--gray-200);
@@ -105,7 +105,8 @@
   --header-top: clamp(0.75rem, 0.4rem + 1.4vw, 2rem);
 
   /* ---------- Promienie ---------- */
-  --r-xs: 3px;    /* [Figma] secondary button, połączenie w grupie */
+  --r-xs: 3px;    /* [Figma] drobne elementy */
+  --r-btn: 4px;   /* prostokąt przycisków: secondary + prawa strona primary (dualizm z kapsułą) */
   --r-sm: 6px;    /* [Figma] karty wewnętrzne, zdjęcia w panelu */
   --r-md: 10px;   /* [Figma] tagi-pytania, panel opinii */
   --r-lg: 18px;   /* [Figma] zdjęcia w sekcji ciemnej, przyciski okrągłe 36px */

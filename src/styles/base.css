@@ -99,5 +99,14 @@ a { color: inherit; }
 .has-glow { position: relative; isolation: isolate; overflow: clip; }
 .has-glow > :not(.glow, .cable) { position: relative; z-index: 1; }
 /* Linia „kabla” — SVG z obrysem w kolorze akcentu */
-.cable { position: absolute; pointer-events: none; z-index: 0; color: var(--color-accent); }
-.cable path { fill: none; stroke: currentColor; stroke-width: var(--cable-width); stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.cable { position: absolute; pointer-events: none; z-index: 0; color: var(--emerald-500); overflow: visible; }
+.cable path { fill: none; stroke: currentColor; stroke-width: var(--cable-sw, 9); stroke-linecap: round; } /* --cable-sw w jednostkach viewBox, liczone w motion.ts z --cable-width */
+
+/* Kabel rysowany przy wejściu w widok (motion.ts dodaje .is-drawn) */
+.js .cable[data-draw] path { stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; }
+.js .cable[data-draw].is-drawn path { stroke-dashoffset: 0; opacity: 1; transition: stroke-dashoffset var(--draw-dur, 1.8s) cubic-bezier(.65, 0, .35, 1) var(--draw-delay, 0s); }
+@media (prefers-reduced-motion: reduce) { .js .cable[data-draw] path { stroke-dashoffset: 0 !important; opacity: 1 !important; transition: none !important; } }
+.glow { will-change: transform; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
