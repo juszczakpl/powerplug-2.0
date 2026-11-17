@@ -1,0 +1,65 @@
+# Każdy push na main (Twój, mój albo zapis klienta w Pages CMS) → build Astro → wysyłka na OVH.
+name: Deploy na OVH
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-ovh
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}                       # np. https://nowa.powerplug.pl
+      PUBLIC_ADOBE_FONTS_KIT: ${{ vars.ADOBE_FONTS_KIT }}  # tymczasowo
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Konfiguracja formularzy (SMTP z sekretów)
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          FORM_FROM: ${{ secrets.FORM_FROM }}
+          FORM_TO: ${{ secrets.FORM_TO }}
+        run: |
+          php -r '
+            $c = [
+              "smtp_host" => getenv("SMTP_HOST") ?: "ssl0.ovh.net",
+              "smtp_port" => (int)(getenv("SMTP_PORT") ?: 465),
+              "smtp_user" => getenv("SMTP_USER"),
+              "smtp_pass" => getenv("SMTP_PASS"),
+              "from"      => getenv("FORM_FROM") ?: getenv("SMTP_USER"),
+              "to"        => getenv("FORM_TO") ?: getenv("SMTP_USER"),
+            ];
+            file_put_contents("dist/api/config.php", "<?php\nreturn " . var_export($c, true) . ";\n");
+          '
+
+      - name: Wysyłka na OVH (SFTP)
+        env:
+          OVH_HOST: ${{ secrets.OVH_SFTP_HOST }}
+          OVH_USER: ${{ secrets.OVH_SFTP_USER }}
+          OVH_PASS: ${{ secrets.OVH_SFTP_PASS }}
+          OVH_DIR: ${{ vars.OVH_TARGET_DIR }}   # folder subdomeny, np. nowa — NIE folder obecnej strony
+        run: |
+          test -n "$OVH_DIR" || { echo "Brak zmiennej OVH_TARGET_DIR"; exit 1; }
+          sudo apt-get -qq update && sudo apt-get -qq install -y lftp
+          lftp -u "$OVH_USER","$OVH_PASS" "sftp://$OVH_HOST" -e "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            mirror -R --delete --parallel=4 --exclude-glob .git* dist/ $OVH_DIR/;
+            bye"

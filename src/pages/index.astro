@@ -1,0 +1,51 @@
+---
+// Strona techniczna: dowód, że cały łańcuch działa (CMS → build → OVH → formularz).
+// Zostanie zastąpiona stroną główną zbudowaną z design systemu.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { urzadzenia, realizacje, opinie, producenci, formatCena } from '../lib/dane';
+import { cmsImage } from '../lib/cms-image';
+
+const u = await urzadzenia();
+const r = await realizacje();
+const o = await opinie();
+const p = await producenci();
+const zbudowano = new Date().toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' });
+---
+<Base title="PowerPlug — podgląd techniczny">
+  <main style="font-family: system-ui, sans-serif; max-width: 960px; margin: 2rem auto; padding: 0 1rem;">
+    <h1>PowerPlug — stack działa ✅</h1>
+    <p>Zbudowano: <strong>{zbudowano}</strong></p>
+    <ul>
+      <li>Producenci w CMS: {p.length}</li>
+      <li>Urządzenia w CMS: {u.length}</li>
+      <li>Realizacje w CMS: {r.length}</li>
+      <li>Opinie w CMS: {o.length}</li>
+    </ul>
+
+    <h2>Urządzenia (z Pages CMS)</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+      {u.map((x) => {
+        const img = cmsImage(x.data.zdjecia[0]);
+        return (
+          <article style="border:1px solid #ddd; border-radius:12px; padding:1rem;">
+            {img && <Image src={img} alt={x.data.nazwa} width={300} />}
+            <small>{x.producentDane?.data.nazwa}</small>
+            <h3 style="margin:.25rem 0">{x.data.nazwa}</h3>
+            <p>{formatCena(x.data.cena)}</p>
+          </article>
+        );
+      })}
+    </div>
+
+    <h2>Test formularza</h2>
+    <form method="post" action="/api/formularz.php" style="display:grid; gap:.5rem; max-width:360px;">
+      <input type="hidden" name="formularz" value="oddzwonienie" />
+      <input type="hidden" name="_start" value={Date.now().toString()} />
+      <label>Imię <input name="imie" required /></label>
+      <label>Telefon <input name="telefon" type="tel" required /></label>
+      <label style="position:absolute; left:-9999px" aria-hidden="true">Nie wypełniaj <input name="www" tabindex="-1" autocomplete="off" /></label>
+      <button type="submit">Poproś o kontakt</button>
+    </form>
+  </main>
+</Base>

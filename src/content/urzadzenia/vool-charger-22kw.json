@@ -1,0 +1,25 @@
+{
+  "nazwa": "Vool Charger 22 kW",
+  "producent": "vool",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom",
+    "firma"
+  ],
+  "cena": 3699,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP54",
+  "opis": "",
+  "parametry": [],
+  "zdjecia": [
+    "/uploads/vool-charger-22kw.png"
+  ],
+  "karta_pdf": "/pliki/vool-charger.pdf",
+  "kolejnosc": 9
+}

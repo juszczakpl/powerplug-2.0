@@ -1,0 +1,22 @@
+{
+  "nazwa": "Postument Premium",
+  "producent": "powerplug",
+  "typ": "akcesorium",
+  "kategorie": [
+    "slupki"
+  ],
+  "cena": 2000,
+  "dostepnosc": "na-zamowienie",
+  "widoczny": true,
+  "polecany": true,
+  "moc": [],
+  "zlacze": "",
+  "ip": null,
+  "opis": "Personalizowany postument ze szlifowanej stali nierdzewnej malowanej proszkowo. Pasuje do ładowarki każdego producenta. Cena z montażem.",
+  "parametry": [],
+  "zdjecia": [
+    "/uploads/premium-stand.jpg"
+  ],
+  "karta_pdf": null,
+  "kolejnosc": 50
+}

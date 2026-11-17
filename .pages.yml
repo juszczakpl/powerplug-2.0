@@ -1,0 +1,196 @@
+# Pages CMS — panel klienta PowerPlug (app.pagescms.org)
+# Klient edytuje TYLKO te 4 kolekcje. Reszta treści jest w kodzie.
+
+media:
+  - name: zdjecia
+    label: Zdjęcia
+    input: src/assets/uploads
+    output: /uploads
+    categories: [image]
+    rename: safe
+  - name: pliki
+    label: Karty produktów (PDF)
+    input: public/pliki
+    output: /pliki
+    extensions: [pdf]
+    rename: safe
+
+content:
+  - name: urzadzenia
+    label: Urządzenia
+    type: collection
+    path: src/content/urzadzenia
+    format: json
+    filename: "{primary}.json"
+    view:
+      primary: nazwa
+      fields: [nazwa, producent, cena, dostepnosc, widoczny]
+      sort: kolejnosc
+      order: asc
+    fields:
+      - name: nazwa
+        label: Nazwa modelu
+        type: string
+        required: true
+        options: { maxlength: 40 }
+      - name: producent
+        label: Producent
+        type: reference
+        required: true
+        options:
+          collection: producenci
+          search: nazwa
+          value: "{primary}"
+          label: "{primary}"
+      - name: typ
+        label: Rodzaj
+        type: select
+        required: true
+        options:
+          values:
+            - { name: ladowarka, label: Ładowarka }
+            - { name: akcesorium, label: Akcesorium }
+      - name: kategorie
+        label: Kategorie
+        description: "Ładowarki: Do domu / Do firmy / Użyteczności publicznej. Akcesoria: Kable / Zaślepki / Słupki / Uchwyty."
+        type: select
+        options:
+          multiple: true
+          values:
+            - { name: dom, label: "Ładowarka — do domu" }
+            - { name: firma, label: "Ładowarka — do firmy" }
+            - { name: publiczne, label: "Ładowarka — użyteczności publicznej" }
+            - { name: kable, label: "Akcesorium — kable" }
+            - { name: zaslepki, label: "Akcesorium — zaślepki" }
+            - { name: slupki, label: "Akcesorium — słupki" }
+            - { name: uchwyty, label: "Akcesorium — uchwyty" }
+      - name: cena
+        label: Cena brutto „od” (zł)
+        description: Zostaw puste, jeśli cena ustalana indywidualnie. Kalkulator wyceny bierze cenę stąd.
+        type: number
+      - name: dostepnosc
+        label: Dostępność
+        type: select
+        options:
+          values:
+            - { name: dostepny, label: Dostępny }
+            - { name: na-zamowienie, label: Na zamówienie }
+            - { name: niedostepny, label: Niedostępny }
+      - name: widoczny
+        label: Widoczny na stronie
+        type: boolean
+        default: true
+      - name: polecany
+        label: Polecany (wyróżniony w katalogu)
+        type: boolean
+      - name: moc
+        label: Dostępne moce
+        type: select
+        options:
+          multiple: true
+          values: ["3,7 kW", "7,4 kW", "11 kW", "22 kW", "30 kW", "50 kW", "60 kW", "120 kW"]
+      - name: zlacze
+        label: Złącze
+        type: string
+        options: { maxlength: 30 }
+      - name: ip
+        label: Klasa szczelności (np. IP65)
+        type: string
+        options: { maxlength: 10 }
+      - name: opis
+        label: Krótki opis
+        type: text
+        options: { maxlength: 280 }
+      - name: parametry
+        label: Dodatkowe parametry
+        type: object
+        list: true
+        fields:
+          - { name: nazwa, label: Parametr, type: string, options: { maxlength: 30 } }
+          - { name: wartosc, label: Wartość, type: string, options: { maxlength: 40 } }
+      - name: zdjecia
+        label: Zdjęcia (pierwsze = główne)
+        type: image
+        options:
+          media: zdjecia
+          multiple: { max: 6 }
+      - name: karta_pdf
+        label: Karta produktu (PDF)
+        type: file
+        options:
+          media: pliki
+      - name: kolejnosc
+        label: Kolejność w katalogu (mniejsza = wyżej)
+        type: number
+        default: 100
+
+  - name: producenci
+    label: Producenci
+    type: collection
+    path: src/content/producenci
+    format: json
+    filename: "{primary}.json"
+    view:
+      primary: nazwa
+      sort: kolejnosc
+    fields:
+      - { name: nazwa, label: Nazwa, type: string, required: true, options: { maxlength: 30 } }
+      - { name: opis, label: Krótki opis, type: text, options: { maxlength: 240 } }
+      - { name: logo, label: Logo, type: image, options: { media: zdjecia } }
+      - { name: kolejnosc, label: Kolejność, type: number, default: 100 }
+      - { name: widoczny, label: Widoczny na stronie, type: boolean, default: true }
+
+  - name: realizacje
+    label: Realizacje
+    type: collection
+    path: src/content/realizacje
+    format: json
+    filename: "{year}-{month}-{primary}.json"
+    view:
+      primary: tytul
+      fields: [tytul, miasto, data]
+      sort: data
+      order: desc
+    fields:
+      - { name: tytul, label: Tytuł, type: string, required: true, options: { maxlength: 60 } }
+      - { name: miasto, label: Miejscowość, type: string, options: { maxlength: 40 } }
+      - name: typ
+        label: Rodzaj realizacji
+        type: select
+        options:
+          values:
+            - { name: dom, label: Dom jednorodzinny }
+            - { name: garaz-wielostanowiskowy, label: Garaż wielostanowiskowy / blok }
+            - { name: firma, label: Firma }
+            - { name: publiczne, label: Miejsce publiczne }
+      - { name: data, label: Data montażu, type: date, required: true }
+      - { name: opis, label: Krótki opis, type: text, options: { maxlength: 300 } }
+      - name: zdjecia
+        label: Zdjęcia
+        type: image
+        required: true
+        options:
+          media: zdjecia
+          multiple: { max: 8 }
+      - { name: widoczna, label: Widoczna na stronie, type: boolean, default: true }
+
+  - name: opinie
+    label: Opinie klientów
+    type: collection
+    path: src/content/opinie
+    format: json
+    filename: "{primary}.json"
+    view:
+      primary: autor
+      fields: [autor, miasto, ocena]
+    fields:
+      - { name: autor, label: Imię (i inicjał nazwiska), type: string, required: true, options: { maxlength: 40 } }
+      - { name: miasto, label: Miejscowość, type: string, options: { maxlength: 40 } }
+      - { name: tresc, label: Treść opinii, type: text, required: true, options: { maxlength: 400 } }
+      - name: ocena
+        label: Ocena (1–5)
+        type: number
+        default: 5
+        options: { min: 1, max: 5 }
+      - { name: data, label: Data, type: date }
+      - { name: widoczna, label: Widoczna na stronie, type: boolean, default: true }

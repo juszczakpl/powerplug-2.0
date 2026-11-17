@@ -1,0 +1,27 @@
+{
+  "nazwa": "Commander 2",
+  "producent": "wallbox",
+  "typ": "ladowarka",
+  "kategorie": [
+    "firma",
+    "publiczne"
+  ],
+  "cena": 5099,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "7,4 kW",
+    "11 kW",
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP65",
+  "opis": "",
+  "parametry": [],
+  "zdjecia": [
+    "/uploads/wallbox-commander-2.png"
+  ],
+  "karta_pdf": "/pliki/wallbox-katalog-2023.pdf",
+  "kolejnosc": 6
+}

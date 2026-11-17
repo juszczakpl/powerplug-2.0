@@ -1,0 +1,26 @@
+{
+  "nazwa": "Pulsar Plus",
+  "producent": "wallbox",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom"
+  ],
+  "cena": 3799,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "7,4 kW",
+    "11 kW",
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP65",
+  "opis": "",
+  "parametry": [],
+  "zdjecia": [
+    "/uploads/wallbox-pulsar-plus.png"
+  ],
+  "karta_pdf": "/pliki/wallbox-katalog-2023.pdf",
+  "kolejnosc": 3
+}

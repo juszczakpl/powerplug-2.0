@@ -1,0 +1,27 @@
+{
+  "nazwa": "Pulsar Max",
+  "producent": "wallbox",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom",
+    "firma"
+  ],
+  "cena": 4099,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "7,4 kW",
+    "11 kW",
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP65",
+  "opis": "",
+  "parametry": [],
+  "zdjecia": [
+    "/uploads/wallbox-pulsar-max.png"
+  ],
+  "karta_pdf": "/pliki/wallbox-katalog-2023.pdf",
+  "kolejnosc": 4
+}

@@ -1,0 +1,47 @@
+# PowerPlug — Apache (hosting OVH)
+Options -Indexes
+DirectoryIndex index.html index.php
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # www → domena główna (tylko produkcja)
+  RewriteCond %{HTTP_HOST} ^www\.powerplug\.pl$ [NC]
+  RewriteRule ^ https://powerplug.pl%{REQUEST_URI} [L,R=301]
+
+  # Stare adresy (strona 2024) → nowe
+  RewriteRule ^index\.html$ / [L,R=301]
+  RewriteRule ^oferta\.html$ /oferta/ [L,R=301]
+  RewriteRule ^producenci\.html$ /ladowarki/ [L,R=301]
+  RewriteRule ^realizacje\.html$ /realizacje/ [L,R=301]
+  RewriteRule ^dla-firm\.html$ /stacje-ladowania-dla-firm/ [L,R=301]
+  RewriteRule ^kontakt\.html$ /kontakt/ [L,R=301]
+  RewriteRule ^assets/pdf/(.*)$ /pliki/ [L,R=301]
+</IfModule>
+
+# Plik z hasłami SMTP nigdy nie jest serwowany
+<Files "config.php">
+  Require all denied
+</Files>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  <FilesMatch "\.(js|css|webp|avif|jpg|jpeg|png|svg|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>

@@ -1,0 +1,25 @@
+{
+  "nazwa": "Zaptec Pro",
+  "producent": "zaptec",
+  "typ": "ladowarka",
+  "kategorie": [
+    "firma",
+    "publiczne"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP54",
+  "opis": "",
+  "parametry": [],
+  "zdjecia": [
+    "/uploads/zaptec-pro.png"
+  ],
+  "karta_pdf": "/pliki/zaptec-pro.pdf",
+  "kolejnosc": 8
+}

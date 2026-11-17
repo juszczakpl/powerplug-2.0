@@ -1,0 +1,22 @@
+{
+  "nazwa": "Zaptec Go",
+  "producent": "zaptec",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom"
+  ],
+  "cena": 3699,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP54",
+  "opis": "",
+  "parametry": [],
+  "zdjecia": [],
+  "karta_pdf": "/pliki/zaptec-go.pdf",
+  "kolejnosc": 7
+}
