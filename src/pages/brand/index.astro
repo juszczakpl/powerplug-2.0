@@ -1,0 +1,431 @@
+---
+// Design system PowerPlug — docelowo brand.powerplug.pl. Strona techniczna, nieindeksowana.
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import Bars from '../../components/ui/Bars.astro';
+import Cable from '../../components/ui/Cable.astro';
+import Logo from '../../components/ui/Logo.astro';
+import ProductCard from '../../components/ui/ProductCard.astro';
+import Faq from '../../components/ui/Faq.astro';
+import hero from '../../assets/brand/hero-man-charging.jpg';
+import foto1 from '../../assets/uploads/realizacja-1713133345879.jpg';
+import foto2 from '../../assets/uploads/realizacja-1730666776305.jpg';
+import foto3 from '../../assets/uploads/realizacja-1720194729746.jpg';
+import foto4 from '../../assets/uploads/realizacja-1709375462084.jpg';
+import pulsar from '../../assets/uploads/wallbox-pulsar-plus.png';
+import autel from '../../assets/uploads/autel-maxicharger.png';
+import zaptec from '../../assets/uploads/zaptec-pro.png';
+
+const emerald = [
+  ['0', '#ffffff', 'Tło'], ['25', '#f3f8f4', 'Tło miękkie, tekst na ciemnym'], ['50', '#e6f3ea', 'Hover, zaznaczenie'], ['100', '#cdebd5', ''], ['200', '#a6dcb4', ''], ['300', '#85d29a', ''],
+  ['400', '#64c97f', 'Hover primary'], ['500', '#40bf62', 'Akcent · primary · kabel'], ['600', '#3a975a', 'Zielony nagłówek ≥ 24 px'], ['700', '#32724d', 'Zielony tekst < 24 px'],
+  ['800', '#274f3b', 'Statystyki, chipy'], ['900', '#1a2e26', 'Nawigacja, sekcja ciemna'], ['950', '#0a100e', 'Tekst, secondary, stopka'],
+];
+const gray = [['100', '#efefef', 'Segmenty'], ['200', '#d9d9d9', 'Linie, kropki'], ['300', '#c6c6c6', 'Wygaszone słowa'], ['500', '#8a898a', 'Placeholder'], ['700', '#535253', 'Tekst pomocniczy'], ['900', '#201e1e', '']];
+const typo = [
+  ['t-display', 'Display', '90 / 83 · −2%', '48', 'Neulis Neue SemiBold', 'H1 strony głównej (hero)', 'Ładuj u siebie.'],
+  ['t-h1', 'H1', '72 / 76 · −1%', '40', 'Neulis Neue SemiBold', 'H1 podstron', 'Liczby mówią same za siebie.'],
+  ['t-h2', 'H2', '64 / 67 · −1%', '34', 'Neulis Neue SemiBold', 'Nagłówek sekcji', 'Możesz poświęcić dziesiątki godzin.'],
+  ['t-h3', 'H3', '48 / 50 · −1%', '28', 'Neulis Neue SemiBold', 'Podsekcja, statystyka', 'Montaż stacji ładowania'],
+  ['t-h4', 'H4', '32 / 38', '24', 'Neulis Neue SemiBold', 'Tytuł karty / cechy', 'Kompleksowa obsługa'],
+  ['t-h5', 'H5', '24 / 29', '20', 'Neulis Neue SemiBold', 'Tytuł małej karty, pytanie FAQ', 'Czy potrzebuję projektu i ekspertyzy?'],
+  ['t-lead', 'Lead', '22 / 29', '18', 'Neulis Sans Medium', 'Wstęp pod H1/H2', 'Zamiast szukać wolnej stacji w mieście — ładujesz w garażu albo pod firmą.'],
+  ['t-body-l', 'Body L', '18 / 27', '18', 'Neulis Sans Regular', 'Tekst domyślny', 'Wizja lokalna pozwala określić, co należy wykonać, aby zamontować stację ładowania w wybranej lokalizacji.'],
+  ['t-body', 'Body', '16 / 24', '16', 'Neulis Sans Regular', 'Tekst w kartach, formularze', 'Dobieramy urządzenie do konkretnego samochodu, instalacji i sposobu użytkowania.'],
+  ['t-small', 'Small', '14 / 21', '14', 'Neulis Sans Regular', 'Podpisy, meta', 'Właściciel · Szczecin'],
+  ['t-xs', 'XS', '12 / 18', '12', 'Neulis Sans Regular', 'Copyright, plakietki', 'Wszelkie prawa zastrzeżone © 2026 PowerPlug'],
+];
+const radii = [['--r-xs', '3px', 'Secondary, łączenie w grupie'], ['--r-sm', '6px', 'Karty, zdjęcia'], ['--r-md', '10px', 'Tagi, panele'], ['--r-lg', '18px', 'Zdjęcia w sekcji ciemnej'], ['--r-xl', '24px', 'Bloki hero, chipy'], ['--r-pill', '999px', 'Primary, nawigacja']];
+const spaces = [['1', 4], ['2', 8], ['3', 12], ['4', 16], ['5', 24], ['6', 32], ['7', 48], ['8', 64], ['9', 96], ['10', 128]];
+const pytania = ['ile kW naprawdę potrzebuję?', 'czy przyłącze wytrzyma?', 'fotowoltaika i OCPP', 'zgłoszenie do OSD', 'gwarancja a montaż', 'jednofazowa czy trójfazowa?'];
+const toc = [['kolory', 'Kolory'], ['typografia', 'Typografia'], ['przyciski', 'Przyciski'], ['nawigacja', 'Nawigacja'], ['chipy', 'Chipy i tagi'], ['media', 'Media i sygnet'], ['karty', 'Karty'], ['sekcje', 'Wzorce sekcji'], ['formularze', 'Formularze'], ['faq', 'FAQ'], ['tokeny', 'Odstępy i promienie']];
+---
+<Base title="PowerPlug — Design System" description="System projektowy strony PowerPlug: tokeny, typografia i komponenty UI." noindex>
+  <style>
+    .ds-hero { padding-top: calc(var(--header-top) + var(--header-h) + var(--space-8)); }
+    .ds-toc { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; }
+    .ds-toc a { display: inline-block; padding: .4rem .8rem; border-radius: var(--r-pill); background: var(--emerald-25); font-family: var(--font-display); font-weight: 600; font-size: var(--fs-small); text-decoration: none; color: var(--emerald-900); }
+    .ds-toc a:hover { background: var(--emerald-500); }
+    .ds-section { border-top: 1px solid var(--color-line); scroll-margin-top: 6rem; }
+    .ds-title { display: flex; align-items: baseline; gap: 1rem; margin-bottom: var(--space-6); }
+    .ds-title small { font-family: var(--font-body); font-weight: 400; font-size: var(--fs-small); color: var(--color-text-muted); }
+    .ds-label { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-xs); letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .75rem; }
+    .ds-panel { padding: var(--space-5); border: 1px dashed var(--gray-300); border-radius: var(--r-sm); }
+    .ds-panel--dark { background: var(--emerald-900); border-style: solid; border-color: transparent; color: var(--emerald-25); }
+    .ds-swatches { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); }
+    .ds-swatch { border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--color-line); font-size: var(--fs-small); }
+    .ds-swatch__chip { height: 4.5rem; }
+    .ds-swatch__info { padding: .5rem .625rem; display: grid; gap: .1rem; }
+    .ds-swatch__info b { font-family: var(--font-display); }
+    .ds-swatch__info span { color: var(--color-text-muted); font-size: var(--fs-xs); }
+    .ds-type { display: grid; gap: .25rem 2rem; padding: var(--space-5) 0; border-bottom: 1px solid var(--color-line); }
+    @media (min-width: 900px) { .ds-type { grid-template-columns: 14rem 1fr; align-items: baseline; } }
+    .ds-type__meta { font-size: var(--fs-small); color: var(--color-text-muted); display: grid; gap: .1rem; }
+    .ds-type__meta b { color: var(--color-text); font-family: var(--font-display); font-size: var(--fs-body); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; background: var(--emerald-25); padding: .1em .35em; border-radius: 4px; }
+    .ds-table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
+    .ds-table th, .ds-table td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--color-line); }
+    .ds-table th { font-family: var(--font-display); font-weight: 600; }
+    .ds-space { height: 1rem; background: var(--emerald-500); border-radius: 2px; }
+    .ds-radius { width: 5rem; height: 3.5rem; background: var(--emerald-25); border: 2px solid var(--emerald-500); }
+  </style>
+
+  <!-- Intro -->
+  <section class="ds-hero has-glow section--sm">
+    <div class="glow" style="--glow-size:70rem;left:-20rem;top:-10rem"></div>
+    <Cable variant="wave" style="left:0;right:0;top:4rem;height:18rem;width:100%;opacity:.9" />
+    <div class="container stack" style="--stack:var(--space-6)">
+      <p class="t-eyebrow">Design System · v1 · listopad 2026</p>
+      <h1 class="t-display">Jeden system.<br /><span class="t-accent">Wszystkie podstrony.</span></h1>
+      <p class="t-lead" style="max-width:44rem">Tokeny i komponenty wydestylowane z landingu w Figmie („PowerPlug | WWW”, sekwencja 1 | Bohater → stopka). <strong>Motyw przewodni: splątany kabel, który zamienia się w prosty, uporządkowany proces.</strong></p>
+      <ul class="ds-toc">{toc.map(([id, l]) => <li><a href={`#${id}`}>{l}</a></li>)}</ul>
+    </div>
+  </section>
+
+  <!-- KOLORY -->
+  <section id="kolory" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Kolory</h2><small>skala emerald z Figmy + neutralne</small></div>
+      <div>
+        <p class="ds-label">Emerald — marka</p>
+        <div class="ds-swatches">
+          {emerald.map(([k, hex, use]) => (
+            <div class="ds-swatch"><div class="ds-swatch__chip" style={`background:${hex}`} /><div class="ds-swatch__info"><b>emerald-{k}</b><span>{hex}</span>{use && <span>{use}</span>}</div></div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p class="ds-label">Neutralne</p>
+        <div class="ds-swatches">
+          {gray.map(([k, hex, use]) => (
+            <div class="ds-swatch"><div class="ds-swatch__chip" style={`background:${hex}`} /><div class="ds-swatch__info"><b>gray-{k}</b><span>{hex}</span>{use && <span>{use}</span>}</div></div>
+          ))}
+        </div>
+      </div>
+      <div class="notice"><Icon name="info" /><p><strong>Dostępność (WCAG AA):</strong> zielony tekst poniżej 24 px używa <code>emerald-700</code> (kontrast 5,9:1), a nie <code>600</code> z Figmy (3,6:1). Duże nagłówki zostają w <code>500/600</code>. Primary to zawsze ciemny tekst na <code>emerald-500</code>, nigdy biały.</p></div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAFIA -->
+  <section id="typografia" class="section ds-section">
+    <div class="container">
+      <div class="ds-title"><h2 class="t-h2">Typografia</h2><small>Neulis Neue (nagłówki, UI) · Neulis Sans (tekst) · skala płynna 390 → 1512 px</small></div>
+      {typo.map(([cls, name, desk, mob, font, use, sample]) => (
+        <div class="ds-type">
+          <div class="ds-type__meta"><b>{name}</b><span><code>.{cls}</code></span><span>Desktop {desk} px · mobile {mob} px</span><span>{font}</span><span>{use}</span></div>
+          <p class={cls}>{sample}</p>
+        </div>
+      ))}
+      <div class="ds-type">
+        <div class="ds-type__meta"><b>Eyebrow</b><span><code>.t-eyebrow</code></span><span>18 px · Neulis Neue SemiBold · emerald-700</span><span>Nad nagłówkiem sekcji</span></div>
+        <p class="t-eyebrow">Próbowałeś już na własną rękę?</p>
+      </div>
+      <div class="ds-type">
+        <div class="ds-type__meta"><b>Nagłówek dwukolorowy</b><span><code>.t-accent</code> / <code>.t-accent-strong</code></span><span>Druga część zdania w zieleni — wzór z hero i sekcji Rozwiązanie</span></div>
+        <p class="t-h2">Skorzystaj z pomocy ekspertów, <span class="t-accent-strong">takich jak my.</span></p>
+      </div>
+      <div class="ds-type">
+        <div class="ds-type__meta"><b>Cytat</b><span><code>.t-quote</code></span><span>24 / 28 · Neulis Sans Medium</span></div>
+        <p class="t-quote">„Pan Dominik to człowiek orkiestra, jest w stanie ogarnąć wszystko, nawet jeśli montaż odbywa się przed blokiem.”</p>
+      </div>
+      <div class="ds-type">
+        <div class="ds-type__meta"><b>Treść długa</b><span><code>.prose</code></span><span>Podstrony SEO: H2/H3, listy, linki</span></div>
+        <div class="prose">
+          <h2>Projekt wykonawczy stacji ładowania</h2>
+          <p>Dobra instalacja stacji ładowania zaczyna się od projektu. <strong>Projekt wykonawczy określa dokładnie, w jaki sposób stacja zostanie zasilona</strong>, zabezpieczona i podłączona do istniejącej infrastruktury.</p>
+          <ul><li>schemat zasilania stacji,</li><li>dobór przewodów i zabezpieczeń,</li><li>rozwiązania związane z <a href="#">zarządzaniem mocą</a>.</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRZYCISKI -->
+  <section id="przyciski" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Przyciski</h2><small>kapsuła = primary · prostokąt r3 = secondary · razem tworzą grupę</small></div>
+      <div class="grid grid--2">
+        <div class="ds-panel stack">
+          <p class="ds-label">Primary — kapsuła</p>
+          <div class="cluster"><Button>Bezpłatna wycena</Button><Button icon="plus-capsule">Bezpłatna wycena</Button><Button size="sm">Zapytaj</Button><Button size="lg" iconAfter="arrow-right">Poproś o kontakt</Button></div>
+        </div>
+        <div class="ds-panel stack">
+          <p class="ds-label">Secondary — prostokąt</p>
+          <div class="cluster"><Button variant="secondary">Kontakt</Button><Button variant="secondary" iconAfter="arrow-down">Kontakt</Button><Button variant="secondary" size="sm">Szczegóły</Button></div>
+        </div>
+        <div class="ds-panel stack">
+          <p class="ds-label">Grupa — połączenie kształtów (nagłówek, CTA)</p>
+          <div class="btn-group"><a class="btn btn--primary" href="#"><Icon name="plus-capsule" /><span>Bezpłatna wycena</span></a><a class="btn btn--secondary" href="#">Kontakt <Icon name="arrow-down" /></a></div>
+          <div class="btn-group"><a class="btn btn--primary btn--lg" href="#"><Icon name="plus-capsule" /><span>Wyceń montaż</span></a><a class="btn btn--secondary btn--lg" href="#">730 882 967</a></div>
+        </div>
+        <div class="ds-panel ds-panel--dark stack">
+          <p class="ds-label" style="color:var(--emerald-300)">Na ciemnym tle</p>
+          <div class="btn-group"><a class="btn btn--primary" href="#"><Icon name="plus-capsule" /><span>Bezpłatna wycena</span></a><a class="btn btn--light" href="#">Kontakt</a></div>
+          <div class="cluster"><button class="btn-icon btn-icon--light"><Icon name="arrow-left" /><span class="sr-only">Poprzednia</span></button><button class="btn-icon btn-icon--light"><Icon name="arrow-right" /><span class="sr-only">Następna</span></button></div>
+        </div>
+        <div class="ds-panel stack">
+          <p class="ds-label">Obrys, tekstowy, ikona</p>
+          <div class="cluster"><Button variant="outline">Zobacz realizacje</Button><a class="btn btn--outline" href="#" aria-label="Przewiń"><Icon name="arrow-down" /></a><Button variant="text" iconAfter="arrow-down">Przewiń dalej</Button><Button variant="text" iconAfter="arrow-right">Zobacz, jak to robimy</Button></div>
+          <div class="cluster"><button class="btn-icon"><Icon name="arrow-left" /><span class="sr-only">Poprzednia</span></button><button class="btn-icon"><Icon name="arrow-right" /><span class="sr-only">Następna</span></button><button class="btn-icon btn-icon--lg"><Icon name="arrow-right" /><span class="sr-only">Dalej</span></button><a class="btn-icon btn-icon--square btn-icon--lg" href="#"><Icon name="arrow-down" /><span class="sr-only">Przewiń</span></a></div>
+        </div>
+        <div class="ds-panel stack">
+          <p class="ds-label">Stany</p>
+          <div class="cluster"><Button>Domyślny</Button><Button disabled>Nieaktywny</Button><Button variant="secondary" disabled>Nieaktywny</Button></div>
+          <p class="t-small t-muted">Hover: primary → emerald-400, secondary → emerald-800. Focus: obrys 3 px emerald-500 z odstępem 3 px (klawiatura).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAWIGACJA -->
+  <section id="nawigacja" class="section ds-section" style="overflow:hidden">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Nawigacja</h2><small>ciemna kapsuła z logo · linki (≥1200 px) albo „=” · grupa CTA</small></div>
+      <p class="ds-label">Wariant „links” — strona główna, podstrony (desktop)</p>
+      <div class="ds-panel" style="padding:1.25rem;background:var(--emerald-25);overflow-x:auto">
+        <div class="site-header__inner" style="min-width:64rem">
+          <div class="nav-pill"><span class="nav-pill__logo"><Logo tone="light" /></span><ul class="nav-links" style="display:inline-flex"><li><a href="#" aria-current="page">Start</a></li><li><a href="#">Oferta</a></li><li><a href="#">Usługi</a></li><li><a href="#">Produkty</a></li><li><a href="#">Realizacje</a></li></ul></div>
+          <div class="btn-group"><a class="btn btn--primary" href="#"><Icon name="plus-capsule" /><span>Bezpłatna wycena</span></a><a class="btn btn--secondary" href="#">Kontakt</a></div>
+        </div>
+      </div>
+      <p class="ds-label">Wariant „compact” — po przewinięciu i na mobile (otwiera menu pełnoekranowe)</p>
+      <div class="ds-panel" style="padding:1.25rem;overflow-x:auto">
+        <div class="site-header__inner" style="min-width:36rem">
+          <div class="nav-pill"><span class="nav-pill__logo"><Logo tone="light" /></span><button class="nav-toggle" data-menu-open aria-controls="menu" aria-expanded="false"><Icon name="menu" /><span class="sr-only">Otwórz menu</span></button></div>
+          <div class="btn-group"><a class="btn btn--primary" href="#"><Icon name="plus-capsule" /><span>Bezpłatna wycena</span></a><a class="btn btn--secondary" href="#">Kontakt</a></div>
+        </div>
+      </div>
+      <p class="t-small t-muted">Kliknij „=” powyżej, żeby zobaczyć menu pełnoekranowe (Oferta i Usługi z podstronami wg IA).</p>
+      <div>
+        <p class="ds-label">Okruszki (podstrony)</p>
+        <nav class="breadcrumbs" aria-label="Okruszki"><ol><li><a href="#">Start</a></li><li><a href="#">Usługi</a></li><li><span aria-current="page">Projekt instalacji</span></li></ol></nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHIPY -->
+  <section id="chipy" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Chipy, tagi, segmenty</h2></div>
+      <div class="grid grid--2">
+        <div class="ds-panel stack">
+          <p class="ds-label">Chip-cecha (hero)</p>
+          <ul class="chip-list"><li class="chip"><Icon name="money" />Taniej</li><li class="chip"><Icon name="pin" />Prościej</li><li class="chip"><Icon name="bolt" />Z głowy</li></ul>
+          <div class="cluster"><span class="chip chip--filled"><Icon name="shield" />5 lat gwarancji</span><span class="chip chip--filled"><Icon name="sun" />Współpraca z PV</span></div>
+        </div>
+        <div class="ds-panel stack">
+          <p class="ds-label">Segmenty odbiorcy (Dla domu / Dla firm / Zarządcy)</p>
+          <ul class="segment"><li><a class="segment__item" href="#" aria-current="true"><Icon name="home" />Dla domu</a></li><li><a class="segment__item" href="#"><Icon name="building" />Dla firm</a></li><li><a class="segment__item" href="#"><Icon name="parking" />Zarządcy</a></li></ul>
+          <p class="ds-label" style="margin-top:1rem">Plakietki</p>
+          <div class="cluster"><span class="badge badge--success">Dostępny</span><span class="badge badge--warning">Na zamówienie</span><span class="badge badge--neutral">Niedostępny</span><span class="badge badge--dark badge--plain">Polecany</span><span class="badge">Krok 3</span></div>
+        </div>
+      </div>
+      <div class="ds-panel has-glow" style="padding-block:3rem">
+        <p class="ds-label t-center">Tagi-pytania (sekcja Problem — plątanina kabli)</p>
+        <Cable variant="tangle" style="inset:15% 5% 0;width:90%;height:85%" />
+        <ul class="tag-cloud">{pytania.map((p) => <li class="tag">{p}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIA -->
+  <section id="media" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Media i sygnet</h2><small>„pasy baterii” — zdjęcie ładuje się jak ogniwo</small></div>
+      <Bars image={hero} alt="Mężczyzna podłącza samochód elektryczny do domowej ładowarki" position="70%" />
+      <div class="grid grid--4">
+        <div><p class="ds-label">r-sm · 4:3</p><div class="media media--photo"><Image src={foto2} alt="Realizacja montażu ładowarki" width={500} /></div></div>
+        <div><p class="ds-label">r-lg · 4:5 (sekcja ciemna)</p><div class="media media--portrait media--r-lg"><Image src={foto3} alt="Realizacja" width={500} /></div></div>
+        <div><p class="ds-label">r-xl · kwadrat</p><div class="media media--square media--r-xl"><Image src={foto4} alt="Realizacja" width={500} /></div></div>
+        <div><p class="ds-label">Produkt (tło emerald-25)</p><div class="media media--product"><Image src={pulsar} alt="Wallbox Pulsar Plus" width={400} /></div></div>
+      </div>
+      <div class="grid grid--3">
+        <div class="ds-panel has-glow" style="height:12rem"><p class="ds-label">Kabel: wave</p><Cable variant="wave" style="inset:25% 0 0;width:100%;height:70%" /></div>
+        <div class="ds-panel has-glow" style="height:12rem"><p class="ds-label">Kabel: loop</p><Cable variant="loop" style="inset:20% 0 0;width:100%;height:80%" /></div>
+        <div class="ds-panel has-glow" style="height:12rem"><p class="ds-label">Poświata (glow)</p><div class="glow" style="--glow-size:24rem;left:10%;top:10%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KARTY -->
+  <section id="karty" class="section ds-section section--soft">
+    <div class="container stack" style="--stack:var(--space-7)">
+      <div class="ds-title"><h2 class="t-h2">Karty</h2></div>
+      <div>
+        <p class="ds-label">Produkt (pseudo-sklep) — CMS: Urządzenia</p>
+        <div class="grid grid--4">
+          <ProductCard name="Pulsar Plus" brand="Wallbox" href="#" image={pulsar} price={3799} specs={['7,4 kW', '11 kW', '22 kW', 'IP65']} />
+          <ProductCard name="MaxiCharger AC" brand="Autel" href="#" image={autel} price={3699} specs={['22 kW', 'Typ 2']} featured />
+          <ProductCard name="Zaptec Pro" brand="Zaptec" href="#" image={zaptec} price={null} specs={['22 kW', 'MID', 'OCPP']} status="na-zamowienie" />
+          <ProductCard name="Easee Charge Up" brand="Easee" href="#" image={null} price={null} specs={['22 kW', '4G']} status="niedostepny" />
+        </div>
+      </div>
+      <div>
+        <p class="ds-label">Usługa / krok procesu</p>
+        <div class="grid grid--3">
+          {[['1', 'Wizja lokalna', 'Sprawdzamy instalację, trasę przewodów i miejsce montażu — po wizji dostajesz precyzyjną wycenę.', foto2], ['2', 'Projekt instalacji', 'Projektujemy pojedyncze punkty i instalacje na kilkanaście stanowisk, z myślą o rozbudowie.', foto3], ['3', 'Montaż', 'Od wallboxa na ścianie domu po infrastrukturę na parkingu firmy — jako jedna spójna instalacja.', foto4]].map(([n, t, d, f]) => (
+            <article class="card card--link service-card">
+              <div class="media media--wide"><Image src={f as any} alt="" width={600} /></div>
+              <div class="service-card__body"><span class="step-num">{n}</span><h3 class="card__title"><a class="stretched-link" href="#" style="color:inherit;text-decoration:none">{t}</a></h3><p class="t-body t-muted">{d}</p><span class="btn btn--text" style="margin-top:auto">Dowiedz się więcej <Icon name="arrow-right" /></span></div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <div class="grid grid--2">
+        <div>
+          <p class="ds-label">Realizacja — CMS: Realizacje</p>
+          <div class="grid grid--2">
+            <article class="card project-card"><div class="media"><Image src={foto1} alt="Montaż wallboxa — Szczecin, Warszewo" width={500} /></div><p class="project-card__place">Szczecin · Warszewo</p><h3 class="card__title">Wallbox w garażu domu jednorodzinnego</h3><span class="badge badge--neutral badge--plain">Dom</span></article>
+            <article class="card project-card"><div class="media"><Image src={foto2} alt="Montaż przed blokiem — Gryfino" width={500} /></div><p class="project-card__place">Gryfino · Flisacza</p><h3 class="card__title">Stacja przed blokiem, formalności po naszej stronie</h3><span class="badge badge--neutral badge--plain">Blok</span></article>
+          </div>
+        </div>
+        <div class="stack">
+          <p class="ds-label">Statystyki</p>
+          <div class="stack" style="--stack:1.5rem">
+            <div class="stat"><span class="stat__value">+150</span><span class="stat__label">zamontowanych<br />ładowarek</span></div>
+            <div class="stat"><span class="stat__value">5 lat</span><span class="stat__label">gwarancji<br />producentów</span></div>
+            <div class="stat"><span class="stat__value">1 dzień</span><span class="stat__label">typowy czas<br />montażu</span></div>
+          </div>
+          <p class="t-small t-muted">Liczby przykładowe — do potwierdzenia z klientem.</p>
+        </div>
+      </div>
+      <div>
+        <p class="ds-label">Opinia — szklany panel ze zdjęciem (CMS: Opinie)</p>
+        <div class="testimonial">
+          <div class="media"><Image src={foto1} alt="Realizacja z opinii — Szczecin, Warszewo" width={700} /></div>
+          <div class="testimonial__card">
+            <div class="stack" style="--stack:1.125rem">
+              <p class="testimonial__quote">„Bardzo polecam PowerPlug! Od początku świetny kontakt z Panem Dominikiem. Montaż stacji ładowania wykonany szybko, estetycznie i bez żadnych problemów.”</p>
+              <p class="testimonial__author">Klient z Małych Błoni<span>Szczecin · dom jednorodzinny</span></p>
+            </div>
+            <div class="slider-controls">
+              <div class="slider-controls__arrows"><button class="btn-icon"><Icon name="arrow-left" /><span class="sr-only">Poprzednia opinia</span></button><button class="btn-icon"><Icon name="arrow-right" /><span class="sr-only">Następna opinia</span></button></div>
+              <ul class="dots" aria-hidden="true"><li aria-current="true"></li><li></li><li></li><li></li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WZORCE SEKCJI -->
+  <section id="sekcje" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-8)">
+      <div class="ds-title"><h2 class="t-h2">Wzorce sekcji</h2><small>klocki, z których składamy podstrony</small></div>
+      <div class="stack" style="--stack:1rem">
+        <p class="ds-label">Nagłówek sekcji — wyśrodkowany</p>
+        <div class="section-head section-head--center has-glow" style="padding:2rem 0"><div class="glow" style="--glow-size:40rem;left:50%;top:0;translate:-50% 0"></div><p class="t-eyebrow">Próbowałeś już na własną rękę?</p><h2 class="t-h2">Możesz poświęcić dziesiątki godzin a i tak popełnisz wiele błędów.</h2><p class="t-body-l section-head__lead">Elektryka, sprzęt i montaż to trzy różne dziedziny. Pomyl się w jednej, a pozostałe dwie przestają mieć znaczenie.</p><a class="btn btn--outline" href="#" aria-label="Przewiń"><Icon name="arrow-down" /></a></div>
+      </div>
+      <div class="stack" style="--stack:1rem">
+        <p class="ds-label">Split: tekst + słowa-przełącznik (Prywatnie. Biznesowo. Publicznie.)</p>
+        <div class="split">
+          <p class="t-body-l"><strong>Każda instalacja jest inna.</strong> Inaczej montujemy wallbox w garażu domu, inaczej stację na parkingu firmy, a jeszcze inaczej punkty w garażu wspólnoty. Wybierz, co Cię dotyczy.</p>
+          <ul class="word-stack"><li><a href="#" aria-current="true">Prywatnie.</a></li><li><a href="#">Biznesowo.</a></li><li><a href="#">Publicznie.</a></li></ul>
+        </div>
+      </div>
+      <div class="stack" style="--stack:1rem">
+        <p class="ds-label">Kroki procesu (1–6)</p>
+        <div class="section-head section-head--center"><p class="t-eyebrow">Poznaj nasz proces <Icon name="arrow-down" size={16} /></p><h2 class="t-h2">Sześć kroków do pełnego ładowania. Zero niespodzianek po drodze.</h2></div>
+        <ol class="steps-nav">{[1, 2, 3, 4, 5, 6].map((n) => <li><a href="#" aria-current={n === 1 ? 'step' : undefined}><span class="step-num step-num--lg">{n}</span></a></li>)}</ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark has-glow" aria-labelledby="dark-title">
+    <Cable variant="wave" style="left:-5%;top:10%;width:110%;height:80%;opacity:.9" />
+    <div class="container stack" style="--stack:var(--space-8)">
+      <div class="section-head section-head--center"><p class="t-eyebrow">Sekcja ciemna · .section--dark</p><h2 id="dark-title" class="t-h2">Dlaczego warto <span class="t-accent">wybrać PowerPlug?</span></h2></div>
+      <div class="stack" style="--stack:var(--space-7)">
+        <div class="feature"><h3 class="feature__title">Indywidualne podejście</h3><div class="media"><Image src={foto3} alt="" width={420} /></div><p class="feature__text">Analizujemy specyfikę Twojej infrastruktury i projektujemy rozwiązania dostosowane do liczby użytkowników, lokalizacji i budżetu.</p></div>
+        <div class="feature"><h3 class="feature__title">Kompleksowa obsługa</h3><div class="media"><Image src={foto4} alt="" width={420} /></div><p class="feature__text">Od doradztwa i audytu technicznego, przez montaż stacji, aż po wsparcie techniczne, serwis i rozbudowę.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="ds-label">Pasek CTA</p>
+      <div class="cta-band">
+        <Cable variant="loop" style="right:-10%;top:-30%;width:60%;height:160%;opacity:.8" />
+        <div class="stack" style="--stack:.75rem"><h2 class="t-h3">Nie wiesz, od czego zacząć? <span class="t-accent">Zadzwoń.</span></h2><p class="t-body-l" style="color:rgb(243 248 244 / .8)">Wizja lokalna w Szczecinie i okolicy (do 30 km) — bez kosztów dojazdu.</p></div>
+        <div class="btn-group"><a class="btn btn--primary btn--lg" href="#"><Icon name="plus-capsule" /><span>Bezpłatna wycena</span></a><a class="btn btn--light btn--lg" href="tel:+48730882967">730 882 967</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARZE -->
+  <section id="formularze" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Formularze</h2><small>kontakt, zapytanie o produkt, kalkulator krokowy</small></div>
+      <div class="split split--top">
+        <form class="form ds-panel" onsubmit="return false">
+          <p class="ds-label">Pola</p>
+          <div class="form__row form__row--2">
+            <div class="field"><label class="field__label" for="f-imie">Imię</label><input class="input" id="f-imie" placeholder="Jan" autocomplete="given-name" /></div>
+            <div class="field field--error"><label class="field__label" for="f-tel">Telefon</label><input class="input" id="f-tel" type="tel" value="12" aria-invalid="true" aria-describedby="f-tel-e" /><p class="field__error" id="f-tel-e">Sprawdź numer telefonu.</p></div>
+          </div>
+          <div class="field"><label class="field__label" for="f-mail">E-mail <span class="opt">(opcjonalnie)</span></label><input class="input" id="f-mail" type="email" placeholder="jan@przyklad.pl" /><p class="field__help">Wolisz rozmowę? Zostaw tylko telefon — oddzwonimy.</p></div>
+          <div class="field"><label class="field__label" for="f-sel">Czego dotyczy zapytanie?</label><select class="select" id="f-sel"><option>Montaż ładowarki w domu</option><option>Stacje dla firmy</option><option>Garaż wspólnoty / spółdzielni</option></select></div>
+          <div class="field"><label class="field__label" for="f-msg">Wiadomość</label><textarea class="textarea" id="f-msg" placeholder="Opisz krótko miejsce montażu…"></textarea></div>
+          <label class="check"><input type="checkbox" checked /> <span>Zgadzam się na kontakt w sprawie zapytania. <a href="#">Polityka prywatności</a></span></label>
+          <div class="btn-group"><button class="btn btn--primary" type="submit">Poproś o kontakt</button><a class="btn btn--secondary" href="tel:+48730882967">Zadzwoń</a></div>
+        </form>
+        <div class="stack">
+          <div class="ds-panel stack">
+            <p class="ds-label">Kalkulator / formularz krokowy</p>
+            <ol class="progress" aria-label="Krok 2 z 5"><li data-done></li><li aria-current="step"></li><li></li><li></li><li></li></ol>
+            <p class="t-h5">Gdzie zamontujemy ładowarkę?</p>
+            <fieldset class="choice-grid">
+              <legend class="sr-only">Miejsce montażu</legend>
+              <label class="choice"><input type="radio" name="miejsce" checked /><Icon name="home" /><span class="choice__title">Dom / garaż</span><span class="choice__desc">Dom jednorodzinny</span></label>
+              <label class="choice"><input type="radio" name="miejsce" /><Icon name="parking" /><span class="choice__title">Garaż podziemny</span><span class="choice__desc">Blok, wspólnota</span></label>
+              <label class="choice"><input type="radio" name="miejsce" /><Icon name="building" /><span class="choice__title">Parking zewnętrzny</span><span class="choice__desc">Firma, obiekt</span></label>
+            </fieldset>
+            <div class="cluster" style="justify-content:space-between"><button class="btn btn--text" type="button"><Icon name="arrow-left" /> Wstecz</button><button class="btn btn--primary" type="button">Dalej <Icon name="arrow-right" /></button></div>
+          </div>
+          <div class="notice"><Icon name="check" /><p><strong>Dziękujemy!</strong> Oddzwonimy najszybciej, jak to możliwe — zwykle tego samego dnia roboczego.</p></div>
+          <div class="notice notice--warning"><Icon name="alert" /><p>Wycena z kalkulatora jest orientacyjna. Dokładną kwotę podajemy po wizji lokalnej.</p></div>
+          <div class="notice notice--error"><Icon name="alert" /><p>Nie udało się wysłać. Zadzwoń: 730 882 967.</p></div>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <p class="ds-label">Tabela parametrów (karta produktu)</p>
+        <table class="spec-table"><tbody><tr><th>Moc ładowania</th><td>7,4 kW (1-faz.) / 22 kW (3-faz.)</td></tr><tr><th>Złącze</th><td>Typ 2</td></tr><tr><th>Łączność</th><td>Wi-Fi, Bluetooth 4.2, eSIM LTE, OCPP 1.6J</td></tr><tr><th>Gwarancja</th><td>5 lat</td></tr></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section ds-section">
+    <div class="container split split--top">
+      <div class="section-head"><p class="t-eyebrow">FAQ</p><h2 class="t-h2">Najczęstsze pytania</h2><p class="t-body-l t-muted">Akordeon na natywnym &lt;details&gt; + dane strukturalne FAQPage dla Google.</p></div>
+      <Faq schema={false} open={0} items={[
+        { q: 'Mam tylko 15 kW mocy – czy mogę zamontować ładowarkę 22 kW?', a: 'Tak, ale moc ładowania trzeba ograniczyć albo zastosować dynamiczne zarządzanie mocą. Sprawdzamy to podczas wizji lokalnej.' },
+        { q: 'Czy potrzebuję projektu i ekspertyzy?', a: 'W garażu wielostanowiskowym zwykle tak — wymaga tego ustawa o elektromobilności. W domu jednorodzinnym najczęściej nie.' },
+        { q: 'Czy moja stacja wymaga odbioru UDT?', a: 'Zależy od rodzaju stacji i sposobu jej udostępniania. Pomagamy przygotować stację do odbioru.' },
+      ]} />
+    </div>
+  </section>
+
+  <!-- TOKENY -->
+  <section id="tokeny" class="section ds-section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="ds-title"><h2 class="t-h2">Odstępy, promienie, siatka</h2><small>src/styles/tokens.css</small></div>
+      <div class="grid grid--2">
+        <div class="ds-panel">
+          <p class="ds-label">Odstępy (siatka 4 px)</p>
+          <table class="ds-table"><tbody>{spaces.map(([k, px]) => <tr><td><code>--space-{k}</code></td><td>{px} px</td><td style="width:55%"><div class="ds-space" style={`width:${px}px`} /></td></tr>)}<tr><td><code>--section-y</code></td><td colspan="2">64 → 128 px (pionowy odstęp sekcji)</td></tr><tr><td><code>--gutter</code></td><td colspan="2">16 → 48 px (margines boczny, Figma 48)</td></tr><tr><td><code>--container</code></td><td colspan="2">1416 px (Figma)</td></tr></tbody></table>
+        </div>
+        <div class="ds-panel">
+          <p class="ds-label">Promienie</p>
+          <div class="grid grid--3">{radii.map(([k, v, use]) => <div class="stack" style="--stack:.5rem"><div class="ds-radius" style={`border-radius:${v}`} /><code>{k}</code><span class="t-xs t-muted">{v} · {use}</span></div>)}</div>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <p class="ds-label">Siatka: 12 kolumn, odstęp 18 px — klasy .grid--2/3/4, .split (50/50), .split--wide-left/right</p>
+        <div class="grid" style="--cols:12">{Array.from({ length: 12 }).map(() => <div style="height:3rem;background:var(--emerald-25);border-radius:3px" />)}</div>
+      </div>
+    </div>
+  </section>
+</Base>

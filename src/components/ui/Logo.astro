@@ -1,0 +1,9 @@
+---
+import { Image } from 'astro:assets';
+import white from '../../assets/brand/logo-white-green.png';
+import dark from '../../assets/brand/logo-dark-green.png';
+interface Props { tone?: 'light' | 'dark'; width?: number; class?: string; eager?: boolean }
+// tone="light" → logo jasne (na ciemne tło), tone="dark" → logo ciemne (na jasne tło)
+const { tone = 'light', width = 350, class: cls, eager = false } = Astro.props;
+---
+<Image src={tone === 'light' ? white : dark} alt="PowerPlug" width={width} class={cls} loading={eager ? 'eager' : 'lazy'} />

@@ -1,8 +1,19 @@
 ---
-// Bazowy layout. Design system (tokeny, komponenty) dojdzie w kolejnym etapie.
-interface Props { title: string; description?: string }
-const { title, description = '' } = Astro.props;
+// Bazowy layout: <head> (SEO, fonty), skip-link, nagłówek, stopka.
+import '../styles/base.css';
+import '../styles/components.css';
+import Header from '../components/ui/Header.astro';
+import Footer from '../components/ui/Footer.astro';
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  header?: 'links' | 'compact' | false;
+  footer?: boolean;
+}
+const { title, description = '', noindex = false, header = 'links', footer = true } = Astro.props;
 const kit = import.meta.env.PUBLIC_ADOBE_FONTS_KIT; // tymczasowo do czasu zakupu licencji webfont
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="pl">
@@ -11,11 +22,19 @@ const kit = import.meta.env.PUBLIC_ADOBE_FONTS_KIT; // tymczasowo do czasu zakup
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-    {__PREVIEW__ && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    {(__PREVIEW__ || noindex) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#1a2e26" />
+    {kit && <link rel="preconnect" href="https://use.typekit.net" crossorigin />}
     {kit && <link rel="stylesheet" href={`https://use.typekit.net/${kit}.css`} />}
+    <slot name="head" />
   </head>
   <body>
-    <slot />
+    <a class="skip-link" href="#tresc">Przejdź do treści</a>
+    {header && <Header variant={header} />}
+    <main id="tresc">
+      <slot />
+    </main>
+    {footer && <Footer />}
   </body>
 </html>

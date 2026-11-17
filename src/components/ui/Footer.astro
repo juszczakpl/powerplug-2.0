@@ -1,0 +1,53 @@
+---
+// Stopka [Figma 38:2580]: emerald-950, „Kontakt”, social, duży zielony kontakt, wielkie logo + kabel.
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Cable from './Cable.astro';
+import { firma } from '../../lib/firma';
+import { nawigacja } from '../../lib/nawigacja';
+const rok = new Date().getFullYear();
+const oferta = nawigacja.find((n) => n.label === 'Oferta');
+const uslugi = nawigacja.find((n) => n.label === 'Usługi');
+---
+<footer class="site-footer">
+  <Cable variant="loop" style="right:-4%;top:-10%;width:min(60rem,70%);height:120%" />
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="stack" style="--stack:1rem">
+        <h2>Kontakt</h2>
+        <p class="t-body">Masz wątpliwości dotyczące wyboru lub montażu ładowarek samochodowych? <strong>Skontaktuj się z nami i uzyskaj pomoc ekspertów w dziedzinie elektromobilności.</strong></p>
+        <div class="site-footer__contact stack" style="--stack:.25rem">
+          <a href={firma.telefonHref}>{firma.telefon}</a>
+          <a href={`mailto:${firma.email}`}>{firma.email}</a>
+        </div>
+        <p class="t-small">{firma.godziny}</p>
+        <ul class="site-footer__social" aria-label="Media społecznościowe">
+          <li><a href={firma.social.facebook} aria-label="Facebook"><Icon name="facebook" /></a></li>
+          <li><a href={firma.social.linkedin} aria-label="LinkedIn"><Icon name="linkedin" /></a></li>
+          <li><a href={firma.social.instagram} aria-label="Instagram"><Icon name="instagram" /></a></li>
+          <li><a href={firma.social.messenger} aria-label="Messenger"><Icon name="messenger" /></a></li>
+          <li><a href={firma.social.whatsapp} aria-label="WhatsApp"><Icon name="whatsapp" /></a></li>
+        </ul>
+      </div>
+      {oferta && 'children' in oferta && (
+        <nav aria-label="Oferta"><h2 class="t-h5" style="margin-bottom:1rem">Oferta</h2>
+          <ul class="site-footer__links">{oferta.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+        </nav>
+      )}
+      {uslugi && 'children' in uslugi && (
+        <nav aria-label="Usługi"><h2 class="t-h5" style="margin-bottom:1rem">Usługi</h2>
+          <ul class="site-footer__links">
+            {uslugi.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+            <li><a href="/ladowarki/">Produkty</a></li>
+            <li><a href="/realizacje/">Realizacje</a></li>
+          </ul>
+        </nav>
+      )}
+    </div>
+    <Logo tone="light" width={1200} class="site-footer__logo" />
+    <div class="site-footer__bottom">
+      <span>Wszelkie prawa zastrzeżone © {rok} PowerPlug</span>
+      <span>Szczecin · {firma.region}</span>
+    </div>
+  </div>
+</footer>

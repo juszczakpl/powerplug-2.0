@@ -1,0 +1,23 @@
+---
+// Przycisk / link-przycisk. variant: primary (kapsuła) | secondary (prostokąt r3) | light | outline | text
+import Icon, { type IconName } from './Icon.astro';
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'light' | 'outline' | 'text';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: IconName;        // ikona przed tekstem
+  iconAfter?: IconName;   // ikona po tekście
+  block?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = 'primary', size = 'md', icon, iconAfter, block, type = 'button', class: cls, ...rest } = Astro.props;
+const classes = ['btn', `btn--${variant}`, size !== 'md' && `btn--${size}`, block && 'btn--block', cls].filter(Boolean).join(' ');
+const Tag = href ? 'a' : 'button';
+---
+<Tag class={classes} href={href} type={href ? undefined : type} {...rest}>
+  {icon && <Icon name={icon} />}
+  <span><slot /></span>
+  {iconAfter && <Icon name={iconAfter} />}
+</Tag>

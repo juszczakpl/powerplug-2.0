@@ -1,0 +1,18 @@
+---
+// Akordeon FAQ na natywnym <details> + dane strukturalne FAQPage.
+interface Props { items: { q: string; a: string }[]; schema?: boolean; open?: number }
+const { items, schema = true, open } = Astro.props;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a.replace(/<[^>]+>/g, '') } })),
+};
+---
+<div class="faq">
+  {items.map((i, n) => (
+    <details class="faq__item" open={open === n}>
+      <summary class="faq__q">{i.q}</summary>
+      <div class="faq__a t-body-l" set:html={`<p>${i.a}</p>`} />
+    </details>
+  ))}
+</div>
+{schema && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}

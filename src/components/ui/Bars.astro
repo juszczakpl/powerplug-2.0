@@ -1,0 +1,24 @@
+---
+// Sygnet marki: zdjęcie pocięte na pionowe „pasy baterii” o rosnącej szerokości [Figma: hero, 37:2511].
+// Każdy pas pokazuje swój fragment tego samego zdjęcia (container query units → bez JS).
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  widths?: number[];   // proporcje szerokości pasów, domyślnie jak w Figmie (×2 każdy kolejny)
+  height?: string;     // CSS, np. "22rem"
+  position?: string;   // pionowe kadrowanie, np. "40%"
+  reverse?: boolean;   // najszerszy pas po lewej
+}
+const { image, alt, widths = [1, 2, 4, 8, 18], height, position = '50%', reverse = false } = Astro.props;
+const w = reverse ? [...widths].reverse() : widths;
+const img = await getImage({ src: image, width: 1800, format: 'webp' });
+// Przesunięcia w % szerokości kontenera (ignorujemy odstępy — różnica jest niewidoczna)
+const total = w.reduce((a, b) => a + b, 0);
+let acc = 0;
+const bars = w.map((v) => { const x = (acc / total) * 100; acc += v; return { v, x }; });
+---
+<div class="bars" role="img" aria-label={alt} style={`--img:url(${img.src});${height ? `--bars-h:${height};` : ''}--y:${position}`}>
+  {bars.map((b) => <span class="bars__bar" style={`--w:${b.v};--x:${b.x.toFixed(3)}`} />)}
+</div>

@@ -1,0 +1,72 @@
+---
+// Nagłówek [Figma 102:1425 / 123:319]: ciemna kapsuła z logo + biała kapsuła linków
+// (desktop ≥1200 px) lub okrągły przycisk „=” (menu pełnoekranowe). Po prawej grupa CTA.
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { nawigacja, cta } from '../../lib/nawigacja';
+interface Props { variant?: 'links' | 'compact'; static?: boolean; current?: string }
+const { variant = 'links', static: isStatic = false, current = Astro.url.pathname } = Astro.props;
+const isCurrent = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
+---
+<header class:list={['site-header', isStatic && 'site-header--static']} data-header>
+  <div class="container site-header__inner">
+    <div class="nav-pill">
+      <a href="/" class="nav-pill__logo" aria-label="PowerPlug — strona główna"><Logo tone="light" eager /></a>
+      {variant === 'links' && (
+        <nav aria-label="Główna">
+          <ul class="nav-links nav-links--expandable">
+            {nawigacja.map((n) => (
+              <li><a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      <button class:list={['nav-toggle', variant === 'links' && 'nav-toggle--auto']} type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+        <Icon name="menu" /><span class="sr-only">Otwórz menu</span>
+      </button>
+    </div>
+    <div class="site-header__actions">
+      <div class="btn-group">
+        <a class="btn btn--primary" href={cta.wycena.href}><Icon name="plus-capsule" /><span>{cta.wycena.label}</span></a>
+        <a class="btn btn--secondary btn-hide-sm" href={cta.kontakt.href}>{cta.kontakt.label}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden data-menu>
+  <button class="nav-toggle menu__close" type="button" data-menu-close><Icon name="close" /><span class="sr-only">Zamknij menu</span></button>
+  <nav aria-label="Menu">
+    <ul class="menu__list">
+      {nawigacja.map((n) => (
+        <li>
+          <a href={n.href}>{n.label}</a>
+          {'children' in n && (
+            <ul class="menu__sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+          )}
+        </li>
+      ))}
+      <li><a href={cta.kontakt.href}>{cta.kontakt.label}</a></li>
+    </ul>
+  </nav>
+  <div class="btn-group">
+    <a class="btn btn--primary btn--lg" href={cta.wycena.href}><Icon name="plus-capsule" /><span>{cta.wycena.label}</span></a>
+    <a class="btn btn--light btn--lg" href="tel:+48730882967">730 882 967</a>
+  </div>
+</div>
+
+<script>
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const openers = document.querySelectorAll<HTMLButtonElement>('[data-menu-open]');
+  const closer = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const set = (open: boolean) => {
+    if (!menu) return;
+    menu.hidden = !open;
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    openers.forEach((b) => b.setAttribute('aria-expanded', String(open)));
+    (open ? closer : openers[0])?.focus();
+  };
+  openers.forEach((b) => b.addEventListener('click', () => set(true)));
+  closer?.addEventListener('click', () => set(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu && !menu.hidden) set(false); });
+</script>

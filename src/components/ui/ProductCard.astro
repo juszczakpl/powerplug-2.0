@@ -1,0 +1,30 @@
+---
+// Karta urządzenia w pseudo-sklepie: zdjęcie, producent, nazwa, moce, cena „od”, CTA (grupa: kapsuła + prostokąt).
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+interface Props {
+  name: string; brand?: string; href: string; image?: ImageMetadata | null;
+  price?: number | null; specs?: string[]; status?: 'dostepny' | 'na-zamowienie' | 'niedostepny'; featured?: boolean;
+}
+const { name, brand, href, image, price, specs = [], status = 'dostepny', featured } = Astro.props;
+const statusy = { dostepny: ['Dostępny', 'badge--success'], 'na-zamowienie': ['Na zamówienie', 'badge--warning'], niedostepny: ['Niedostępny', 'badge--neutral'] } as const;
+const [statusLabel, statusClass] = statusy[status];
+---
+<article class="card product-card">
+  <div class="media media--product">
+    {image ? <Image src={image} alt={`${brand ?? ''} ${name}`.trim()} width={480} /> : <Icon name="plug" size={64} />}
+  </div>
+  <div class="product-card__body">
+    <div class="cluster" style="--cluster:.5rem;justify-content:space-between">
+      {brand && <span class="product-card__brand">{brand}</span>}
+      <span class:list={['badge', statusClass]}>{featured ? 'Polecany' : statusLabel}</span>
+    </div>
+    <h3 class="card__title"><a href={href} class="stretched-link" style="text-decoration:none;color:inherit">{name}</a></h3>
+    {specs.length > 0 && <ul class="product-card__specs">{specs.map((s) => <li>{s}</li>)}</ul>}
+  </div>
+  <div class="card__footer">
+    <p class="price"><small>{price == null ? 'Cena' : 'Cena brutto'}</small>{price == null ? 'indywidualna' : `od ${price.toLocaleString('pl-PL')} zł`}</p>
+    <a href={`${href}#zapytanie`} class="btn btn--primary btn--sm" style="position:relative;z-index:2">Zapytaj</a>
+  </div>
+</article>
