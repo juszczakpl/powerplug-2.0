@@ -1,51 +1,160 @@
 ---
-// Strona techniczna: dowód, że cały łańcuch działa (CMS → build → OVH → formularz).
-// Zostanie zastąpiona stroną główną zbudowaną z design systemu.
+// Strona główna — landing wg sekwencji „PowerPlug | WWW” (Figma 102:1396 → …).
+// Sekcje: 1 Bohater · 2 Problem (plątanina) · 3 Rozwiązanie (rozplątane + segmenty).
+import { getImage } from 'astro:assets';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import { urzadzenia, realizacje, opinie, producenci, formatCena } from '../lib/dane';
-import { cmsImage } from '../lib/cms-image';
+import Bars from '../components/ui/Bars.astro';
+import Cable from '../components/ui/Cable.astro';
+import Icon from '../components/ui/Icon.astro';
+import heroBg from '../assets/brand/hero-man-charging.jpg';
+import heroCut from '../assets/brand/hero-man-cutout.png';
+import fotoDom from '../assets/brand/rozwiazanie-montaz.jpg';
+import fotoFirma from '../assets/uploads/realizacja-1709375462084.jpg';
+import fotoPubl from '../assets/uploads/realizacja-1720194729746.jpg';
+import '../styles/home.css';
 
-const u = await urzadzenia();
-const r = await realizacje();
-const o = await opinie();
-const p = await producenci();
-const zbudowano = new Date().toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' });
+const cut = await getImage({ src: heroCut, width: 1800, format: 'webp' });
+
+const pytania = [
+  ['ile kW naprawdę potrzebuję?', -5, 1],
+  ['czy przyłącze wytrzyma?', 6, 0],
+  ['fotowoltaika i OCPP', 8, 2],
+  ['gwarancja a montaż', -4, 2],
+  ['jednofazowa czy trójfazowa?', 3, 0],
+  ['zgłoszenie do OSD', -12, 1],
+] as const;
+
+const segmenty = [
+  {
+    id: 'prywatnie', slowo: 'Prywatnie.', etykieta: 'Dla domu', ikona: 'home', foto: fotoDom,
+    alt: 'Monter PowerPlug instaluje wallbox na ścianie domu jednorodzinnego',
+    lead: 'Wallbox w garażu albo na podjeździe domu.',
+    tekst: 'Dobieramy moc do Twojego auta i instalacji, sprawdzamy przyłącze, załatwiamy formalności i montujemy. Ładujesz w nocy, w swojej taryfie — bez szukania wolnej stacji w mieście.',
+    href: '/ladowarka-samochodowa-do-domu/', cta: 'Ładowarki do domu',
+  },
+  {
+    id: 'biznesowo', slowo: 'Biznesowo.', etykieta: 'Dla firm', ikona: 'building', foto: fotoFirma,
+    alt: 'Prace ziemne przy budowie stacji ładowania na parkingu firmy',
+    lead: 'Stacje dla floty, pracowników i klientów.',
+    tekst: 'Projektujemy, instalujemy i serwisujemy infrastrukturę ładowania dla firm i instytucji. Zarządzanie mocą i rozliczanie kosztów energii dla każdego pojazdu — już od jednego samochodu.',
+    href: '/stacje-ladowania-dla-firm/', cta: 'Stacje dla firm',
+  },
+  {
+    id: 'publicznie', slowo: 'Publicznie.', etykieta: 'Zarządcy', ikona: 'parking', foto: fotoPubl,
+    alt: 'Stacja ładowania i rozdzielnica w garażu wielostanowiskowym',
+    lead: 'Garaże wspólnot, spółdzielni i parkingi publiczne.',
+    tekst: 'Rozwiązania o niskim koszcie budowy, ekspertyza dopuszczalności zgodna z ustawą o elektromobilności i obsługa płatności za ładowanie — jako jedna spójna instalacja.',
+    href: '/miejsce-postojowe-ladowarka/', cta: 'Miejsca postojowe',
+  },
+] as const;
 ---
-<Base title="PowerPlug — podgląd techniczny">
-  <main style="font-family: system-ui, sans-serif; max-width: 960px; margin: 2rem auto; padding: 0 1rem;">
-    <h1>PowerPlug — stack działa ✅</h1>
-    <p>Zbudowano: <strong>{zbudowano}</strong></p>
-    <ul>
-      <li>Producenci w CMS: {p.length}</li>
-      <li>Urządzenia w CMS: {u.length}</li>
-      <li>Realizacje w CMS: {r.length}</li>
-      <li>Opinie w CMS: {o.length}</li>
-    </ul>
-
-    <h2>Urządzenia (z Pages CMS)</h2>
-    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-      {u.map((x) => {
-        const img = cmsImage(x.data.zdjecia[0]);
-        return (
-          <article style="border:1px solid #ddd; border-radius:12px; padding:1rem;">
-            {img && <Image src={img} alt={x.data.nazwa} width={300} />}
-            <small>{x.producentDane?.data.nazwa}</small>
-            <h3 style="margin:.25rem 0">{x.data.nazwa}</h3>
-            <p>{formatCena(x.data.cena)}</p>
-          </article>
-        );
-      })}
+<Base
+  title="Montaż ładowarek samochodowych Szczecin i zachodniopomorskie | PowerPlug"
+  description="Ładowarki samochodowe z montażem w Szczecinie i całym zachodniopomorskim. Doradztwo, wizja lokalna, projekt, ekspertyza, montaż i serwis wallboxów dla domu, firm i wspólnot."
+>
+  <!-- 1 | BOHATER -->
+  <section class="home-hero has-glow" aria-labelledby="hero-title">
+    <div class="glow" style="--glow-size:56rem;left:-18rem;top:-14rem"></div>
+    <div class="container home-hero__grid">
+      <div class="home-hero__copy">
+        <h1 id="hero-title" class="t-display">Ładuj <span class="t-accent" style="white-space:nowrap">u siebie.</span></h1>
+        <p class="t-lead home-hero__lead">Zamiast szukać wolnej stacji w mieście — ładujesz w garażu albo pod firmą. <strong>Montujemy ładowarki samochodowe w Szczecinie i całym zachodniopomorskim.</strong></p>
+        <ul class="chip-list home-hero__chips">
+          <li class="chip"><Icon name="money" />Taniej</li>
+          <li class="chip"><Icon name="pin" />Prościej</li>
+          <li class="chip"><Icon name="bolt" />Z głowy</li>
+        </ul>
+      </div>
+      <div class="home-hero__aside" aria-hidden="true"></div>
+      <div class="home-hero__visual">
+        <Bars image={heroBg} alt="Kierowca podłącza samochód elektryczny do domowej ładowarki" widths={[1, 2, 4, 8, 17]} position="100%" height="clamp(14rem, 8rem + 16vw, 22.5rem)" />
+        <svg class="cable home-hero__ring" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet" data-draw aria-hidden="true" focusable="false"><path d="M400 30 C 640 30, 770 120, 770 215 C 770 320, 620 395, 400 395 C 180 395, 30 320, 30 215 C 30 120, 160 30, 400 30 Z" pathLength="1" /></svg>
+        <img class="home-hero__cutout" src={cut.src} alt="" width="1800" height="1200" loading="eager" decoding="async" fetchpriority="high" />
+        <a class="btn-icon btn-icon--square btn-icon--lg home-hero__down" href="#problem"><Icon name="arrow-down" /><span class="sr-only">Przewiń do następnej sekcji</span></a>
+      </div>
     </div>
+  </section>
 
-    <h2>Test formularza</h2>
-    <form method="post" action="/api/formularz.php" style="display:grid; gap:.5rem; max-width:360px;">
-      <input type="hidden" name="formularz" value="oddzwonienie" />
-      <input type="hidden" name="_start" value={Date.now().toString()} />
-      <label>Imię <input name="imie" required /></label>
-      <label>Telefon <input name="telefon" type="tel" required /></label>
-      <label style="position:absolute; left:-9999px" aria-hidden="true">Nie wypełniaj <input name="www" tabindex="-1" autocomplete="off" /></label>
-      <button type="submit">Poproś o kontakt</button>
-    </form>
-  </main>
+  <!-- 2 | PROBLEM — plątanina -->
+  <section id="problem" class="section home-problem has-glow" aria-labelledby="problem-title">
+    <div class="glow" style="--glow-size:60rem;left:50%;top:-6rem;translate:-50% 0"></div>
+    <div class="container section-head section-head--center">
+      <p class="t-eyebrow">Próbowałeś już na własną rękę?</p>
+      <h2 id="problem-title" class="t-h2">Możesz poświęcić dziesiątki godzin a&nbsp;i&nbsp;tak popełnisz wiele błędów.</h2>
+      <p class="t-body-l section-head__lead">Elektryka, sprzęt i montaż to trzy różne dziedziny. Pomyl się w jednej, a pozostałe dwie przestają mieć znaczenie.</p>
+      <a class="btn btn--outline home-problem__down" href="#rozwiazanie" aria-label="Zobacz, jak możemy pomóc"><Icon name="arrow-down" /></a>
+    </div>
+    <div class="home-tangle">
+      <Cable variant="tangle" class="home-tangle__cable" />
+      <ul class="home-tangle__tags" aria-label="Pytania, które zadaje sobie każdy przed montażem ładowarki">
+        {pytania.map(([t, rot, row]) => <li class="tag" style={`--rot:${rot}deg;--row:${row}`}>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 | ROZWIĄZANIE — rozplątane -->
+  <section id="rozwiazanie" class="section home-solution" aria-labelledby="solution-title">
+    <div class="home-untangled" aria-hidden="true">
+      <div class="cable-band"><Cable variant="band" /></div>
+      <ul class="tag-cloud home-untangled__tags">
+        {pytania.map(([t]) => <li class="tag">{t}</li>)}
+      </ul>
+    </div>
+    <div class="container">
+      <h2 id="solution-title" class="t-h2 home-solution__title">
+        <span class="home-solution__a">Skorzystaj z pomocy ekspertów branży elektromobilności,</span>{' '}
+        <span class="home-solution__b t-accent">takich jak my, i pozwól nam zająć się Twoją własną stacją do ładowania samochodu.</span>
+      </h2>
+
+      <div class="home-segments" data-segments>
+        <div class="home-segments__media">
+          {segmenty.map((s, i) => (
+            <div class="media home-segments__photo" data-panel={s.id} hidden={i !== 0}>
+              <Image src={s.foto} alt={s.alt} width={1100} sizes="(min-width: 900px) 50vw, 100vw" />
+            </div>
+          ))}
+          <ul class="segment home-segments__switch" aria-label="Wybierz rodzaj instalacji">
+            {segmenty.map((s, i) => (
+              <li><button type="button" class="segment__item" data-tab={s.id} aria-pressed={i === 0 ? 'true' : 'false'} aria-current={i === 0 ? 'true' : undefined}><Icon name={s.ikona} />{s.etykieta}</button></li>
+            ))}
+          </ul>
+        </div>
+        <div class="home-segments__copy">
+          <ul class="word-stack" role="tablist" aria-label="Dla kogo">
+            {segmenty.map((s, i) => (
+              <li role="presentation"><a href={s.href} role="tab" id={`tab-${s.id}`} aria-controls={`opis-${s.id}`} aria-selected={i === 0 ? 'true' : 'false'} aria-current={i === 0 ? 'true' : undefined} data-tab={s.id}>{s.slowo}</a></li>
+            ))}
+          </ul>
+          {segmenty.map((s, i) => (
+            <div class="home-segments__text" id={`opis-${s.id}`} role="tabpanel" aria-labelledby={`tab-${s.id}`} data-panel={s.id} hidden={i !== 0}>
+              <p class="t-body-l"><strong>{s.lead}</strong> {s.tekst}</p>
+              <a class="btn btn--text" href={s.href}>{s.cta} <Icon name="arrow-right" /></a>
+            </div>
+          ))}
+
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>
+
+<script>
+  // Przełącznik segmentów: słowo (Prywatnie./Biznesowo./Publicznie.) i kafelki sterują tym samym stanem.
+  document.querySelectorAll<HTMLElement>('[data-segments]').forEach((root) => {
+    const set = (id: string) => {
+      root.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== id; });
+      root.querySelectorAll<HTMLElement>('[data-tab]').forEach((t) => {
+        const on = t.dataset.tab === id;
+        if (t.getAttribute('role') === 'tab') t.setAttribute('aria-selected', String(on));
+        else t.setAttribute('aria-pressed', String(on));
+        on ? t.setAttribute('aria-current', 'true') : t.removeAttribute('aria-current');
+      });
+    };
+    root.querySelectorAll<HTMLElement>('[data-tab]').forEach((t) => {
+      const go = (e: Event) => { e.preventDefault(); set(t.dataset.tab!); };
+      t.addEventListener('click', go);
+      if (t.getAttribute('role') === 'tab') t.addEventListener('pointerenter', () => set(t.dataset.tab!));
+    });
+  });
+</script>

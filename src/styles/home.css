@@ -1,0 +1,71 @@
+/* Strona główna — układy sekcji landingu. Tylko kompozycja; elementy pochodzą z design systemu. */
+
+/* ── 1 | Bohater ─────────────────────────────────────────── */
+.home-hero { padding-top: calc(var(--header-top) + var(--header-h) + var(--space-5)); padding-bottom: var(--space-6); }
+.home-hero__grid { display: grid; gap: var(--grid-gap); }
+.home-hero__copy {
+  display: flex; flex-direction: column; justify-content: center; gap: var(--space-5);
+  padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+  border-radius: var(--r-xl); background: rgb(255 255 255 / .78); backdrop-filter: blur(6px);
+}
+.home-hero__copy .t-display { margin: 0; }
+.home-hero__lead { max-width: 34rem; color: var(--emerald-950); }
+.home-hero__lead strong { font-weight: var(--fw-semibold); }
+.home-hero__chips .chip { padding-left: 0; }
+.home-hero__aside { display: none; }
+.home-hero__visual { position: relative; }
+.home-hero__ring, .home-hero__cutout { display: none; }
+.home-hero__down { position: absolute; left: 0; bottom: 0; z-index: 3; }
+
+@media (min-width: 900px) {
+  .home-hero__grid { grid-template-columns: 1.06fr .94fr; }
+  .home-hero__copy { grid-column: 1; grid-row: 1; min-height: clamp(22rem, 12rem + 14vw, 27rem); }
+  .home-hero__aside { display: block; grid-column: 2; grid-row: 1; border-radius: var(--r-xl); background: rgb(237 248 240 / .7); }
+  .home-hero__visual { grid-column: 1 / -1; grid-row: 2; }
+  /* Wycięta postać leży dokładnie na zdjęciu z pasów (ta sama skala i dół) i „wychodzi” ponad nie */
+  .home-hero__cutout { display: block; position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: auto; z-index: 2; pointer-events: none; }
+  /* Zamknięta pętla kabla wokół postaci — bez początku i końca, nigdy nad tekstem */
+  .home-hero__ring { display: block; position: absolute; z-index: 3; left: 47%; width: 50%; max-width: none; height: auto; aspect-ratio: 800 / 420; bottom: 20%; }
+}
+
+/* ── 2 | Problem — plątanina ─────────────────────────────── */
+.home-problem { padding-bottom: 0; }
+.home-problem__down { margin-top: var(--space-2); width: 3.5rem; padding: 0; }
+.home-tangle { position: relative; margin-top: var(--space-4); min-height: clamp(16rem, 10rem + 14vw, 24rem); display: grid; place-items: center; overflow: hidden; }
+.home-tangle__cable { left: -4%; top: 50%; translate: 0 -50%; width: 108%; max-width: none; height: auto; }
+.home-tangle__tags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4) var(--space-3); max-width: 58rem; padding: var(--space-6) var(--gutter); list-style: none; }
+.home-tangle__tags { gap: var(--space-5) var(--space-4); }
+.home-tangle__tags .tag { transform: translateY(calc(var(--row, 0) * .5rem - .5rem)) rotate(var(--rot, 0deg)); box-shadow: 0 10px 24px -12px rgb(10 16 14 / .45); }
+@media (max-width: 699px) { .home-tangle__tags .tag { transform: rotate(calc(var(--rot, 0deg) * .4)); } }
+
+/* ── 3 | Rozwiązanie — rozplątane ───────────────────────── */
+.home-solution { padding-top: var(--space-6); }
+.home-untangled { position: relative; display: grid; place-items: center; min-height: clamp(7rem, 4rem + 9vw, 13rem); margin-bottom: var(--space-7); }
+.home-untangled > .cable-band { position: absolute; top: 50%; left: 50%; translate: -50% -50%; margin: 0; }
+.home-untangled__tags { position: relative; z-index: 1; padding-inline: max(var(--gutter), calc(50% - 27rem)); }
+
+.home-solution__title { margin: 0 0 var(--space-8); font-size: clamp(2rem, 1rem + 2.8vw, 3.5rem); line-height: 1.14; }
+.home-solution__a { color: var(--emerald-950); }
+@media (min-width: 1200px) {
+  .home-solution__title { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--grid-gap); }
+  .home-solution__a { grid-column: 1 / -1; grid-row: 1; max-width: 20em; }
+  .home-solution__b { grid-column: 2; grid-row: 2; margin-top: -1lh; max-width: 8.6em; }
+}
+
+.home-segments { display: grid; gap: var(--space-6) var(--grid-gap); align-items: start; }
+.home-segments__media { display: grid; gap: var(--space-4); }
+.home-segments__photo { aspect-ratio: 699 / 317; }
+.home-segments__photo[hidden], .home-segments__text[hidden] { display: none; }
+.home-segments__copy { display: grid; gap: var(--space-5); }
+.home-segments__copy .word-stack a { cursor: pointer; }
+.home-segments__text { display: grid; gap: var(--space-3); justify-items: start; max-width: 34rem; }
+.home-segments__switch .segment__item { width: 100%; cursor: pointer; }
+.home-segments__switch .segment__item[aria-pressed="true"] { background: var(--emerald-50); box-shadow: inset 4px 0 0 0 var(--emerald-500); }
+@media (min-width: 900px) {
+  .home-segments { grid-template-columns: 1fr 1fr; }
+  /* Figma: kafelki „schodkami” pod zdjęciem */
+  .home-segments__switch { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; }
+  .home-segments__switch li:nth-child(1) { transform: translateY(0); }
+  .home-segments__switch li:nth-child(2) { transform: translateY(-.75rem); }
+  .home-segments__switch li:nth-child(3) { transform: translateY(-1.5rem); }
+}
