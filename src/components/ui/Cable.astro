@@ -2,6 +2,8 @@
 // Dekoracyjna linia „kabla” (motyw przewodni: splątany kabel → uporządkowany proces).
 // Zasady: proporcje zawsze zachowane (nigdy nie rozciągamy), kabel nie biegnie pod tekstem
 // w statycznym układzie (używaj .cable-band albo pustej strefy), rysuje się przy wejściu w widok.
+// Kabel ZAWSZE biegnie od krawędzi do krawędzi kontenera — początek i koniec nigdy nie są widoczne
+// (ścieżki zaczynają się i kończą poza viewBox, a SVG przycina wszystko poza swoim polem).
 interface Props {
   variant?: 'loop' | 'wave' | 'tangle' | 'arrow' | 'band';
   class?: string;
@@ -13,10 +15,10 @@ interface Props {
 }
 const { variant = 'loop', class: cls, style, draw = true, fit = 'meet' } = Astro.props;
 const paths = {
-  loop: { vb: '0 0 600 400', d: 'M-20 330 C 120 330, 180 120, 330 120 C 470 120, 520 260, 420 300 C 320 340, 260 200, 360 120 C 440 60, 560 70, 640 20' },
-  wave: { vb: '0 0 1200 300', d: 'M-20 220 C 150 40, 300 40, 380 150 C 460 260, 600 260, 690 140 C 780 20, 930 20, 1010 150 C 1080 260, 1160 230, 1220 160' },
-  tangle: { vb: '0 0 800 320', d: 'M40 260 C 60 60, 260 40, 300 160 C 340 280, 120 300, 160 180 C 200 60, 420 20, 480 140 C 540 260, 330 300, 380 190 C 430 80, 640 40, 700 150 C 760 260, 560 290, 600 200 C 640 110, 760 120, 780 180' },
-  band: { vb: '0 0 1200 160', d: 'M-20 112 C 180 112, 300 40, 460 62 C 590 80, 640 138, 566 140 C 490 142, 512 44, 640 42 C 800 40, 930 122, 1220 76' },
+  loop: { vb: '0 0 600 400', d: 'M-80 335 C 120 335, 180 120, 330 120 C 470 120, 520 260, 420 300 C 320 340, 260 200, 360 120 C 440 60, 560 50, 680 10' },
+  wave: { vb: '0 0 1200 300', d: 'M-80 270 C 150 40, 300 40, 380 150 C 460 260, 600 260, 690 140 C 780 20, 930 20, 1010 150 C 1080 260, 1160 230, 1280 120' },
+  tangle: { vb: '0 0 1200 220', d: 'M-80 150 C 60 150, 120 40, 220 70 C 320 100, 260 200, 190 160 C 120 120, 260 30, 380 60 C 500 90, 470 190, 410 170 C 340 145, 470 40, 600 70 C 730 100, 700 200, 640 175 C 570 150, 700 40, 830 70 C 960 100, 920 200, 860 175 C 790 150, 930 50, 1060 90 C 1150 118, 1200 110, 1280 100' },
+  band: { vb: '0 0 1200 160', d: 'M-20 112 C 180 112, 300 40, 460 62 C 590 80, 640 138, 566 140 C 490 142, 512 44, 640 42 C 800 40, 930 122, 1280 70' },
   arrow: { vb: '0 0 400 300', d: 'M380 20 C 420 160, 300 260, 120 250 M150 215 L115 250 L155 285' },
 } as const;
 const p = paths[variant];

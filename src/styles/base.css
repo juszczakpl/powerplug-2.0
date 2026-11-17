@@ -81,6 +81,7 @@ a { color: inherit; }
 .section--dark .t-muted, .section--deep .t-muted { color: rgb(243 248 244 / .72); }
 .stack { display: flex; flex-direction: column; gap: var(--stack, var(--space-5)); }
 .cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster, var(--space-3)); }
+.grid > * { min-width: 0; }
 .grid { display: grid; gap: var(--grid-gap); grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr)); }
 @media (min-width: 640px) { .grid--2, .grid--3, .grid--4 { --cols: 2; } }
 @media (min-width: 1024px) { .grid--3 { --cols: 3; } .grid--4 { --cols: 4; } }
@@ -99,7 +100,7 @@ a { color: inherit; }
 .has-glow { position: relative; isolation: isolate; overflow: clip; }
 .has-glow > :not(.glow, .cable) { position: relative; z-index: 1; }
 /* Linia „kabla” — SVG z obrysem w kolorze akcentu */
-.cable { position: absolute; pointer-events: none; z-index: 0; color: var(--emerald-500); overflow: visible; }
+.cable { position: absolute; pointer-events: none; z-index: 0; color: var(--emerald-500); overflow: hidden; }
 .cable path { fill: none; stroke: currentColor; stroke-width: var(--cable-sw, 9); stroke-linecap: round; } /* --cable-sw w jednostkach viewBox, liczone w motion.ts z --cable-width */
 
 /* Kabel rysowany przy wejściu w widok (motion.ts dodaje .is-drawn) */
@@ -110,3 +111,5 @@ a { color: inherit; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: clip; }
+
+html, body { overflow-x: clip; }

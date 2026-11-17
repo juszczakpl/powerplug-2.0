@@ -43,10 +43,8 @@ const uslugi = nawigacja.find((n) => n.label === 'Usługi');
         </nav>
       )}
     </div>
-    <div class="site-footer__brand">
-      <Logo tone="light" width={1200} class="site-footer__logo" />
-      <Cable variant="loop" class="site-footer__cable" />
-    </div>
+    <div class="cable-band" aria-hidden="true"><Cable variant="band" /></div>
+    <Logo tone="light" width={1200} class="site-footer__logo" />
     <div class="site-footer__bottom">
       <span>Wszelkie prawa zastrzeżone © {rok} PowerPlug</span>
       <span>Szczecin · {firma.region}</span>
