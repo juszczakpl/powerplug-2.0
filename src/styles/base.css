@@ -98,7 +98,14 @@ a { color: inherit; }
 /* Zielona poświata (elipsy rozmyte w tle Figmy) */
 .glow { position: absolute; pointer-events: none; z-index: 0; width: var(--glow-size, 60rem); aspect-ratio: 1.8; background: var(--glow); filter: blur(24px); }
 .has-glow { position: relative; isolation: isolate; overflow: clip; }
-.has-glow > :not(.glow, .cable) { position: relative; z-index: 1; }
+.has-glow > :not(.glow, .glow-layer, .cable) { position: relative; z-index: 1; }
+/* Warstwa poświaty: wygaszenie przy dolnej (i górnej, jeśli sekcja nie jest pierwsza) krawędzi — bez ostrego cięcia na granicy sekcji */
+.glow-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(4rem, 12%, 9rem), #000 calc(100% - clamp(4rem, 14%, 10rem)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(4rem, 12%, 9rem), #000 calc(100% - clamp(4rem, 14%, 10rem)), transparent 100%); }
+main > :first-child > .glow-layer, .has-glow:first-child > .glow-layer {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - clamp(4rem, 14%, 10rem)), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - clamp(4rem, 14%, 10rem)), transparent 100%); }
 /* Linia „kabla” — SVG z obrysem w kolorze akcentu */
 .cable { position: absolute; pointer-events: none; z-index: 0; color: var(--emerald-500); overflow: hidden; }
 .cable path { fill: none; stroke: currentColor; stroke-width: var(--cable-sw, 9); stroke-linecap: round; } /* --cable-sw w jednostkach viewBox, liczone w motion.ts z --cable-width */

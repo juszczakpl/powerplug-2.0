@@ -41,12 +41,21 @@ if (reduced || !('IntersectionObserver' in window)) {
   cables.forEach((c) => io.observe(c));
 }
 
+// ── Poświata: warstwa z miękkim wygaszeniem przy krawędziach sekcji (bez ostrego cięcia) ──
+document.querySelectorAll<HTMLElement>('.has-glow > .glow').forEach((el) => {
+  const layer = document.createElement('div');
+  layer.className = 'glow-layer';
+  layer.setAttribute('aria-hidden', 'true');
+  el.replaceWith(layer);
+  layer.append(el);
+});
+
 // ── Poświata za kursorem (z easingiem) ─────────────────
 if (!reduced && finePointer) {
   type G = { el: HTMLElement; host: HTMLElement; x: number; y: number; tx: number; ty: number; ox: number; oy: number; active: boolean };
   const glows: G[] = [];
-  document.querySelectorAll<HTMLElement>('.has-glow > .glow').forEach((el) => {
-    const host = el.parentElement as HTMLElement;
+  document.querySelectorAll<HTMLElement>('.has-glow > .glow-layer > .glow').forEach((el) => {
+    const host = el.parentElement!.parentElement as HTMLElement;
     glows.push({ el, host, x: 0, y: 0, tx: 0, ty: 0, ox: 0, oy: 0, active: false });
   });
   let px = -1, py = -1;
