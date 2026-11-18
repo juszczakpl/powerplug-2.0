@@ -193,3 +193,12 @@
 @media (max-width: 519px) { .steps .step-num--lg { width: 2.4rem; height: 2.4rem; font-size: var(--fs-h5); } .steps-arrow { --s: 2.4rem; } }
 /* FAQ: nagłówek przyklejony z lewej przy przewijaniu pytań */
 @media (min-width: 1024px) { .faq-section .section-head { position: sticky; top: calc(var(--header-top) + var(--header-h) + var(--space-7)); align-self: start; } }
+/* Opinie: wysokość wyznacza treść, zdjęcie przycinane od środka (bez pustych przerw w karcie) */
+@media (min-width: 768px) {
+  .slider .testimonial { grid-template-columns: .9fr 1.1fr; }
+  .slider .testimonial .media { position: relative; min-height: 22rem; height: 100%; overflow: hidden; }
+  .slider .testimonial .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+}
+.slider .testimonial__card { justify-content: flex-start; gap: var(--space-5); }
+.slider .testimonial__card .slider-controls { margin-top: auto; padding-top: var(--space-3); }
+@media (max-width: 767px) { .slider .testimonial .media { aspect-ratio: 4 / 3; min-height: 0; } }
