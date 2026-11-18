@@ -10,15 +10,19 @@ interface Props {
   height?: string;     // CSS, np. "22rem"
   position?: string;   // pionowe kadrowanie, np. "40%"
   reverse?: boolean;   // najszerszy pas po lewej
+  priority?: boolean;  // hero: preload zdjęcia (LCP)
 }
-const { image, alt, widths = [1, 2, 4, 8, 18], height, position = '50%', reverse = false } = Astro.props;
+const { image, alt, widths = [1, 2, 4, 8, 18], height, position = '50%', reverse = false, priority = false } = Astro.props;
 const w = reverse ? [...widths].reverse() : widths;
-const img = await getImage({ src: image, width: 1800, format: 'webp' });
+const img = await getImage({ src: image, width: 1400, format: 'webp' });
+const sm = await getImage({ src: image, width: 800, format: 'webp' });
 // Przesunięcia: % szerokości bez odstępów + liczba odstępów przed pasem → zdjęcie składa się idealnie
 const total = w.reduce((a, b) => a + b, 0);
 let acc = 0;
 const bars = w.map((v) => { const x = (acc / total) * 100; acc += v; return { v, x }; });
 ---
-<div class="bars" role="img" aria-label={alt} style={`--img:url(${img.src});${height ? `--bars-h:${height};` : ''}--y:${position};--gaps:${w.length - 1}`}>
+{priority && <link rel="preload" as="image" href={img.src} media="(min-width: 720px)" fetchpriority="high" />}
+{priority && <link rel="preload" as="image" href={sm.src} media="(max-width: 719px)" fetchpriority="high" />}
+<div class="bars" role="img" aria-label={alt} style={`--img-lg:url(${img.src});--img-sm:url(${sm.src});${height ? `--bars-h:${height};` : ''}--y:${position};--gaps:${w.length - 1}`}>
   {bars.map((b, i) => <span class="bars__bar" style={`--w:${b.v};--x:${b.x.toFixed(3)};--i:${i}`} />)}
 </div>

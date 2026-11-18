@@ -136,6 +136,8 @@
 .media--product img { object-fit: contain; }
 /* Sygnet marki: zdjęcie pocięte na „ładujące się” pasy baterii [Figma 37:2511 / hero] */
 .bars { --gap: var(--grid-gap); container-type: inline-size; display: flex; gap: var(--gap); height: var(--bars-h, clamp(10rem, 6rem + 18vw, 22.5rem)); }
+.bars { --img: var(--img-lg); }
+@media (max-width: 719px) { .bars { --img: var(--img-sm); } }
 .bars__bar { flex: var(--w) 0 0; border-radius: var(--r-xl); background-image: var(--img); background-size: 100cqw auto; background-size: 100cqw; background-repeat: no-repeat; background-position: calc(-1 * (var(--x) * (100cqw - var(--gaps, 4) * var(--gap)) / 100 + var(--i, 0) * var(--gap))) var(--y, 50%); background-color: var(--gray-100); }
 @media (max-width: 639px) { .bars__bar { border-radius: var(--r-lg); } }
 

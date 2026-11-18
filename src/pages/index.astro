@@ -21,7 +21,8 @@ import fotoFirma from '../assets/uploads/realizacja-1719781723583.jpg';
 import fotoPubl from '../assets/uploads/realizacja-1730666776407.jpg';
 import '../styles/home.css';
 
-const cut = await getImage({ src: heroCut, width: 1800, format: 'webp' });
+const cut = await getImage({ src: heroCut, width: 1400, format: 'webp' });
+const cutSm = await getImage({ src: heroCut, width: 800, format: 'webp' });
 
 // Pytania-pigułki: [tekst, x, y, obrót] — pozycja „chaosu”, z której wyrównują się przy scrollu
 const pytania = [
@@ -89,8 +90,8 @@ const ld = {
       <!-- Górny rząd „rdzeni baterii”: matowe szkło, odwrócony kierunek względem pasów zdjęcia -->
       <div class="home-hero__glass" aria-hidden="true">{[17, 8, 4, 2, 1].map((w) => <span style={`--w:${w}`} />)}</div>
       <div class="home-hero__visual">
-        <Bars image={heroBg} alt="Kierowca podłącza samochód elektryczny do domowej ładowarki" widths={[1, 2, 4, 8, 17]} position="100%" height="clamp(14rem, 8rem + 16vw, 22.5rem)" />
-        <img class="home-hero__cutout" src={cut.src} alt="" width="1800" height="1200" loading="eager" decoding="async" fetchpriority="high" />
+        <Bars image={heroBg} alt="Kierowca podłącza samochód elektryczny do domowej ładowarki" widths={[1, 2, 4, 8, 17]} position="100%" priority height="clamp(14rem, 8rem + 16vw, 22.5rem)" />
+        <img class="home-hero__cutout" src={cut.src} srcset={`${cutSm.src} 800w, ${cut.src} 1400w`} sizes="(min-width: 1024px) 50vw, 100vw" alt="" width="1800" height="1200" loading="eager" decoding="async" fetchpriority="high" />
         <a class="home-hero__down" href="#problem"><Icon name="arrow-down" /><span class="sr-only">Przewiń do następnej sekcji</span></a>
       </div>
       <!-- Kabel oplatający bohatera: jedna ścieżka na pierwszym planie, końce poza krawędzią ekranu -->
