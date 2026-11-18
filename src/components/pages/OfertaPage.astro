@@ -9,6 +9,7 @@ import CtaSection from '../sections/CtaSection.astro';
 import ProductCard from '../ui/ProductCard.astro';
 import Icon from '../ui/Icon.astro';
 import { uslugi } from '../../data/uslugi';
+import { faqOgolne } from '../../data/faq';
 import type { OfertaStrona } from '../../data/oferta';
 import { urzadzenia } from '../../lib/dane';
 import { cmsImage } from '../../lib/cms-image';
@@ -108,6 +109,6 @@ const ld = {
     </div>
   </section>
 
-  <FaqSection items={o.faq} />
+  <FaqSection items={o.faq.length < 4 ? [...o.faq, ...faqOgolne.slice(0, 4 - o.faq.length)] : o.faq} />
   <CtaSection zrodlo={o.slug} />
 </Base>
