@@ -1,0 +1,9 @@
+{
+  "nazwa": "dsbcksdjbc",
+  "producent": "Testowy producent",
+  "typ": "ladowarka",
+  "cena": 2300,
+  "widoczny": true,
+  "polecany": false,
+  "kolejnosc": 100
+}
