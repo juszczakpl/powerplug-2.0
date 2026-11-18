@@ -78,7 +78,7 @@
   transition: transform .45s cubic-bezier(.22, 1, .36, 1), width .45s cubic-bezier(.22, 1, .36, 1), opacity .25s ease; }
 .nav-links__pill.is-on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .nav-links__pill { transition: opacity .2s; } }
-.nav-toggle { display: inline-grid; place-items: center; width: var(--header-h); height: var(--header-h); border: 0; border-radius: 50%; background: var(--emerald-0); color: var(--emerald-900); }
+.nav-toggle { padding: 0; display: inline-grid; place-items: center; width: var(--header-h); height: var(--header-h); border: 0; border-radius: 50%; background: var(--emerald-0); color: var(--emerald-900); }
 .nav-toggle svg { width: 60%; }
 .site-header__actions { display: flex; gap: 6px; }
 .site-header__actions .btn { --btn-h: var(--header-h); min-height: var(--header-h); }
@@ -105,7 +105,7 @@
   .site-header__actions .btn--primary { transition: padding var(--hdr-dur) var(--hdr-ease), border-radius var(--hdr-dur) var(--hdr-ease), gap var(--hdr-dur) var(--hdr-ease), background-color var(--dur); }
   .site-header__actions .btn--primary > span { display: inline-block; max-width: 14em; overflow: hidden; white-space: nowrap; transition: max-width var(--hdr-dur) var(--hdr-ease), opacity .3s ease; }
   .site-header__actions .btn--primary > svg:first-child { transition: margin var(--hdr-dur) var(--hdr-ease), transform .2s var(--ease-out, ease); }
-  .site-header.is-compact .site-header__actions .btn--primary { padding: 0 5px; gap: 0; border-radius: calc(var(--btn-h) / 2); }
+  .site-header.is-compact .site-header__actions .btn--primary { padding: 0 5px; gap: 0; } /* half-pill zostaje: półkole z lewej, małe promienie z prawej (jak przy „Kontakt”) */
   .site-header.is-compact .site-header__actions .btn--primary > span { max-width: 0; opacity: 0; }
   .site-header.is-compact .site-header__actions .btn--primary > svg:first-child { margin-left: 0; }
 }
