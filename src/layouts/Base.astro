@@ -6,16 +6,23 @@ import '../styles/sections.css';
 import QuoteDialog from '../components/forms/QuoteDialog.astro';
 import Header from '../components/ui/Header.astro';
 import Footer from '../components/ui/Footer.astro';
+import { getImage } from 'astro:assets';
+import ogDefault from '../assets/brand/hero-man-charging.jpg';
 interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
   header?: 'links' | 'compact' | false;
   footer?: boolean;
+  image?: ImageMetadata;
 }
-const { title, description = '', noindex = false, header = 'links', footer = true } = Astro.props;
+const { title, description = '', noindex = false, header = 'links', footer = true, image } = Astro.props;
 const kit = import.meta.env.PUBLIC_ADOBE_FONTS_KIT || 'gpz4qwf'; // Adobe Fonts „PowerPlug WWW 2026” — tymczasowo do zakupu licencji webfont
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const pageTitle = title.length > 65 ? title.replace(/ \| PowerPlug$/, '') : title;
+const pageDesc = description.length > 158 ? description.slice(0, 155).replace(/[\s,;:—–…-]+\S*$/, '').replace(/[…\s.,]+$/, '') + '…' : description;
+const canonical = new URL(Astro.url.pathname, 'https://powerplug.pl');
+const og = await getImage({ src: image ?? ogDefault, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site);
 ---
 <!doctype html>
 <html lang="pl">
@@ -23,11 +30,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <script is:inline>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__motion)document.documentElement.classList.add('reveal-off')},3000)</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <title>{pageTitle}</title>
+    {pageDesc && <meta name="description" content={pageDesc} />}
     <link rel="canonical" href={canonical} />
     {(__PREVIEW__ || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#1a2e26" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="PowerPlug" />
+    <meta property="og:title" content={pageTitle} />
+    {pageDesc && <meta property="og:description" content={pageDesc} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     {kit && <link rel="preconnect" href="https://use.typekit.net" crossorigin />}
     {kit && <link rel="stylesheet" href={`https://use.typekit.net/${kit}.css`} />}
     <slot name="head" />

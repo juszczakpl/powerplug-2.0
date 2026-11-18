@@ -11,7 +11,7 @@ export default defineConfig({
   site,
   trailingSlash: 'ignore',
   build: { format: 'directory' },
-  integrations: isPreview ? [] : [sitemap()],
+  integrations: [sitemap({ filter: (u) => !/\/(status|brand|dziekujemy|404)\/?$/.test(u) })],
   image: { responsiveStyles: true },
   vite: { define: { __PREVIEW__: JSON.stringify(isPreview) } },
 });

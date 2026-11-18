@@ -23,9 +23,10 @@ const img = cmsImage(d.zdjecia[0]);
 const galeria = d.zdjecia.slice(1).map(cmsImage).filter(Boolean);
 const lad = d.typ === 'ladowarka';
 const kategorie: Record<string, string> = { dom: 'do domu', firma: 'do firmy', publiczne: 'użyteczności publicznej', kable: 'kable', slupki: 'słupki', uchwyty: 'uchwyty', zaslepki: 'zaślepki', zarzadzanie: 'zarządzanie mocą' };
-const opis = d.opis || `${nazwaH1} — ${lad ? 'stacja ładowania' : 'akcesorium'} w ofercie PowerPlug. Dobierzemy, zamontujemy i skonfigurujemy.`;
-const title = `${nazwaH1}${d.moc.length ? ' ' + d.moc[d.moc.length - 1] : ''} — ${lad ? 'ładowarka z montażem' : 'akcesoria do ładowarek'} | PowerPlug`;
-const description = `${nazwaH1}: ${opis.slice(0, 110).replace(/\s+\S*$/, '')}… ${d.cena ? `Cena od ${d.cena.toLocaleString('pl-PL')} zł.` : 'Wycena indywidualna.'} Montaż w Szczecinie i zachodniopomorskim.`;
+const parametryKrotko = [d.moc.length ? `moc ${d.moc.join(' / ')}` : '', d.zlacze && d.zlacze !== '—' ? d.zlacze.toLowerCase() : '', d.ip].filter(Boolean).join(', ');
+const opis = d.opis || (lad ? `${nazwaH1} — stacja ładowania${parametryKrotko ? ` (${parametryKrotko})` : ''}. Sprawdzimy, czy pasuje do Twojego auta i instalacji, a potem zamontujemy i skonfigurujemy ją z pomiarami.` : `${nazwaH1} — akcesorium do stacji ładowania. Zapytaj o dostępność i dopasowanie do Twojej ładowarki.`);
+const title = `${nazwaH1}${d.moc.length && !/kW/.test(nazwaH1) ? ' ' + d.moc[d.moc.length - 1] : ''} — ${lad ? 'ładowarka z montażem' : 'akcesoria do ładowarek'} | PowerPlug`;
+const description = `${nazwaH1}${lad ? ' z montażem' : ''}. ${d.cena ? `Cena od ${d.cena.toLocaleString('pl-PL')} zł.` : 'Wycena indywidualna.'} ${opis.split(/(?<=\.)\s/)[0]}`;
 const podobne = lista.filter((x) => x.id !== u.id && x.data.typ === d.typ && (x.producentDane?.id === u.producentDane?.id || x.data.kategorie.some((k) => d.kategorie.includes(k)))).slice(0, 4);
 const ld: Record<string, unknown> = {
   '@context': 'https://schema.org', '@type': 'Product', name: nazwaH1, description: opis, brand: { '@type': 'Brand', name: marka },
