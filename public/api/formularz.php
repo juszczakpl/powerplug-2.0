@@ -5,6 +5,7 @@
  * Ochrona: honeypot "www", minimalny czas wypełnienia, limit zgłoszeń z jednego IP, whitelist pól.
  */
 declare(strict_types=1);
+// Zgodne z PHP 7.4+ (hosting OVH może mieć starszą wersję PHP niż 8.x — str_contains/never powodowały błąd 500 PO wysłaniu maila).
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as MailerException;
@@ -35,12 +36,12 @@ const ETYKIETY = [
     'zrodlo' => 'Wysłano z',
 ];
 
-function odpowiedz(bool $ok, string $komunikat, int $kod = 200): never
+function odpowiedz(bool $ok, string $komunikat, int $kod = 200): void
 {
     $smieci = '';
     while (ob_get_level() > 0) { $smieci .= (string) ob_get_clean(); }
     if (trim($smieci) !== '') { error_log('PowerPlug formularz — nieoczekiwany output: ' . mb_substr(trim($smieci), 0, 500)); }
-    $json = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
+    $json = strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
     if ($json) {
         http_response_code($kod);
         header('Content-Type: application/json; charset=utf-8');
@@ -137,7 +138,7 @@ try {
 } catch (MailerException $e) {
     error_log('PowerPlug formularz: ' . $m->ErrorInfo);
     // Część adresatów odrzucona, ale do pozostałych wiadomość wyszła → dla klienta to sukces (błąd zostaje w logu).
-    if (str_contains($m->ErrorInfo, 'recipients failed') && count($m->getToAddresses()) > 1) {
+    if (strpos($m->ErrorInfo, 'recipients failed') !== false && count($m->getToAddresses()) > 1) {
         odpowiedz(true, 'Dziękujemy! Odezwiemy się najszybciej, jak to możliwe.');
     }
     odpowiedz(false, 'Nie udało się wysłać. Zadzwoń: +48 730 882 967.', 500);
