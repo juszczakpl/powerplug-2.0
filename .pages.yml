@@ -122,6 +122,7 @@ content:
           media: pliki
       - name: kolejnosc
         label: Kolejność w katalogu (mniejsza = wyżej)
+        description: "Ten sam numer u kilku urządzeń jest OK — wtedy najpierw polecane, potem alfabetycznie (producent, model). Wskazówka: numeruj co 10 (10, 20, 30…), żeby łatwo wstawić coś pomiędzy."
         type: number
         default: 100
 

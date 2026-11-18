@@ -3,10 +3,11 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 export type Urzadzenie = CollectionEntry<'urzadzenia'> & { producentDane?: CollectionEntry<'producenci'> };
 
 const norm = (s: string) => s.trim().toLowerCase();
+const abc = (a: string, b: string) => a.localeCompare(b, 'pl', { sensitivity: 'base', numeric: true });
 
 export async function producenci() {
   return (await getCollection('producenci', (p) => p.data.widoczny)).sort(
-    (a, b) => a.data.kolejnosc - b.data.kolejnosc,
+    (a, b) => a.data.kolejnosc - b.data.kolejnosc || abc(a.data.nazwa, b.data.nazwa),
   );
 }
 
@@ -18,12 +19,17 @@ export async function urzadzenia(): Promise<Urzadzenie[]> {
   return (await getCollection('urzadzenia', (u) => u.data.widoczny))
     .map((u) => ({ ...u, producentDane: znajdz(u.data.producent) }))
     .filter((u) => u.producentDane?.data.widoczny !== false)
-    .sort((a, b) => a.data.kolejnosc - b.data.kolejnosc);
+    // Ta sama „kolejność” u kilku urządzeń: najpierw polecane, potem producent i model alfabetycznie (zawsze ten sam wynik)
+    .sort((a, b) =>
+      a.data.kolejnosc - b.data.kolejnosc
+      || Number(b.data.polecany) - Number(a.data.polecany)
+      || abc(a.producentDane?.data.nazwa ?? '', b.producentDane?.data.nazwa ?? '')
+      || abc(a.data.nazwa, b.data.nazwa));
 }
 
 export async function realizacje() {
   return (await getCollection('realizacje', (r) => r.data.widoczna)).sort(
-    (a, b) => b.data.data.getTime() - a.data.data.getTime(),
+    (a, b) => b.data.data.getTime() - a.data.data.getTime() || abc(a.id, b.id),
   );
 }
 
