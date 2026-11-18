@@ -13,7 +13,7 @@ const isCurrent = (href: string) => (href === '/' ? current === '/' : current.st
     <div class="nav-pill">
       <a href="/" class="nav-pill__logo" aria-label="PowerPlug — strona główna"><Logo tone="light" eager /></a>
       {variant === 'links' && (
-        <nav aria-label="Główna">
+        <nav class="nav-pill__nav" aria-label="Główna">
           <ul class="nav-links nav-links--expandable">
             {nawigacja.map((n) => (
               <li><a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a></li>
@@ -70,4 +70,21 @@ const isCurrent = (href: string) => (href === '/' ? current === '/' : current.st
   openers.forEach((b) => b.addEventListener('click', () => set(true)));
   closer?.addEventListener('click', () => set(false));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu && !menu.hidden) set(false); });
+
+  // Kompaktowy nagłówek: przewijanie w dół → zwinięty (menu → „=”, wycena → „+”); w górę / na górze strony → rozwinięty
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  if (header) {
+    let last = window.scrollY, acc = 0;
+    const TOP = 120, THRESH = 12;
+    const onScroll = () => {
+      const y = window.scrollY, d = y - last; last = y;
+      if (menu && !menu.hidden) return;
+      if (y < TOP) { header.classList.remove('is-compact'); acc = 0; return; }
+      acc = Math.sign(d) === Math.sign(acc) ? acc + d : d;
+      if (acc > THRESH) header.classList.add('is-compact');
+      else if (acc < -THRESH) header.classList.remove('is-compact');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 </script>
