@@ -14,11 +14,15 @@ const { id = 'proces', naglowek = true } = Astro.props;
         <h2 id={`${id}-title`} class="t-h2">Sześć kroków do pełnego ładowania. Zero niespodzianek po drodze.</h2>
       </div>
     )}
+    <div class="steps-bar">
+    <button type="button" class="steps-arrow steps-arrow--prev" data-step-prev aria-label="Poprzedni krok"><Icon name="arrow-left" /></button>
     <ol class="steps-nav" role="tablist" aria-label="Kroki procesu">
       {uslugi.map((u, i) => (
         <li role="presentation"><button type="button" role="tab" id={`${id}-tab-${i}`} aria-controls={`${id}-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}><span class="step-num step-num--lg">{i + 1}</span><span class="sr-only">{u.nazwa}</span></button></li>
       ))}
     </ol>
+    <button type="button" class="steps-arrow steps-arrow--next" data-step-next aria-label="Następny krok"><Icon name="arrow-right" /></button>
+    </div>
     {uslugi.map((u, i) => (
       <div class="step-panel" id={`${id}-panel-${i}`} role="tabpanel" aria-labelledby={`${id}-tab-${i}`} hidden={i !== 0}>
         <div class="media"><Image src={u.foto} alt={u.fotoAlt} widths={[480, 800, 1100]} sizes="(min-width: 900px) 50vw, 100vw" /></div>
@@ -41,6 +45,9 @@ const { id = 'proces', naglowek = true } = Astro.props;
       panels.forEach((p, i) => { p.hidden = i !== k; if (i === k) { p.classList.add('is-in'); } });
       if (focus) tabs[k].focus();
     };
+    const cur = () => tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+    root.querySelector('[data-step-prev]')?.addEventListener('click', () => set((cur() - 1 + tabs.length) % tabs.length));
+    root.querySelector('[data-step-next]')?.addEventListener('click', () => set((cur() + 1) % tabs.length));
     tabs.forEach((t, i) => {
       t.addEventListener('click', () => set(i));
       t.addEventListener('keydown', (e) => {

@@ -4,7 +4,7 @@ interface Props { items: { q: string; a: string }[]; title?: string; eyebrow?: s
 const { items, title = 'Najczęstsze pytania', eyebrow = 'FAQ', lead } = Astro.props;
 ---
 {items.length > 0 && (
-  <section class="section" aria-labelledby="faq-title">
+  <section class="section faq-section" aria-labelledby="faq-title">
     <div class="container split split--top">
       <div class="section-head">
         <p class="t-eyebrow">{eyebrow}</p>

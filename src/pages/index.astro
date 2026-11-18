@@ -26,12 +26,15 @@ const cutSm = await getImage({ src: heroCut, width: 800, format: 'webp' });
 
 // Pytania-pigułki: [tekst, x, y, obrót] — pozycja „chaosu”, z której wyrównują się przy scrollu
 const pytania = [
-  ['ile kW naprawdę potrzebuję?', -60, 70, -9],
-  ['czy przyłącze wytrzyma?', 90, -40, 12],
-  ['fotowoltaika i OCPP', 160, 50, 34],
-  ['gwarancja a montaż', -140, -30, -16],
-  ['jednofazowa czy trójfazowa?', 40, 60, 6],
-  ['zgłoszenie do OSD', 120, -80, -24],
+  // Najczęstsze pytania klientów Dominika (skrót) — pełne odpowiedzi w FAQ
+  ['mam 15 kW — a ładowarka 22 kW?', -60, 70, -9],
+  ['czy instalacja to wytrzyma?', 90, -40, 12],
+  ['operator odmówił mocy', 160, 50, 24],
+  ['garaż podziemny — od czego zacząć?', -140, -30, -16],
+  ['kto załatwi warunki przyłączenia?', 40, 60, 6],
+  ['czy potrzebuję projektu i ekspertyzy?', 120, -80, -20],
+  ['kilka ładowarek, za mało mocy', -100, 40, 14],
+  ['czy stacja wymaga odbioru UDT?', 70, -60, -8],
 ] as const;
 
 const segmenty = [
