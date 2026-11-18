@@ -216,3 +216,7 @@
 /* Katalog: karty w rzędzie równej wysokości, cena i „Więcej” zawsze na dole */
 .catalog [data-item]:not([hidden]) { display: flex; }
 .catalog [data-item] > .product-card { flex: 1; }
+/* Opinie: aktywna kropka-pasek = loader czasu wyświetlania (zielone wypełnienie, sterowane z JS przez --p) */
+.slider .dots li { position: relative; overflow: hidden; }
+.slider .dots li[aria-current="true"]::after { content: ""; position: absolute; inset: 0; background: var(--emerald-500); border-radius: inherit; transform-origin: left center; transform: scaleX(var(--p, 0)); pointer-events: none; }
+.slider.is-static .dots li[aria-current="true"]::after { transform: none; }
