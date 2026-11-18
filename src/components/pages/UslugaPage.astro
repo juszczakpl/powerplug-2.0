@@ -34,7 +34,7 @@ const ld = {
     <div class="container split split--top">
       <div class="stack" style="--stack:var(--space-5)">
         <h2 class="t-h3">{u.nazwa} — <span class="t-accent">jak to wygląda</span></h2>
-        {u.akapity.map((a) => <p class="t-body-l">{a}</p>)}
+        {u.akapity.map((a) => <p class="t-body-l" set:html={a} />)}
         <p class="pull">{u.puenta}</p>
         {u.cenaOd && <p class="price-note"><Icon name="money" />{u.cenaOd}</p>}
       </div>

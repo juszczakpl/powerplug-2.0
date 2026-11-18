@@ -183,7 +183,7 @@ export const uslugi: Usluga[] = [
     krok: 'Zostajemy z Tobą po uruchomieniu: przeglądy, diagnostyka, aktualizacje i rozbudowa.',
     lead: 'Stacja ładowania jest urządzeniem elektrycznym, które — podobnie jak pozostała infrastruktura — wymaga okresowej kontroli, diagnostyki i odpowiedniej konserwacji.',
     akapity: [
-      'Zapewniamy wsparcie zarówno dla stacji zamontowanych przez PowerPlug, jak i dla urządzeń innych instalatorów.',
+      'Zapewniamy wsparcie zarówno dla stacji zamontowanych przez PowerPlug, jak i dla urządzeń innych instalatorów. <strong>Zdecydowaną większość stacji ładowania z naszej oferty możemy diagnozować i konfigurować zdalnie, bez konieczności umawiania się z klientem.</strong>',
       'W przypadku awarii analizujemy zarówno samą stację, jak i instalację, która ją zasila. Dzięki temu ustalamy, czy problem leży po stronie urządzenia, zasilania, zabezpieczeń, komunikacji czy konfiguracji.',
     ],
     listaTytul: 'W ramach serwisu wykonujemy m.in.',

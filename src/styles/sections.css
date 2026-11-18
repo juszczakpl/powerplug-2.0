@@ -220,3 +220,13 @@
 .slider .dots li { position: relative; overflow: hidden; }
 .slider .dots li[aria-current="true"]::after { content: ""; position: absolute; inset: 0; background: var(--emerald-500); border-radius: inherit; transform-origin: left center; transform: scaleX(var(--p, 0)); pointer-events: none; }
 .slider.is-static .dots li[aria-current="true"]::after { transform: none; }
+/* Kalkulator na telefonie: nic nie wystaje w poziomie; „Wyślij” na całą szerokość, „Wstecz” pod spodem */
+.quote-dialog { overflow-x: hidden; }
+.quote-dialog form, .quote-dialog .field, .quote-dialog .input { min-width: 0; max-width: 100%; }
+@media (max-width: 519px) {
+  .quote-dialog { padding: 1.25rem; }
+  .quote-nav { flex-wrap: wrap; }
+  .quote-nav [data-next], .quote-nav [data-submit] { flex: 1 1 100%; margin-left: 0; }
+  .quote-nav [data-submit] > span { white-space: normal; text-align: left; line-height: 1.1; }
+  .quote-nav [data-prev] { order: 2; }
+}
