@@ -81,7 +81,6 @@ const p = (n: string) => `${id}-${n}`;
       <div class="field"><label class="field__label" for={p('tel')}>Telefon</label><input class="input" id={p('tel')} name="telefon" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9 +()\-]{9,}" /></div>
     </div>
     <div class="field"><label class="field__label" for={p('mail')}>E-mail <span class="opt">(opcjonalnie)</span></label><input class="input" id={p('mail')} name="email" type="email" autocomplete="email" /></div>
-    <div class="field"><label class="field__label" for={p('msg')}>Dodatkowe informacje <span class="opt">(opcjonalnie)</span></label><textarea class="textarea" id={p('msg')} name="wiadomosc" rows="3" placeholder="Np. model samochodu, moc przyłącza, fotowoltaika…"></textarea></div>
   </fieldset>
 
   <div class="quote-nav">

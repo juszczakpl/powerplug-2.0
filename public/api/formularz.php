@@ -9,6 +9,10 @@ declare(strict_types=1);
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as MailerException;
 
+// Żadne ostrzeżenia PHP nie mogą trafić do odpowiedzi — przeglądarka oczekuje czystego JSON-a.
+ini_set('display_errors', '0');
+ob_start();
+
 require __DIR__ . '/lib/PHPMailer/Exception.php';
 require __DIR__ . '/lib/PHPMailer/PHPMailer.php';
 require __DIR__ . '/lib/PHPMailer/SMTP.php';
@@ -33,6 +37,9 @@ const ETYKIETY = [
 
 function odpowiedz(bool $ok, string $komunikat, int $kod = 200): never
 {
+    $smieci = '';
+    while (ob_get_level() > 0) { $smieci .= (string) ob_get_clean(); }
+    if (trim($smieci) !== '') { error_log('PowerPlug formularz — nieoczekiwany output: ' . mb_substr(trim($smieci), 0, 500)); }
     $json = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
     if ($json) {
         http_response_code($kod);
@@ -129,6 +136,10 @@ try {
     $m->send();
 } catch (MailerException $e) {
     error_log('PowerPlug formularz: ' . $m->ErrorInfo);
+    // Część adresatów odrzucona, ale do pozostałych wiadomość wyszła → dla klienta to sukces (błąd zostaje w logu).
+    if (str_contains($m->ErrorInfo, 'recipients failed') && count($m->getToAddresses()) > 1) {
+        odpowiedz(true, 'Dziękujemy! Odezwiemy się najszybciej, jak to możliwe.');
+    }
     odpowiedz(false, 'Nie udało się wysłać. Zadzwoń: +48 730 882 967.', 500);
 }
 

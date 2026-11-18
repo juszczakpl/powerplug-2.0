@@ -14,7 +14,15 @@ document.querySelectorAll<HTMLFormElement>('form[data-ajax]').forEach((form) => 
     if (status) { status.className = 'form__status'; status.textContent = 'Wysyłanie…'; }
     try {
       const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      const data = await res.json().catch(() => ({ ok: false, komunikat: 'Nie udało się wysłać. Zadzwoń: +48 730 882 967.' }));
+      // Odporne parsowanie: gdyby serwer dokleił coś przed JSON-em (np. ostrzeżenie PHP), bierzemy ostatni obiekt {"ok":…}
+      const txt = await res.text();
+      let data: { ok: boolean; komunikat: string };
+      try { data = JSON.parse(txt); }
+      catch {
+        const m = txt.match(/\{"ok":(?:true|false)[\s\S]*\}\s*$/);
+        try { data = m ? JSON.parse(m[0]) : null as any; } catch { data = null as any; }
+        data ??= { ok: false, komunikat: 'Nie udało się wysłać. Zadzwoń: +48 730 882 967.' };
+      }
       if (data.ok) {
         form.classList.add('is-sent');
         if (status) { status.className = 'form__status notice'; status.textContent = data.komunikat; }
