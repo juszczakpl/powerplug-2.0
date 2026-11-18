@@ -3,6 +3,7 @@
   "producent": "Testowy producent",
   "typ": "ladowarka",
   "cena": 2300,
+  "dostepnosc": "na-zamowienie",
   "widoczny": false,
   "polecany": false,
   "kolejnosc": 100
