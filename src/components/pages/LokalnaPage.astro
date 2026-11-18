@@ -1,0 +1,82 @@
+---
+// Strona lokalna /montaz-ladowarek-[miasto]: unikalna treść, mapa z aktywną kropką, opinia, usługi, FAQ.
+import Base from '../../layouts/Base.astro';
+import PageHero from '../sections/PageHero.astro';
+import AreaMap from '../sections/AreaMap.astro';
+import AreaList from '../sections/AreaList.astro';
+import LinkCards from '../sections/LinkCards.astro';
+import FaqSection from '../sections/FaqSection.astro';
+import CtaSection from '../sections/CtaSection.astro';
+import Icon from '../ui/Icon.astro';
+import { uslugi } from '../../data/uslugi';
+import { oferta } from '../../data/oferta';
+import { faqOgolne } from '../../data/faq';
+import type { Miejscowosc } from '../../data/lokalne';
+import { firma } from '../../lib/firma';
+interface Props { m: Miejscowosc }
+const { m } = Astro.props;
+const title = `Montaż ładowarek samochodowych ${m.nazwa} — wallbox z montażem | PowerPlug`;
+const description = `Montaż ładowarek samochodowych ${m.miejscownik}: dobór wallboxa, wizja lokalna, formalności, montaż i serwis. ${m.km <= 30 ? 'Dojazd bez dopłaty.' : 'Dojazd wyceniamy indywidualnie.'} Zadzwoń: 730 882 967.`;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Service', name: `Montaż ładowarek samochodowych — ${m.nazwa}`, serviceType: 'Montaż stacji ładowania samochodów elektrycznych',
+  provider: { '@id': 'https://powerplug.pl/#firma', '@type': 'Electrician', name: 'PowerPlug', telephone: firma.telefon },
+  areaServed: { '@type': 'Place', name: m.nazwa, geo: { '@type': 'GeoCoordinates', latitude: m.lat, longitude: m.lng } },
+};
+---
+<Base title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <PageHero eyebrow={m.km === 0 ? 'Obszar działania · nasza baza' : `Obszar działania · ok. ${m.km} km od Szczecina`} title="Montaż ładowarek samochodowych" accent={m.nazwa} lead={m.lead} image={m.foto} alt={m.fotoAlt}
+    crumbs={[{ label: 'Obszar działania', href: '/ladowarki-zachodniopomorskie/' }, { label: m.nazwa }]}>
+    <div class="btn-group">
+      <a class="btn btn--primary btn--lg" href="/wycena/"><Icon name="plus" /><span>Bezpłatna wycena</span></a>
+      <a class="btn btn--secondary btn--lg" href={firma.telefonHref}>{firma.telefon.replace('+48 ', '')}</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--sm">
+    <div class="container split split--top">
+      <div class="stack" style="--stack:var(--space-5)">
+        <h2 class="t-h3">Ładowarki <span class="t-accent">{m.miejscownik}</span></h2>
+        {m.akapity.map((a) => <p class="t-body-l">{a}</p>)}
+        <div class="stack" style="--stack:var(--space-3)">
+          <p class="t-label">Montujemy m.in. w miejscowościach:</p>
+          <ul class="cluster" style="list-style:none;padding:0;--cluster:.5rem">{m.okolice.map((o) => <li class="badge badge--neutral badge--plain">{o}</li>)}</ul>
+        </div>
+        {m.opinia && (
+          <figure class="card card--soft stack" style="--stack:var(--space-3)">
+            <blockquote class="t-quote">„{m.opinia.tresc}”</blockquote>
+            <figcaption class="t-small t-muted">{m.opinia.podpis}</figcaption>
+          </figure>
+        )}
+      </div>
+      <div class="stack" style="--stack:var(--space-5)">
+        <AreaMap active={m.slug} />
+        <p class="t-small t-muted" style="text-align:center">{m.km <= 30 ? 'W promieniu 30 km od Szczecina dojazd jest bez dopłaty.' : 'Poza promieniem 30 km koszt dojazdu podajemy w wycenie.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="section-head"><p class="t-eyebrow">Co robimy {m.miejscownik}</p><h2 class="t-h2">Od doradztwa <span class="t-accent">po serwis</span></h2></div>
+      <LinkCards items={uslugi.map((u, i) => ({ href: u.href, tytul: u.nazwa, tekst: u.krok, meta: `Krok ${i + 1} z 6` }))} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="section-head"><p class="t-eyebrow">Dla kogo</p><h2 class="t-h2">Dom, firma <span class="t-accent">czy garaż bloku?</span></h2></div>
+      <LinkCards items={oferta.slice(0, 3).map((o) => ({ href: o.href, tytul: o.nazwa, tekst: o.krotko, ikona: o.ikona }))} />
+    </div>
+  </section>
+
+  <section class="section section--sm">
+    <div class="container stack" style="--stack:var(--space-5)">
+      <h2 class="t-h4">Inne miejscowości</h2>
+      <AreaList active={m.slug} />
+    </div>
+  </section>
+
+  <FaqSection items={[...m.faq, ...faqOgolne.slice(0, 3)]} />
+  <CtaSection zrodlo={`lokalna-${m.slug}`} />
+</Base>

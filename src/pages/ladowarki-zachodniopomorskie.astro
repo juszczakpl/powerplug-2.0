@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import AreaMap from '../components/sections/AreaMap.astro';
+import AreaList from '../components/sections/AreaList.astro';
+import FaqSection from '../components/sections/FaqSection.astro';
+import CtaSection from '../components/sections/CtaSection.astro';
+import Icon from '../components/ui/Icon.astro';
+import { obszar } from '../data/oferta';
+import { miejscowosci } from '../data/lokalne';
+const faq = [
+  { q: 'Gdzie montujecie ładowarki?', a: 'W Szczecinie i całym województwie zachodniopomorskim. Najczęściej pracujemy w Szczecinie, Policach, Gryfinie, Goleniowie, Stargardzie i gminie Dobra.' },
+  { q: 'Ile kosztuje dojazd?', a: 'W promieniu 30 km od Szczecina dojazd jest bez dopłaty. Dalsze lokalizacje obsługujemy regularnie — koszt dojazdu podajemy w wycenie.' },
+];
+---
+<Base title="Ładowarki samochodowe zachodniopomorskie — obszar działania | PowerPlug" description="Montujemy ładowarki samochodowe w Szczecinie i województwie zachodniopomorskim: Police, Gryfino, Goleniów, Stargard, Dobra i okolice. Dojazd bez dopłaty do 30 km.">
+  <PageHero eyebrow="Obszar działania" title="Ładowarki samochodowe" accent={"w zachodnio\u00ADpomorskim"} lead="Nasza baza to Szczecin, ale montujemy w całym województwie. W promieniu 30 km dojazd jest bez dopłaty — sprawdź swoją miejscowość na mapie." image={obszar.foto} alt="Stacja ładowania na słupku przy domu" crumbs={[{ label: 'Oferta', href: '/oferta/' }, { label: 'Obszar działania' }]}>
+    <div class="btn-group"><a class="btn btn--primary btn--lg" href="/wycena/"><Icon name="plus" /><span>Bezpłatna wycena</span></a><a class="btn btn--secondary btn--lg" href="#mapa">Mapa <Icon name="arrow-down" /></a></div>
+  </PageHero>
+  <section id="mapa" class="section" data-area>
+    <div class="container split split--top">
+      <div class="stack" style="--stack:var(--space-5)">
+        <div class="section-head"><p class="t-eyebrow">Mapa zasięgu</p><h2 class="t-h2">Kliknij miejscowość</h2><p class="t-body-l section-head__lead">Kropka na mapie i pozycja na liście prowadzą do strony z informacjami o montażu w danej okolicy.</p></div>
+        <AreaList />
+      </div>
+      <AreaMap />
+    </div>
+  </section>
+  <FaqSection items={faq} />
+  <CtaSection zrodlo="obszar" />
+</Base>
+<script>
+  // Podświetlanie: kropka ↔ pozycja na liście
+  document.querySelectorAll<HTMLElement>('[data-area]').forEach((root) => {
+    const on = (slug: string | null) => root.querySelectorAll<HTMLElement>('[data-slug]').forEach((el) => el.classList.toggle('is-active', el.dataset.slug === slug));
+    root.querySelectorAll<HTMLElement>('[data-slug]').forEach((el) => {
+      el.addEventListener('pointerenter', () => on(el.dataset.slug!));
+      el.addEventListener('pointerleave', () => on(null));
+      el.addEventListener('focus', () => on(el.dataset.slug!));
+    });
+  });
+</script>

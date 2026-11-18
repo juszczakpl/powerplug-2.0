@@ -5,9 +5,9 @@ import type { ImageMetadata } from 'astro';
 import Icon from './Icon.astro';
 interface Props {
   name: string; brand?: string; href: string; image?: ImageMetadata | null;
-  price?: number | null; specs?: string[]; status?: 'dostepny' | 'na-zamowienie' | 'niedostepny'; featured?: boolean;
+  price?: number | null; specs?: string[]; status?: 'dostepny' | 'na-zamowienie' | 'niedostepny'; featured?: boolean; slug?: string;
 }
-const { name, brand, href, image, price, specs = [], status = 'dostepny', featured } = Astro.props;
+const { name, brand, href, image, price, specs = [], status = 'dostepny', featured, slug } = Astro.props;
 const statusy = { dostepny: ['Dostępny', 'badge--success'], 'na-zamowienie': ['Na zamówienie', 'badge--warning'], niedostepny: ['Niedostępny', 'badge--neutral'] } as const;
 const [statusLabel, statusClass] = statusy[status];
 ---
@@ -25,6 +25,6 @@ const [statusLabel, statusClass] = statusy[status];
   </div>
   <div class="card__footer">
     <p class="price"><small>{price == null ? 'Cena' : 'Cena brutto'}</small>{price == null ? 'indywidualna' : `od ${price.toLocaleString('pl-PL')} zł`}</p>
-    <a href={`${href}#zapytanie`} class="btn btn--primary btn--sm" style="position:relative;z-index:2" aria-label={`Wyceń ${brand} ${name}`}><Icon name="plus" /><span>Wyceń</span></a>
+    <a href={slug ? `/wycena/?urzadzenie=${slug}` : `${href}#zapytanie`} data-wycena-urzadzenie={slug} class="btn btn--primary btn--sm" style="position:relative;z-index:2" aria-label={`Wyceń ${brand} ${name}`}><Icon name="plus" /><span>Wyceń</span></a>
   </div>
 </article>

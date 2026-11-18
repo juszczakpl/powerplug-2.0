@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Cable from '../components/ui/Cable.astro';
+import Icon from '../components/ui/Icon.astro';
+---
+<Base title="Nie znaleziono strony — PowerPlug" noindex>
+  <section class="section plain-page"><div class="container container--narrow stack" style="--stack:var(--space-5)">
+    <p class="t-eyebrow">Błąd 404</p>
+    <h1 class="t-h1">Ten kabel <span class="t-accent">nigdzie nie prowadzi.</span></h1>
+    <p class="t-lead">Strona, której szukasz, nie istnieje albo zmieniła adres. Zacznij od strony głównej albo sprawdź naszą ofertę.</p>
+    <div class="btn-group"><a class="btn btn--primary btn--lg" href="/"><Icon name="home" /><span>Strona główna</span></a><a class="btn btn--secondary btn--lg" href="/ladowarki/">Ładowarki</a></div>
+  </div></section>
+  <div class="cable-band" aria-hidden="true"><Cable variant="tangle" /></div>
+</Base>

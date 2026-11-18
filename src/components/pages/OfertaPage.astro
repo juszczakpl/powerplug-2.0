@@ -1,0 +1,113 @@
+---
+// Szablon strony oferty (50/50): korzyści, treść, produkty z CMS, usługi, FAQ, CTA.
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../sections/PageHero.astro';
+import LinkCards from '../sections/LinkCards.astro';
+import FaqSection from '../sections/FaqSection.astro';
+import CtaSection from '../sections/CtaSection.astro';
+import ProductCard from '../ui/ProductCard.astro';
+import Icon from '../ui/Icon.astro';
+import { uslugi } from '../../data/uslugi';
+import type { OfertaStrona } from '../../data/oferta';
+import { urzadzenia } from '../../lib/dane';
+import { cmsImage } from '../../lib/cms-image';
+import { firma } from '../../lib/firma';
+import schemat from '../../assets/uploads/realizacja-1730666776368.jpg';
+interface Props { o: OfertaStrona }
+const { o } = Astro.props;
+const produkty = o.kategoria ? (await urzadzenia()).filter((u) => u.data.typ === 'ladowarka' && u.data.kategorie.includes(o.kategoria!)).slice(0, 4) : [];
+const us = o.uslugi.map((s) => uslugi.find((u) => u.slug === s)!).map((u) => ({ href: u.href, tytul: u.nazwa, tekst: u.krok, meta: `Krok ${uslugi.indexOf(u) + 1} z 6` }));
+const miejsce = o.kategoria === 'publiczne' ? 'garaz' : o.kategoria === 'firma' ? 'parking' : 'dom';
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Service', name: `${o.h1} ${o.h1Akcent}`, description: o.description,
+  provider: { '@id': 'https://powerplug.pl/#firma', '@type': 'Electrician', name: 'PowerPlug', telephone: firma.telefon },
+  areaServed: { '@type': 'AdministrativeArea', name: 'województwo zachodniopomorskie' },
+};
+---
+<Base title={o.title} description={o.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <PageHero eyebrow={o.eyebrow} title={o.h1} accent={o.h1Akcent} lead={o.lead} image={o.foto} alt={o.fotoAlt}
+    crumbs={[{ label: 'Oferta', href: '/oferta/' }, { label: o.nazwa }]}>
+    <div class="btn-group">
+      <a class="btn btn--primary btn--lg" href={`/wycena/?miejsce=${miejsce}`} data-wycena-miejsce={miejsce} data-wycena-uzytek={o.kategoria === 'firma' ? 'Firmowy' : undefined}><Icon name="plus" /><span>Wyceń montaż</span></a>
+      <a class="btn btn--secondary btn--lg" href={firma.telefonHref}>{firma.telefon.replace('+48 ', '')}</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--sm">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <h2 class="t-h2">{o.korzysciTytul}</h2>
+      <div class="grid grid--3">
+        {o.korzysci.map((k) => (
+          <div class="link-card" style="transform:none">
+            <span class="link-card__icon"><Icon name={k.ikona as any} /></span>
+            <h3 class="card__title t-h5">{k.tytul}</h3>
+            <p class="t-body t-muted">{k.tekst}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {o.tresc.map((t, i) => (
+    <section class:list={['section section--sm', i % 2 === 0 && 'section--soft']}>
+      <div class="container split split--top">
+        <h2 class="t-h3">{t.h2}</h2>
+        <div class="stack" style="--stack:var(--space-4)">
+          {t.akapity.map((a) => <p class="t-body-l">{a}</p>)}
+          {t.lista && <ul class="check-list">{t.lista.map((l) => <li>{l}</li>)}</ul>}
+        </div>
+      </div>
+      {o.slug === 'miejsce-postojowe-ladowarka' && i === 0 && (
+        <div class="container" style="margin-top:var(--space-6)">
+          <ol class="garage-flow" aria-label="Etapy montażu ładowarki w garażu podziemnym">
+            <li><b>Zgłoszenie</b><span>Mówisz nam, gdzie jest Twoje miejsce postojowe i jakie auto ładujesz.</span></li>
+            <li><b>Wizja lokalna</b><span>Sprawdzamy rozdzielnicę budynku, moc i trasę kabla do stanowiska.</span></li>
+            <li><b>Ekspertyza</b><span>Oceniamy dopuszczalność punktu ładowania zgodnie z ustawą.</span></li>
+            <li><b>Projekt</b><span>Projektujemy zasilanie, zabezpieczenia i opomiarowanie stanowiska.</span></li>
+            <li><b>Zgoda zarządcy</b><span>Przekazujemy dokumenty wspólnocie lub spółdzielni.</span></li>
+            <li><b>Montaż i odbiór</b><span>Montujemy, uruchamiamy i przekazujemy protokół z pomiarów.</span></li>
+          </ol>
+        </div>
+      )}
+    </section>
+  ))}
+
+  {o.slug === 'platnosci-za-ladowanie' && (
+    <section class="section section--sm">
+      <div class="container">
+        <div class="cta-band">
+          <div class="stack" style="--stack:var(--space-3)"><h2 class="t-h3">Platforma <span class="t-accent">ev24</span></h2><p class="t-body-l" style="color:rgb(243 248 244 / .82)">Zobacz, jak wygląda udostępnianie i rozliczanie stacji w praktyce.</p></div>
+          <a class="btn btn--light btn--lg" href="https://embed.ev24.cloud/partner-website-demo.html" target="_blank" rel="noopener">Zobacz demo ev24 <Icon name="arrow-up-right" /></a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {produkty.length > 0 && (
+    <section class="section">
+      <div class="container stack" style="--stack:var(--space-6)">
+        <div class="cluster" style="justify-content:space-between;align-items:end">
+          <div class="section-head"><p class="t-eyebrow">Polecane urządzenia</p><h2 class="t-h2">Ładowarki, które montujemy</h2></div>
+          <a class="btn btn--outline" href={`/ladowarki/?kategoria=${o.kategoria}`}>Wszystkie ładowarki</a>
+        </div>
+        <div class="grid grid--4">
+          {produkty.map((u) => (
+            <ProductCard name={u.data.nazwa} brand={u.producentDane?.data.nazwa} href={`/ladowarki/${u.id}/`} slug={u.id} image={cmsImage(u.data.zdjecia[0])} price={u.data.cena ?? null} specs={[...u.data.moc, u.data.ip].filter(Boolean) as string[]} status={u.data.dostepnosc} featured={u.data.polecany} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--soft">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="section-head"><p class="t-eyebrow">Jak pracujemy</p><h2 class="t-h2">Usługi, które <span class="t-accent">do tego dobieramy</span></h2></div>
+      <LinkCards items={us} cols={us.length === 4 ? 4 : us.length === 2 ? 2 : 3} />
+    </div>
+  </section>
+
+  <FaqSection items={o.faq} />
+  <CtaSection zrodlo={o.slug} />
+</Base>

@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
+import QuoteForm from '../components/forms/QuoteForm.astro';
+import Icon from '../components/ui/Icon.astro';
+import { firma } from '../lib/firma';
+---
+<Base title="Kalkulator wyceny ładowarki z montażem — bezpłatna wycena | PowerPlug" description="Policz orientacyjny koszt ładowarki samochodowej z montażem: miejsce, urządzenie, sposób montażu i odległość od rozdzielnicy. Dokładną wycenę podajemy po wizji lokalnej.">
+  <section class="section has-glow" style="padding-top:calc(var(--header-top) + var(--header-h) + var(--space-5))">
+    <div class="glow" style="--glow-size:52rem;left:-16rem;top:-12rem"></div>
+    <div class="container split split--top">
+      <div class="stack" style="--stack:var(--space-5)">
+        <Breadcrumbs items={[{ label: 'Bezpłatna wycena' }]} />
+        <h1 class="t-h1">Bezpłatna <span class="t-accent">wycena</span></h1>
+        <p class="t-lead">Odpowiedz na kilka pytań, a pokażemy orientacyjny koszt ładowarki z montażem. Dokładną cenę podamy po krótkiej rozmowie i wizji lokalnej.</p>
+        <ul class="check-list">
+          <li>bez zobowiązań i bez opłat za wycenę</li>
+          <li>dojazd bez dopłaty do 30 km od Szczecina</li>
+          <li>leasing przez mLeasing</li>
+        </ul>
+        <p class="t-body-l">Wolisz porozmawiać? <a href={firma.telefonHref}><strong>{firma.telefon}</strong></a> <span class="t-small t-muted">· {firma.godziny}</span></p>
+      </div>
+      <div class="card card--soft"><QuoteForm id="wp" /></div>
+    </div>
+  </section>
+</Base>

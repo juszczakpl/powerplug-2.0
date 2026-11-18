@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import Icon from '../components/ui/Icon.astro';
+import { firma } from '../lib/firma';
+import foto from '../assets/uploads/realizacja-1730666776734.jpg';
+---
+<Base title="Kontakt — PowerPlug, montaż ładowarek samochodowych Szczecin" description={`Zadzwoń: ${firma.telefon} lub napisz: ${firma.email}. Doradztwo, wycena i montaż ładowarek samochodowych w Szczecinie i zachodniopomorskim. ${firma.godziny}.`}>
+  <PageHero eyebrow="Kontakt" title="Porozmawiajmy" accent="o Twoim ładowaniu." lead="Najszybciej będzie przez telefon — odbieramy w dni robocze. Wolisz napisać? Zostaw wiadomość, odpiszemy tego samego lub następnego dnia roboczego." image={foto} alt="Stoisko PowerPlug z ładowarkami samochodowymi" crumbs={[{ label: 'Kontakt' }]}>
+    <div class="stack" style="--stack:var(--space-2)">
+      <a class="t-h3" href={firma.telefonHref} style="text-decoration:none;color:var(--emerald-900);display:inline-flex;align-items:center;gap:.5rem"><Icon name="phone" size={28} />{firma.telefon}</a>
+      <a class="t-h5" href={`mailto:${firma.email}`} style="color:var(--emerald-700)">{firma.email}</a>
+      <p class="t-small t-muted">{firma.godziny} · {firma.miasto}, {firma.region}</p>
+    </div>
+  </PageHero>
+  <section class="section">
+    <div class="container split split--top">
+      <div class="section-head">
+        <p class="t-eyebrow">Formularz</p>
+        <h2 class="t-h2">Napisz do nas</h2>
+        <p class="t-body-l">Opisz krótko, gdzie chcesz ładować i jaki masz samochód. Jeśli wolisz policzyć koszt od razu — skorzystaj z <a href="/wycena/">kalkulatora wyceny</a>.</p>
+        <ul class="cluster" style="list-style:none;padding:0;--cluster:.75rem">
+          <li><a class="btn-icon btn-icon--lg" href={firma.social.messenger} aria-label="Messenger"><Icon name="messenger" /></a></li>
+          <li><a class="btn-icon btn-icon--lg" href={firma.social.whatsapp} aria-label="WhatsApp"><Icon name="whatsapp" /></a></li>
+          <li><a class="btn-icon btn-icon--lg" href={firma.social.facebook} aria-label="Facebook"><Icon name="facebook" /></a></li>
+          <li><a class="btn-icon btn-icon--lg" href={firma.social.linkedin} aria-label="LinkedIn"><Icon name="linkedin" /></a></li>
+        </ul>
+      </div>
+      <form class="form card card--soft" action="/api/formularz.php" method="post" data-ajax>
+        <input type="hidden" name="formularz" value="kontakt" />
+        <input type="hidden" name="zrodlo" value="kontakt" />
+        <div class="hp" aria-hidden="true"><label>Strona www <input type="text" name="www" tabindex="-1" autocomplete="off" /></label></div>
+        <div class="form__row form__row--2">
+          <div class="field"><label class="field__label" for="k-imie">Imię</label><input class="input" id="k-imie" name="imie" autocomplete="given-name" required /></div>
+          <div class="field"><label class="field__label" for="k-tel">Telefon</label><input class="input" id="k-tel" name="telefon" type="tel" inputmode="tel" autocomplete="tel" pattern="[0-9 +()\-]{9,}" /></div>
+        </div>
+        <div class="field"><label class="field__label" for="k-mail">E-mail</label><input class="input" id="k-mail" name="email" type="email" autocomplete="email" /><p class="field__help">Podaj telefon albo e-mail — jedno wystarczy.</p></div>
+        <div class="field"><label class="field__label" for="k-msg">Wiadomość</label><textarea class="textarea" id="k-msg" name="wiadomosc" rows="5" required placeholder="Np. dom jednorodzinny, Tesla Model Y, mam fotowoltaikę…"></textarea></div>
+        <label class="check"><input type="checkbox" required /> <span>Zgadzam się na kontakt w sprawie zapytania. <a href="/polityka-prywatnosci/">Polityka prywatności</a></span></label>
+        <button class="btn btn--primary btn--lg" type="submit" style="justify-self:start"><Icon name="plus" /><span>Wyślij wiadomość</span></button>
+        <div class="form__status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+</Base>
+<script>
+  // Błąd z klasycznego (bez JS) wysłania formularza
+  if (new URLSearchParams(location.search).get('blad')) {
+    const s = document.querySelector<HTMLElement>('main .form__status');
+    if (s) { s.className = 'form__status notice notice--error'; s.textContent = 'Nie udało się wysłać. Sprawdź dane albo zadzwoń: +48 730 882 967.'; }
+  }
+</script>

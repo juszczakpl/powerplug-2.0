@@ -128,3 +128,4 @@ html, body { overflow-x: clip; }
   .js [data-rv] { opacity: 1 !important; transform: none !important; transition: none !important; }
   .js main :is(.t-display, .t-h1, .t-h2) { visibility: visible !important; }
 }
+[hidden] { display: none !important; }

@@ -1,0 +1,26 @@
+---
+// Szablon polityki prywatności — do uzupełnienia danymi administratora (nazwa firmy, adres, NIP) przez klienta.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
+import { firma } from '../lib/firma';
+---
+<Base title="Polityka prywatności — PowerPlug" description="Polityka prywatności serwisu powerplug.pl: administrator danych, cele przetwarzania, formularze kontaktowe, prawa użytkownika.">
+  <section class="section plain-page"><div class="container container--narrow stack" style="--stack:var(--space-6)">
+    <Breadcrumbs items={[{ label: 'Polityka prywatności' }]} />
+    <h1 class="t-h1">Polityka prywatności</h1>
+    <div class="prose">
+      <h2>Administrator danych</h2>
+      <p>Administratorem danych osobowych przekazywanych przez formularze w serwisie powerplug.pl jest PowerPlug [pełna nazwa firmy, adres, NIP — do uzupełnienia]. Kontakt: <a href={`mailto:${firma.email}`}>{firma.email}</a>, tel. {firma.telefon}.</p>
+      <h2>Jakie dane zbieramy i po co</h2>
+      <p>Przez formularze kontaktowe, formularz „Poproś o kontakt” i kalkulator wyceny zbieramy dane, które podajesz: imię, numer telefonu, adres e-mail, miejscowość oraz informacje o planowanej instalacji. Przetwarzamy je wyłącznie po to, aby odpowiedzieć na zapytanie i przygotować ofertę (art. 6 ust. 1 lit. b i f RODO).</p>
+      <h2>Jak długo przechowujemy dane</h2>
+      <p>Dane z zapytań przechowujemy przez czas potrzebny do obsługi zapytania i ewentualnej realizacji, a następnie przez okres wymagany przepisami lub do upływu terminów przedawnienia roszczeń.</p>
+      <h2>Odbiorcy danych</h2>
+      <p>Wiadomości z formularzy są wysyłane pocztą e-mail za pośrednictwem serwerów dostawcy hostingu (OVH). Nie sprzedajemy danych i nie przekazujemy ich podmiotom trzecim w celach marketingowych.</p>
+      <h2>Twoje prawa</h2>
+      <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz wniesienia sprzeciwu, a także prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</p>
+      <h2>Pliki cookies</h2>
+      <p>Serwis nie używa plików cookies do celów marketingowych. Czcionki strony są ładowane z usługi Adobe Fonts, która może przetwarzać adres IP w celu dostarczenia plików czcionek.</p>
+    </div>
+  </div></section>
+</Base>

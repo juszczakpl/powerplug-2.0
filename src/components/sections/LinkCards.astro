@@ -1,0 +1,17 @@
+---
+// Karty-linki (usługi / oferta / miejscowości) — siatka 3 kolumn.
+import Icon from '../ui/Icon.astro';
+interface Props { items: { href: string; tytul: string; tekst?: string; ikona?: string; meta?: string }[]; cta?: string; cols?: 2 | 3 | 4 }
+const { items, cta = 'Dowiedz się więcej', cols = 3 } = Astro.props;
+---
+<div class:list={['grid', `grid--${cols}`]}>
+  {items.map((i) => (
+    <article class="link-card">
+      {i.ikona && <span class="link-card__icon"><Icon name={i.ikona as any} /></span>}
+      {i.meta && <p class="t-small t-muted">{i.meta}</p>}
+      <h3 class="card__title t-h5"><a class="stretched-link" href={i.href} style="color:inherit;text-decoration:none">{i.tytul}</a></h3>
+      {i.tekst && <p class="t-body t-muted">{i.tekst}</p>}
+      <span class="btn btn--text">{cta} <Icon name="arrow-right" /></span>
+    </article>
+  ))}
+</div>

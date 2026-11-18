@@ -1,0 +1,11 @@
+---
+import Icon from '../ui/Icon.astro';
+import { miejscowosci } from '../../data/lokalne';
+interface Props { active?: string }
+const { active } = Astro.props;
+---
+<ul class="area-list">
+  {miejscowosci.map((m) => (
+    <li><a href={`/montaz-ladowarek-${m.slug}/`} class:list={[active === m.slug && 'is-active']} data-slug={m.slug}><Icon name="pin" />{m.nazwa}<span>{m.km === 0 ? 'nasza baza' : `ok. ${m.km} km`}</span><Icon name="arrow-right" /></a></li>
+  ))}
+</ul>

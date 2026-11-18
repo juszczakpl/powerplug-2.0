@@ -7,7 +7,8 @@
 .page-hero { display: grid; gap: var(--space-6); padding-top: calc(var(--header-top) + var(--header-h) + var(--space-5)); padding-bottom: var(--space-7); }
 .page-hero__text { display: flex; flex-direction: column; gap: var(--space-6); padding-inline: var(--gutter); }
 .page-hero__copy { display: flex; flex-direction: column; gap: var(--space-4); max-width: 38rem; }
-.page-hero__copy .t-h1 { margin: 0; text-wrap: balance; }
+.page-hero__copy .t-h1 { margin: 0; text-wrap: balance; font-size: clamp(2.25rem, 1.1rem + 2.6vw, 4rem); overflow-wrap: break-word; hyphens: manual; }
+.page-hero__text { min-width: 0; }
 .page-hero__copy .t-lead { color: var(--emerald-950); }
 .page-hero__media { margin-inline: var(--gutter); aspect-ratio: 4 / 3; }
 .page-hero__media img { width: 100%; height: 100%; object-fit: cover; }
@@ -99,7 +100,7 @@
 .link-card__icon { display: inline-grid; place-items: center; width: 3rem; height: 3rem; border-radius: var(--r-sm); background: var(--emerald-25); color: var(--emerald-800); }
 .link-card__icon svg { width: 1.5rem; height: 1.5rem; }
 .link-card .card__title { margin: 0; }
-.link-card .btn--text { margin-top: auto; }
+.link-card .btn--text { margin-top: auto; align-self: flex-start; }
 
 /* ── Treść podstron ───────────────────────── */
 .check-list { display: grid; gap: .625rem; list-style: none; padding: 0; }
@@ -161,3 +162,5 @@
 
 /* ── Strony systemowe ─────────────────────── */
 .plain-page { padding-top: calc(var(--header-top) + var(--header-h) + var(--space-7)); }
+
+.product-hero__info > .btn--text { align-self: flex-start; }

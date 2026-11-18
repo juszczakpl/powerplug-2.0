@@ -1,0 +1,20 @@
+---
+// Strony pierwszego poziomu z danych: usługi, oferta, strony lokalne (/montaz-ladowarek-[miasto]/).
+import UslugaPage from '../components/pages/UslugaPage.astro';
+import OfertaPage from '../components/pages/OfertaPage.astro';
+import LokalnaPage from '../components/pages/LokalnaPage.astro';
+import { uslugi } from '../data/uslugi';
+import { oferta } from '../data/oferta';
+import { miejscowosci } from '../data/lokalne';
+export function getStaticPaths() {
+  return [
+    ...uslugi.map((u) => ({ params: { strona: u.slug }, props: { typ: 'usluga', dane: u } })),
+    ...oferta.map((o) => ({ params: { strona: o.slug }, props: { typ: 'oferta', dane: o } })),
+    ...miejscowosci.map((m) => ({ params: { strona: `montaz-ladowarek-${m.slug}` }, props: { typ: 'lokalna', dane: m } })),
+  ];
+}
+const { typ, dane } = Astro.props as any;
+---
+{typ === 'usluga' && <UslugaPage u={dane} />}
+{typ === 'oferta' && <OfertaPage o={dane} />}
+{typ === 'lokalna' && <LokalnaPage m={dane} />}

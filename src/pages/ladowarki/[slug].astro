@@ -1,0 +1,85 @@
+---
+// Podstrona modelu (SEO na modele i producentów) — dane z Pages CMS.
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.astro';
+import Icon from '../../components/ui/Icon.astro';
+import ProductCard from '../../components/ui/ProductCard.astro';
+import Steps from '../../components/sections/Steps.astro';
+import CtaSection from '../../components/sections/CtaSection.astro';
+import { urzadzenia, formatCena, type Urzadzenie } from '../../lib/dane';
+import { cmsImage } from '../../lib/cms-image';
+import { firma } from '../../lib/firma';
+export async function getStaticPaths() {
+  const lista = await urzadzenia();
+  return lista.map((u) => ({ params: { slug: u.id }, props: { u, lista } }));
+}
+const { u, lista } = Astro.props as { u: Urzadzenie; lista: Urzadzenie[] };
+const d = u.data;
+const marka = u.producentDane?.data.nazwa ?? '';
+const pelna = `${marka} ${d.nazwa}`.trim().replace(new RegExp(`^${marka} ${marka} `), `${marka} `);
+const nazwaH1 = d.nazwa.toLowerCase().startsWith(marka.toLowerCase()) ? d.nazwa : pelna;
+const img = cmsImage(d.zdjecia[0]);
+const galeria = d.zdjecia.slice(1).map(cmsImage).filter(Boolean);
+const lad = d.typ === 'ladowarka';
+const kategorie: Record<string, string> = { dom: 'do domu', firma: 'do firmy', publiczne: 'użyteczności publicznej', kable: 'kable', slupki: 'słupki', uchwyty: 'uchwyty', zaslepki: 'zaślepki', zarzadzanie: 'zarządzanie mocą' };
+const opis = d.opis || `${nazwaH1} — ${lad ? 'stacja ładowania' : 'akcesorium'} w ofercie PowerPlug. Dobierzemy, zamontujemy i skonfigurujemy.`;
+const title = `${nazwaH1}${d.moc.length ? ' ' + d.moc[d.moc.length - 1] : ''} — ${lad ? 'ładowarka z montażem' : 'akcesoria do ładowarek'} | PowerPlug`;
+const description = `${nazwaH1}: ${opis.slice(0, 110).replace(/\s+\S*$/, '')}… ${d.cena ? `Cena od ${d.cena.toLocaleString('pl-PL')} zł.` : 'Wycena indywidualna.'} Montaż w Szczecinie i zachodniopomorskim.`;
+const podobne = lista.filter((x) => x.id !== u.id && x.data.typ === d.typ && (x.producentDane?.id === u.producentDane?.id || x.data.kategorie.some((k) => d.kategorie.includes(k)))).slice(0, 4);
+const ld: Record<string, unknown> = {
+  '@context': 'https://schema.org', '@type': 'Product', name: nazwaH1, description: opis, brand: { '@type': 'Brand', name: marka },
+  category: lad ? 'Stacja ładowania samochodów elektrycznych' : 'Akcesoria do stacji ładowania',
+  ...(d.cena ? { offers: { '@type': 'AggregateOffer', priceCurrency: 'PLN', lowPrice: d.cena, availability: d.dostepnosc === 'niedostepny' ? 'https://schema.org/OutOfStock' : d.dostepnosc === 'na-zamowienie' ? 'https://schema.org/BackOrder' : 'https://schema.org/InStock', seller: { '@id': 'https://powerplug.pl/#firma', '@type': 'Organization', name: 'PowerPlug' } } } : {}),
+};
+---
+<Base title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <section class="section has-glow" style="padding-top:0">
+    <div class="glow" style="--glow-size:52rem;left:-16rem;top:-12rem"></div>
+    <div class="container product-hero">
+      <div class="stack" style="--stack:var(--space-4)">
+        <Breadcrumbs items={[{ label: 'Produkty', href: '/ladowarki/' }, { label: nazwaH1 }]} />
+        <div class="media media--product">{img ? <Image src={img} alt={nazwaH1} width={900} loading="eager" /> : <Icon name="plug" size={96} />}</div>
+        {galeria.length > 0 && <div class="grid grid--4">{galeria.map((g) => <div class="media media--product"><Image src={g!} alt={nazwaH1} width={300} /></div>)}</div>}
+      </div>
+      <div class="product-hero__info">
+        <div class="cluster" style="--cluster:.5rem">
+          {marka && <a class="badge badge--neutral badge--plain" href={`/ladowarki/?producent=${encodeURIComponent(marka)}`}>{marka}</a>}
+          {d.kategorie.map((k) => <a class="badge badge--plain" href={`/ladowarki/?kategoria=${lad ? k : 'akcesoria'}`}>{kategorie[k] ?? k}</a>)}
+        </div>
+        <h1 class="t-h1">{nazwaH1}</h1>
+        <p class="t-lead">{opis}</p>
+        {d.moc.length > 0 && <ul class="product-card__specs" style="font-size:var(--fs-body)">{[...d.moc, d.zlacze !== '—' ? d.zlacze : null, d.ip].filter(Boolean).map((s) => <li>{s}</li>)}</ul>}
+        <div class="product-hero__price">
+          <p class="price price--lg"><small>{d.cena == null ? 'Cena' : 'Cena brutto'}</small>{d.cena == null ? 'indywidualna' : formatCena(d.cena)}</p>
+          <div class="btn-group" style="margin-left:auto">
+            {lad
+              ? <a class="btn btn--primary" href={`/wycena/?urzadzenie=${u.id}`} data-wycena-urzadzenie={u.id}><Icon name="plus" /><span>Wyceń z montażem</span></a>
+              : <a class="btn btn--primary" href="/kontakt/"><Icon name="plus" /><span>Zapytaj o dostępność</span></a>}
+            <a class="btn btn--secondary" href={firma.telefonHref}>Zadzwoń</a>
+          </div>
+        </div>
+        {d.parametry.length > 0 && (
+          <div class="stack" style="--stack:var(--space-3)">
+            <h2 class="t-h5">Parametry</h2>
+            <table class="spec-table"><tbody>{d.parametry.map((p) => <tr><th>{p.nazwa}</th><td>{p.wartosc}</td></tr>)}</tbody></table>
+          </div>
+        )}
+        {d.karta_pdf && <a class="btn btn--text" href={d.karta_pdf} target="_blank" rel="noopener"><Icon name="document" /> Karta katalogowa (PDF)</a>}
+      </div>
+    </div>
+  </section>
+  {podobne.length > 0 && (
+    <section class="section section--soft">
+      <div class="container stack" style="--stack:var(--space-6)">
+        <h2 class="t-h3">Zobacz też</h2>
+        <div class="grid grid--4">
+          {podobne.map((x) => <ProductCard name={x.data.nazwa} brand={x.producentDane?.data.nazwa} href={`/ladowarki/${x.id}/`} slug={x.data.typ === 'ladowarka' ? x.id : undefined} image={cmsImage(x.data.zdjecia[0])} price={x.data.cena ?? null} specs={[...x.data.moc, x.data.ip].filter(Boolean).slice(0, 3) as string[]} status={x.data.dostepnosc} featured={x.data.polecany} />)}
+        </div>
+      </div>
+    </section>
+  )}
+  {lad && <Steps id="proces-produkt" />}
+  <CtaSection zrodlo={`produkt-${u.id}`} title="Chcesz ten model?" accent="Oddzwonimy z wyceną." />
+</Base>

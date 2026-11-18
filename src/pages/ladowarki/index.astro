@@ -1,0 +1,78 @@
+---
+// Katalog urządzeń (pseudo-sklep) — dane z Pages CMS (Urządzenia, Producenci). Filtry bez przeładowania.
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.astro';
+import ProductCard from '../../components/ui/ProductCard.astro';
+import CtaSection from '../../components/sections/CtaSection.astro';
+import FaqSection from '../../components/sections/FaqSection.astro';
+import { urzadzenia } from '../../lib/dane';
+import { cmsImage } from '../../lib/cms-image';
+import { uslugaPoSlug } from '../../data/uslugi';
+const lista = await urzadzenia();
+const marki = [...new Set(lista.map((u) => u.producentDane?.data.nazwa).filter(Boolean))] as string[];
+const kat = [
+  ['wszystkie', 'Wszystkie'], ['dom', 'Do domu'], ['firma', 'Do firmy'], ['publiczne', 'Użyteczności publicznej'], ['akcesoria', 'Akcesoria'],
+];
+const faq = uslugaPoSlug('jaka-ladowarka-samochodowa')!.faq;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: 'Ładowarki samochodowe w ofercie PowerPlug',
+  itemListElement: lista.map((u, i) => ({ '@type': 'ListItem', position: i + 1, url: `https://powerplug.pl/ladowarki/${u.id}/`, name: `${u.producentDane?.data.nazwa ?? ''} ${u.data.nazwa}`.trim() })),
+};
+---
+<Base title="Ładowarki samochodowe z montażem — wallboxy Wallbox, Easee, Zaptec, NexBlue | PowerPlug" description="Ładowarki samochodowe i wallboxy z montażem: Wallbox, Easee, Zaptec, NexBlue, Autel, FoxESS i akcesoria. Ceny „od”, parametry i bezpłatna wycena montażu w Szczecinie.">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <section class="section has-glow catalog" style="padding-top:calc(var(--header-top) + var(--header-h) + var(--space-5))" data-catalog>
+    <div class="glow" style="--glow-size:52rem;left:-16rem;top:-12rem"></div>
+    <div class="container stack" style="--stack:var(--space-6)">
+      <Breadcrumbs items={[{ label: 'Produkty' }]} />
+      <div class="split split--top">
+        <h1 class="t-h1">Ładowarki <span class="t-accent">z montażem</span></h1>
+        <p class="t-lead">Sprawdzone stacje ładowania do domu, firmy i miejsc publicznych. Przy każdej możesz od razu policzyć orientacyjny koszt z montażem — albo poprosić, żebyśmy dobrali model za Ciebie.</p>
+      </div>
+      <div class="stack" style="--stack:var(--space-3)">
+        <ul class="filters" aria-label="Kategoria">{kat.map(([k, l], i) => <li><button type="button" data-f-kat={k} aria-pressed={i === 0 ? 'true' : 'false'}>{l}</button></li>)}</ul>
+        <ul class="filters" aria-label="Producent"><li><button type="button" data-f-marka="" aria-pressed="true">Wszyscy producenci</button></li>{marki.map((m) => <li><button type="button" data-f-marka={m} aria-pressed="false">{m}</button></li>)}</ul>
+      </div>
+      <div class="grid grid--4" data-items>
+        {lista.map((u) => (
+          <div data-item data-kat={u.data.typ === 'akcesorium' ? 'akcesoria' : u.data.kategorie.join(' ')} data-marka={u.producentDane?.data.nazwa ?? ''}>
+            <ProductCard name={u.data.nazwa} brand={u.producentDane?.data.nazwa} href={`/ladowarki/${u.id}/`} slug={u.data.typ === 'ladowarka' ? u.id : undefined} image={cmsImage(u.data.zdjecia[0])} price={u.data.cena ?? null} specs={[...u.data.moc, u.data.ip].filter(Boolean).slice(0, 4) as string[]} status={u.data.dostepnosc} featured={u.data.polecany} />
+          </div>
+        ))}
+      </div>
+      <p class="notice" data-empty hidden>Brak urządzeń w tym zestawieniu. Zadzwoń — mamy też modele spoza katalogu.</p>
+      <p class="t-body-l t-muted">W ofercie mamy też inne akcesoria: uchwyty do kabli, karty RFID i części zamienne. Nie znalazłeś czegoś? <a href="/kontakt/">Napisz do nas</a>.</p>
+    </div>
+  </section>
+  <FaqSection items={faq} title="Jak wybrać ładowarkę?" eyebrow="Doradztwo" lead="Nie musisz znać się na parametrach — dobierzemy stację do Twojego auta i instalacji." />
+  <CtaSection zrodlo="ladowarki" />
+</Base>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-catalog]');
+  if (root) {
+    const q = new URLSearchParams(location.search);
+    let kat = q.get('kategoria') ?? 'wszystkie', marka = q.get('producent') ?? '';
+    const apply = () => {
+      let n = 0;
+      root.querySelectorAll<HTMLElement>('[data-item]').forEach((el) => {
+        const ok = (kat === 'wszystkie' || el.dataset.kat!.split(' ').includes(kat)) && (!marka || el.dataset.marka === marka);
+        el.hidden = !ok; if (ok) n++;
+      });
+      root.querySelectorAll<HTMLButtonElement>('[data-f-kat]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.fKat === kat)));
+      root.querySelectorAll<HTMLButtonElement>('[data-f-marka]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.fMarka === marka)));
+      root.querySelector<HTMLElement>('[data-empty]')!.hidden = n > 0;
+      const u = new URL(location.href);
+      kat === 'wszystkie' ? u.searchParams.delete('kategoria') : u.searchParams.set('kategoria', kat);
+      marka ? u.searchParams.set('producent', marka) : u.searchParams.delete('producent');
+      history.replaceState(null, '', u);
+    };
+    root.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest('button'); if (!b) return;
+      if (b.dataset.fKat !== undefined) kat = b.dataset.fKat;
+      else if (b.dataset.fMarka !== undefined) marka = b.dataset.fMarka;
+      else return;
+      apply();
+    });
+    apply();
+  }
+</script>

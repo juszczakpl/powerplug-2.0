@@ -1,0 +1,35 @@
+---
+// Realizacje — galeria z Pages CMS (Realizacje) + opinie.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
+import Proof from '../components/sections/Proof.astro';
+import CtaSection from '../components/sections/CtaSection.astro';
+import { realizacje } from '../lib/dane';
+import { cmsImage } from '../lib/cms-image';
+const lista = await realizacje();
+const typy: Record<string, string> = { dom: 'Dom jednorodzinny', firma: 'Firma', 'garaz-wielostanowiskowy': 'Garaż wielostanowiskowy', publiczne: 'Miejsce publiczne' };
+const zdjecia = lista.flatMap((r) => r.data.zdjecia.map((z, i) => ({ img: cmsImage(z), r, i }))).filter((x) => x.img);
+---
+<Base title="Realizacje — montaż ładowarek samochodowych w Szczecinie i regionie | PowerPlug" description="Zobacz nasze realizacje: wallboxy w domach, stacje na parkingach firm i ładowarki w garażach podziemnych w Szczecinie i województwie zachodniopomorskim.">
+  <section class="section has-glow" style="padding-top:calc(var(--header-top) + var(--header-h) + var(--space-5))">
+    <div class="glow" style="--glow-size:52rem;left:-16rem;top:-12rem"></div>
+    <div class="container stack" style="--stack:var(--space-6)">
+      <Breadcrumbs items={[{ label: 'Realizacje' }]} />
+      <div class="split split--top">
+        <h1 class="t-h1">Nasze <span class="t-accent">realizacje</span></h1>
+        <p class="t-lead">Domy jednorodzinne, garaże podziemne, parkingi firm. Każda instalacja jest inna — ale każdą kończymy pomiarami, konfiguracją i instruktażem.</p>
+      </div>
+      <div class="gallery">
+        {zdjecia.map(({ img, r }) => (
+          <figure>
+            <div class="media"><Image src={img!} alt={`${r.data.tytul}${r.data.miasto ? ' — ' + r.data.miasto : ''}`} widths={[400, 700]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" /></div>
+            {(r.data.miasto || r.data.opis) && <figcaption>{[r.data.miasto, typy[r.data.typ]].filter(Boolean).join(' · ')}{r.data.opis && ` — ${r.data.opis}`}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+  <Proof />
+  <CtaSection zrodlo="realizacje" title="Twoja realizacja może być następna." accent="Porozmawiajmy." />
+</Base>

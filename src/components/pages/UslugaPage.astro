@@ -1,0 +1,61 @@
+---
+// Szablon strony usługi (50/50): opis, zakres, cena „od”, pozostałe etapy, FAQ, CTA.
+import Base from '../../layouts/Base.astro';
+import PageHero from '../sections/PageHero.astro';
+import LinkCards from '../sections/LinkCards.astro';
+import FaqSection from '../sections/FaqSection.astro';
+import CtaSection from '../sections/CtaSection.astro';
+import Icon from '../ui/Icon.astro';
+import { uslugi, type Usluga } from '../../data/uslugi';
+import { faqOgolne } from '../../data/faq';
+import { firma } from '../../lib/firma';
+interface Props { u: Usluga }
+const { u } = Astro.props;
+const nr = uslugi.findIndex((x) => x.slug === u.slug) + 1;
+const inne = uslugi.filter((x) => x.slug !== u.slug).map((x, i) => ({ href: x.href, tytul: x.nazwa, tekst: x.krok, meta: `Krok ${uslugi.indexOf(x) + 1} z 6` }));
+const faq = [...u.faq, ...faqOgolne.slice(0, 2)];
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Service', name: `${u.h1} ${u.h1Akcent}`.trim(), serviceType: u.nazwa,
+  description: u.description, provider: { '@id': 'https://powerplug.pl/#firma', '@type': 'Electrician', name: 'PowerPlug', telephone: firma.telefon },
+  areaServed: { '@type': 'AdministrativeArea', name: 'województwo zachodniopomorskie' },
+};
+---
+<Base title={u.title} description={u.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <PageHero eyebrow={`Usługi · krok ${nr} z 6`} title={u.h1} accent={u.h1Akcent} lead={u.lead} image={u.foto} alt={u.fotoAlt}
+    crumbs={[{ label: 'Usługi', href: '/uslugi/' }, { label: u.nazwa }]}>
+    <div class="btn-group">
+      <a class="btn btn--primary btn--lg" href="/wycena/"><Icon name="plus" /><span>Bezpłatna wycena</span></a>
+      <a class="btn btn--secondary btn--lg" href={firma.telefonHref}>{firma.telefon.replace('+48 ', '')}</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--sm">
+    <div class="container split split--top">
+      <div class="stack" style="--stack:var(--space-5)">
+        <h2 class="t-h3">{u.nazwa} — <span class="t-accent">jak to wygląda</span></h2>
+        {u.akapity.map((a) => <p class="t-body-l">{a}</p>)}
+        <p class="pull">{u.puenta}</p>
+        {u.cenaOd && <p class="price-note"><Icon name="money" />{u.cenaOd}</p>}
+      </div>
+      <div class="card card--soft stack" style="--stack:var(--space-4)">
+        <h2 class="t-h5">{u.listaTytul}:</h2>
+        <ul class="check-list">{u.lista.map((l) => <li>{l}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container stack" style="--stack:var(--space-6)">
+      <div class="section-head">
+        <p class="t-eyebrow">Pozostałe etapy</p>
+        <h2 class="t-h2">Każdy krok możesz zamówić <span class="t-accent">osobno.</span></h2>
+        <p class="t-body-l section-head__lead">Nie musisz kupować pakietu. Wybierz to, czego potrzebujesz — od samego doradztwa, przez montaż kupionej już ładowarki, po serwis stacji innego instalatora.</p>
+      </div>
+      <LinkCards items={inne} />
+    </div>
+  </section>
+
+  <FaqSection items={faq} />
+  <CtaSection zrodlo={u.slug} />
+</Base>
