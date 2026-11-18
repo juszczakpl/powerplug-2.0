@@ -4,6 +4,7 @@ import Lenis from 'lenis';
 
 const root = document.documentElement;
 root.classList.add('js');
+(window as any).__motion = true;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -100,3 +101,49 @@ document.querySelectorAll<HTMLElement>('.nav-links').forEach((list) => {
   document.fonts?.ready.then(init); init();
   addEventListener('resize', init);
 });
+
+// ── Wejścia: nagłówki display/H1/H2 słowo po słowie (offset per słowo), reszta fade-up ──
+const SPLIT = 'main :is(.t-display, .t-h1, .t-h2)';
+const REVEAL = [
+  'main .section-head > :not(h1, h2)', 'main .t-lead', 'main .grid > *', 'main .stat', 'main .testimonial',
+  'main .faq__item', 'main .chip-list', 'main .page-hero__media', 'main .cta-band', 'main .check-list',
+  'main .pull', 'main .step-panel:not([hidden])', 'main .feature', 'main .area-map', 'main .area-list > li',
+  'main .gallery figure', 'main .garage-flow > li', 'main .product-hero__info > *', 'main .home-segments',
+].join(',');
+
+function splitWords(el: HTMLElement) {
+  let i = 0;
+  const walk = (node: Node) => {
+    [...node.childNodes].forEach((ch) => {
+      if (ch.nodeType === 3) {
+        const parts = (ch.textContent ?? '').split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        parts.forEach((p) => {
+          if (!p) return;
+          if (/^\s+$/.test(p)) { frag.append(document.createTextNode(p)); return; }
+          const w = document.createElement('span'); w.className = 'split-w';
+          const inner = document.createElement('span'); inner.textContent = p; inner.style.setProperty('--i', String(i++));
+          w.append(inner); frag.append(w);
+        });
+        ch.replaceWith(frag);
+      } else if (ch.nodeType === 1 && !(ch as HTMLElement).classList.contains('split-w')) walk(ch);
+    });
+  };
+  walk(el);
+  el.classList.add('is-split');
+}
+
+if (reduced) root.classList.add('reveal-off');
+else {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll<HTMLElement>(SPLIT).forEach((h) => { splitWords(h); io.observe(h); });
+  document.querySelectorAll<HTMLElement>(REVEAL).forEach((el) => {
+    if (el.closest('[data-rv]') && !el.hasAttribute('data-rv')) return; // nie animuj podwójnie zagnieżdżonych
+    el.setAttribute('data-rv', '');
+    const sib = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0;
+    if (el.matches('.grid > *, .area-list > li, .garage-flow > li, .faq__item, .stat, .gallery figure, .product-hero__info > *')) el.style.setProperty('--d', `${Math.min(sib, 6) * 80}ms`);
+    io.observe(el);
+  });
+}

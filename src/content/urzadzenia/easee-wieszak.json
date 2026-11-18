@@ -1,0 +1,25 @@
+{
+  "nazwa": "Wieszak na kabel Easee premium",
+  "producent": "Easee",
+  "typ": "akcesorium",
+  "kategorie": [
+    "uchwyty"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [],
+  "zlacze": "—",
+  "ip": null,
+  "opis": "Wieszak na przewód do ładowania Typ 2 — porządek w garażu i na podjeździe.",
+  "parametry": [
+    {
+      "nazwa": "Zgodność",
+      "wartosc": "przewody Typ 2"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 43
+}

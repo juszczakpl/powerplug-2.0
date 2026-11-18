@@ -14,12 +14,12 @@ require __DIR__ . '/lib/PHPMailer/PHPMailer.php';
 require __DIR__ . '/lib/PHPMailer/SMTP.php';
 
 const FORMULARZE = [
-    'oddzwonienie' => ['tytul' => 'Prośba o kontakt', 'pola' => ['imie', 'telefon']],
-    'kontakt'      => ['tytul' => 'Wiadomość ze strony', 'pola' => ['imie', 'telefon', 'email', 'wiadomosc']],
-    'produkt'      => ['tytul' => 'Zapytanie o urządzenie', 'pola' => ['produkt', 'imie', 'telefon', 'email', 'wiadomosc']],
+    'oddzwonienie' => ['tytul' => 'Prośba o kontakt', 'pola' => ['imie', 'telefon', 'zrodlo']],
+    'kontakt'      => ['tytul' => 'Wiadomość ze strony', 'pola' => ['imie', 'telefon', 'email', 'wiadomosc', 'zrodlo']],
+    'produkt'      => ['tytul' => 'Zapytanie o urządzenie', 'pola' => ['produkt', 'imie', 'telefon', 'email', 'wiadomosc', 'zrodlo']],
     'wycena'       => ['tytul' => 'Wycena z kalkulatora', 'pola' => [
         'imie', 'telefon', 'email', 'miejscowosc', 'uzytek', 'urzadzenie', 'miejsce', 'montaz',
-        'odleglosc', 'dojazd', 'leasing', 'wynik', 'wiadomosc',
+        'odleglosc', 'dojazd', 'leasing', 'wynik', 'wiadomosc', 'zrodlo',
     ]],
 ];
 const ETYKIETY = [
@@ -28,6 +28,7 @@ const ETYKIETY = [
     'urzadzenie' => 'Urządzenie', 'miejsce' => 'Miejsce montażu', 'montaz' => 'Sposób montażu',
     'odleglosc' => 'Odległość od rozdzielni', 'dojazd' => 'Dojazd', 'leasing' => 'Leasing',
     'wynik' => 'Szacunkowa wycena',
+    'zrodlo' => 'Wysłano z',
 ];
 
 function odpowiedz(bool $ok, string $komunikat, int $kod = 200): never

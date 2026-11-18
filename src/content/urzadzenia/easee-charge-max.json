@@ -1,0 +1,43 @@
+{
+  "nazwa": "Easee Charge Max 22 kW",
+  "producent": "Easee",
+  "typ": "ladowarka",
+  "kategorie": [
+    "firma"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": null,
+  "opis": "Stacja z licznikiem MID do rozliczeń energii — do 3 stacji w jednym obwodzie.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "do 22 kW"
+    },
+    {
+      "nazwa": "Licznik",
+      "wartosc": "MID"
+    },
+    {
+      "nazwa": "Obwód",
+      "wartosc": "do 3 stacji"
+    },
+    {
+      "nazwa": "Protokół",
+      "wartosc": "OCPP 1.6J"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "5 lat"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 22
+}

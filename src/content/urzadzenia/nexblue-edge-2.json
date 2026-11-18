@@ -1,0 +1,51 @@
+{
+  "nazwa": "NexBlue Edge 2 22 kW",
+  "producent": "NexBlue",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "1,4–22 kW"
+  ],
+  "zlacze": "Gniazdo Typ 2",
+  "ip": "IP54 / IK10",
+  "opis": "Stacja do domu i małych obiektów z gniazdem Typ 2, obsługą V2G i ISO 15118 oraz współpracą z fotowoltaiką. Do 5 jednostek w obwodzie.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "1,4–22 kW"
+    },
+    {
+      "nazwa": "Protokół",
+      "wartosc": "OCPP 1.6J / 2.0.1"
+    },
+    {
+      "nazwa": "Komunikacja z autem",
+      "wartosc": "ISO 15118, V2G"
+    },
+    {
+      "nazwa": "Fotowoltaika",
+      "wartosc": "tak"
+    },
+    {
+      "nazwa": "Obwód",
+      "wartosc": "do 5 jednostek"
+    },
+    {
+      "nazwa": "Szczelność",
+      "wartosc": "IP54 / IK10"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "5 lat"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 25
+}

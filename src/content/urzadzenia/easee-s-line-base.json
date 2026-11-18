@@ -1,0 +1,33 @@
+{
+  "nazwa": "Słupek S-line Base 1-Way / 2-Way",
+  "producent": "Easee",
+  "typ": "akcesorium",
+  "kategorie": [
+    "slupki"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [],
+  "zlacze": "—",
+  "ip": null,
+  "opis": "Słupek z aluminium i stali nierdzewnej na jedną lub dwie stacje Easee, z wieszakami na kable.",
+  "parametry": [
+    {
+      "nazwa": "Materiał",
+      "wartosc": "aluminium + stal nierdzewna, czarny"
+    },
+    {
+      "nazwa": "Wersje",
+      "wartosc": "1-Way / 2-Way"
+    },
+    {
+      "nazwa": "Przewód zasilający",
+      "wartosc": "do 25 mm²"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 42
+}

@@ -1,0 +1,93 @@
+---
+// Kalkulator wyceny (krok po kroku) — składniki wg notatki „Ustalenia zmian na WWW”.
+// Ceny urządzeń z CMS (Urządzenia), stawki montażu z CMS (Cennik → src/data/cennik.json).
+import Icon from '../ui/Icon.astro';
+import { urzadzenia } from '../../lib/dane';
+import cennik from '../../data/cennik.json';
+interface Props { id: string }
+const { id } = Astro.props;
+const lista = (await urzadzenia()).filter((u) => u.data.typ === 'ladowarka');
+const opcje = lista.map((u) => ({ id: u.id, nazwa: `${u.producentDane?.data.nazwa ?? ''} ${u.data.nazwa}`.trim(), cena: u.data.cena ?? null }));
+const p = (n: string) => `${id}-${n}`;
+---
+<form class="form quote-form" action="/api/formularz.php" method="post" data-ajax data-quote data-cennik={JSON.stringify(cennik)} data-urzadzenia={JSON.stringify(opcje)}>
+  <input type="hidden" name="formularz" value="wycena" />
+  <input type="hidden" name="wynik" value="" />
+  <input type="hidden" name="zrodlo" value="" />
+  <div class="hp" aria-hidden="true"><label>Strona www <input type="text" name="www" tabindex="-1" autocomplete="off" /></label></div>
+
+  <ol class="progress" aria-hidden="true">{[1, 2, 3, 4, 5].map(() => <li />)}</ol>
+
+  <fieldset class="quote-step" data-step="1">
+    <legend class="t-h5">Gdzie zamontujemy ładowarkę?</legend>
+    <div class="choice-grid">
+      <label class="choice"><input type="radio" name="miejsce" value="Dom / garaż prywatny" data-k="dom" checked /><Icon name="home" /><span class="choice__title">Dom lub garaż</span><span class="choice__desc">Dom jednorodzinny, podjazd</span></label>
+      <label class="choice"><input type="radio" name="miejsce" value="Garaż podziemny wielostanowiskowy" data-k="garaz" /><Icon name="parking" /><span class="choice__title">Garaż podziemny</span><span class="choice__desc">Blok, wspólnota, spółdzielnia</span></label>
+      <label class="choice"><input type="radio" name="miejsce" value="Parking zewnętrzny" data-k="parking" /><Icon name="building" /><span class="choice__title">Parking zewnętrzny</span><span class="choice__desc">Firma, obiekt, osiedle</span></label>
+    </div>
+    <div class="segment segment--toggle" role="radiogroup" aria-label="Użytek">
+      <label class="segment__item"><input type="radio" name="uzytek" value="Prywatny" checked />Prywatnie</label>
+      <label class="segment__item"><input type="radio" name="uzytek" value="Firmowy" />Dla firmy</label>
+    </div>
+  </fieldset>
+
+  <fieldset class="quote-step" data-step="2" hidden>
+    <legend class="t-h5">Jakie urządzenie?</legend>
+    <div class="field">
+      <label class="field__label" for={p('urz')}>Model ładowarki</label>
+      <select class="select" id={p('urz')} name="urzadzenie">
+        <option value="Nie wiem — proszę o dobór" data-id="">Nie wiem — doradźcie mi</option>
+        {opcje.map((o) => <option value={o.nazwa} data-id={o.id}>{o.nazwa}{o.cena ? ` — od ${o.cena.toLocaleString('pl-PL')} zł` : ''}</option>)}
+        <option value="Mam własną ładowarkę" data-id="wlasna">Mam już swoją ładowarkę</option>
+      </select>
+      <p class="field__help">Nie masz pewności? Wybierz „doradźcie mi” — dobierzemy model do Twojego auta i instalacji.</p>
+    </div>
+  </fieldset>
+
+  <fieldset class="quote-step" data-step="3" hidden>
+    <legend class="t-h5">Jak i gdzie montujemy?</legend>
+    <div class="segment segment--toggle" role="radiogroup" aria-label="Sposób montażu">
+      <label class="segment__item"><input type="radio" name="montaz" value="Na ścianie" checked />Na ścianie</label>
+      <label class="segment__item"><input type="radio" name="montaz" value="Na słupku" />Na słupku</label>
+    </div>
+    <p class="field__label">Odległość od głównej rozdzielnicy</p>
+    <div class="choice-grid choice-grid--compact">
+      <label class="choice"><input type="radio" name="odleglosc" value="To samo pomieszczenie" data-k="0" checked /><span class="choice__title">To samo pomieszczenie</span><span class="choice__desc">do ok. 5 m</span></label>
+      <label class="choice"><input type="radio" name="odleglosc" value="Sąsiednie pomieszczenie" data-k="1" /><span class="choice__title">Sąsiednie pomieszczenie</span><span class="choice__desc">do ok. 15 m</span></label>
+      <label class="choice"><input type="radio" name="odleglosc" value="15–30 m" data-k="2" /><span class="choice__title">15–30 m</span><span class="choice__desc">np. wjazd, podjazd</span></label>
+      <label class="choice"><input type="radio" name="odleglosc" value="Ponad 30 m" data-k="3" /><span class="choice__title">Ponad 30 m</span><span class="choice__desc">np. parking, prace ziemne</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="quote-step" data-step="4" hidden>
+    <legend class="t-h5">Dojazd i finansowanie</legend>
+    <div class="segment segment--toggle" role="radiogroup" aria-label="Dojazd">
+      <label class="segment__item"><input type="radio" name="dojazd" value="Szczecin i okolice (do 30 km)" checked />Szczecin i okolice do 30 km</label>
+      <label class="segment__item"><input type="radio" name="dojazd" value="Powyżej 30 km" data-k="daleko" />Dalej niż 30 km</label>
+    </div>
+    <div class="field"><label class="field__label" for={p('miasto')}>Miejscowość <span class="opt">(opcjonalnie)</span></label><input class="input" id={p('miasto')} name="miejscowosc" autocomplete="address-level2" /></div>
+    <label class="check"><input type="checkbox" name="leasing" value="Tak — interesuje mnie leasing" /> <span>Interesuje mnie leasing (mLeasing)</span></label>
+  </fieldset>
+
+  <fieldset class="quote-step" data-step="5" hidden>
+    <legend class="sr-only">Wynik i kontakt</legend>
+    <div class="quote-result" aria-live="polite">
+      <p class="t-eyebrow">Orientacyjny koszt z montażem</p>
+      <p class="quote-result__value" data-wynik>—</p>
+      <p class="t-small t-muted" data-nota>{cennik.nota}</p>
+    </div>
+    <div class="form__row form__row--2">
+      <div class="field"><label class="field__label" for={p('imie')}>Imię</label><input class="input" id={p('imie')} name="imie" autocomplete="given-name" required /></div>
+      <div class="field"><label class="field__label" for={p('tel')}>Telefon</label><input class="input" id={p('tel')} name="telefon" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9 +()\-]{9,}" /></div>
+    </div>
+    <div class="field"><label class="field__label" for={p('mail')}>E-mail <span class="opt">(opcjonalnie)</span></label><input class="input" id={p('mail')} name="email" type="email" autocomplete="email" /></div>
+    <div class="field"><label class="field__label" for={p('msg')}>Dodatkowe informacje <span class="opt">(opcjonalnie)</span></label><textarea class="textarea" id={p('msg')} name="wiadomosc" rows="3" placeholder="Np. model samochodu, moc przyłącza, fotowoltaika…"></textarea></div>
+  </fieldset>
+
+  <div class="quote-nav">
+    <button type="button" class="btn btn--text" data-prev hidden><Icon name="arrow-left" /> Wstecz</button>
+    <button type="button" class="btn btn--primary" data-next>Dalej <Icon name="arrow-right" /></button>
+    <button type="submit" class="btn btn--primary" data-submit hidden><Icon name="plus" /><span>Wyślij i poproś o wycenę</span></button>
+  </div>
+  <div class="form__status" role="status" aria-live="polite"></div>
+</form>

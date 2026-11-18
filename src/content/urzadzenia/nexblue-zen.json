@@ -1,0 +1,33 @@
+{
+  "nazwa": "NexBlue ZEN",
+  "producent": "NexBlue",
+  "typ": "akcesorium",
+  "kategorie": [
+    "zarzadzanie"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [],
+  "zlacze": "—",
+  "ip": null,
+  "opis": "Inteligentny licznik i load balancer na szynę DIN — do 80 A albo do 1500 A z cewkami Rogowskiego.",
+  "parametry": [
+    {
+      "nazwa": "Montaż",
+      "wartosc": "szyna DIN"
+    },
+    {
+      "nazwa": "Zakres",
+      "wartosc": "do 80 A lub 1500 A (cewki Rogowskiego)"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "3 lata"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 41
+}

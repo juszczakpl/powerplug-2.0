@@ -1,0 +1,18 @@
+---
+// Formularz „Poproś o kontakt” (Imię + Telefon) — zatwierdzony zamiast lead magnetu.
+import Icon from '../ui/Icon.astro';
+interface Props { id?: string; dark?: boolean; zrodlo?: string }
+const { id = 'oddzwon', dark = false, zrodlo = '' } = Astro.props;
+---
+<form class:list={['form callback-form', dark && 'callback-form--dark']} action="/api/formularz.php" method="post" data-ajax>
+  <input type="hidden" name="formularz" value="oddzwonienie" />
+  <input type="hidden" name="zrodlo" value={zrodlo} />
+  <div class="hp" aria-hidden="true"><label>Strona www <input type="text" name="www" tabindex="-1" autocomplete="off" /></label></div>
+  <div class="form__row form__row--2">
+    <div class="field"><label class="field__label" for={`${id}-imie`}>Imię</label><input class="input" id={`${id}-imie`} name="imie" autocomplete="given-name" required /></div>
+    <div class="field"><label class="field__label" for={`${id}-tel`}>Telefon</label><input class="input" id={`${id}-tel`} name="telefon" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9 +()\-]{9,}" /></div>
+  </div>
+  <p class="field__help">Oddzwonimy w godzinach pracy — zwykle tego samego dnia roboczego.</p>
+  <button class="btn btn--primary btn--lg" type="submit"><Icon name="plus" /><span>Poproś o kontakt</span></button>
+  <div class="form__status" role="status" aria-live="polite"></div>
+</form>

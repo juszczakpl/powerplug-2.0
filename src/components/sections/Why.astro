@@ -1,0 +1,33 @@
+---
+// „Dlaczego warto wybrać PowerPlug?” — sekcja ciemna, cechy wzdłuż kabla (Figma 9:210).
+import { Image } from 'astro:assets';
+import Cable from '../ui/Cable.astro';
+import f1 from '../../assets/uploads/realizacja-1714817392911.jpg';
+import f2 from '../../assets/uploads/realizacja-1730666776484.jpg';
+import f3 from '../../assets/uploads/realizacja-1730666776425.jpg';
+import f4 from '../../assets/uploads/realizacja-1730666776720.jpg';
+const cechy = [
+  { t: 'Indywidualne podejście', d: 'Analizujemy specyfikę Twojej infrastruktury i projektujemy rozwiązania dostosowane do liczby użytkowników, lokalizacji i budżetu.', f: f1, a: 'Montaż słupka stacji ładowania przy domu' },
+  { t: 'Kompleksowa obsługa', d: 'Od doradztwa i audytu technicznego, przez montaż stacji, aż po wsparcie techniczne, serwis i rozbudowę — jeden partner na każdym etapie.', f: f2, a: 'Elektryk PowerPlug podłącza stację w garażu' },
+  { t: 'Zarządzanie mocą', d: 'Dobieramy rozwiązania, które dzielą dostępną moc między budynek i stacje. Ładujesz bez przeciążania przyłącza i bez kosztownej rozbudowy.', f: f3, a: 'Rozdzielnica z zabezpieczeniami stacji ładowania' },
+  { t: 'Formalności po naszej stronie', d: 'Warunki przyłączenia, ekspertyzy, projekty i dokumenty dla zarządcy — prowadzimy sprawy, które zwykle zajmują najwięcej czasu.', f: f4, a: 'Podlicznik energii stacji ładowania z opisem' },
+];
+---
+<section class="section section--dark why has-glow" aria-labelledby="why-title">
+  <div class="glow" style="--glow-size:60rem;left:50%;top:-10rem;translate:-50% 0;opacity:.35"></div>
+  <div class="container">
+    <div class="section-head section-head--center">
+      <h2 id="why-title" class="t-h2">Dlaczego warto <span class="t-accent">wybrać PowerPlug?</span></h2>
+    </div>
+  </div>
+  <div class="cable-band" aria-hidden="true" style="margin-block:var(--space-6)"><Cable variant="wave" /></div>
+  <div class="container">
+    {cechy.map((c) => (
+      <div class="feature">
+        <h3 class="feature__title">{c.t}</h3>
+        <div class="media"><Image src={c.f} alt={c.a} width={420} /></div>
+        <p class="feature__text">{c.d}</p>
+      </div>
+    ))}
+  </div>
+</section>

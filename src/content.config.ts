@@ -63,6 +63,8 @@ const opinie = defineCollection({
     autor: z.string(),
     miasto: z.string().default(''),
     tresc: z.string(),
+    rodzaj: z.string().default(''), // np. „dom jednorodzinny”, „montaż przed blokiem”
+    zdjecie: sciezka.optional().nullable(),
     ocena: z.number().min(1).max(5).default(5),
     data: z.coerce.date().optional(),
     widoczna: z.boolean().default(true),

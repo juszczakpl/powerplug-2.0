@@ -1,0 +1,48 @@
+{
+  "nazwa": "Easee Charge Pro",
+  "producent": "Easee",
+  "typ": "ladowarka",
+  "kategorie": [
+    "firma",
+    "publiczne"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "1,4–22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": null,
+  "opis": "Stacja dla biznesu: przełączanie faz 1↔3, licznik MID klasy B i do 101 ładowarek w jednym obwodzie.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "1,4–22 kW"
+    },
+    {
+      "nazwa": "Przełączanie faz",
+      "wartosc": "1 ↔ 3"
+    },
+    {
+      "nazwa": "Licznik",
+      "wartosc": "MID klasa B"
+    },
+    {
+      "nazwa": "Obwód",
+      "wartosc": "do 101 ładowarek"
+    },
+    {
+      "nazwa": "Protokół",
+      "wartosc": "OCPP 1.6J"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "5 lat"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 23
+}

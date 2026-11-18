@@ -1,0 +1,17 @@
+---
+import Faq from '../ui/Faq.astro';
+interface Props { items: { q: string; a: string }[]; title?: string; eyebrow?: string; lead?: string }
+const { items, title = 'Najczęstsze pytania', eyebrow = 'FAQ', lead } = Astro.props;
+---
+{items.length > 0 && (
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container split split--top">
+      <div class="section-head">
+        <p class="t-eyebrow">{eyebrow}</p>
+        <h2 id="faq-title" class="t-h2">{title}</h2>
+        {lead && <p class="t-body-l t-muted">{lead}</p>}
+      </div>
+      <Faq items={items} />
+    </div>
+  </section>
+)}

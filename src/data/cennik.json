@@ -1,0 +1,16 @@
+{
+  "montaz_dom_od": 600,
+  "montaz_dom_do": 1500,
+  "montaz_garaz_od": 1500,
+  "montaz_garaz_do": 3500,
+  "montaz_parking_od": 1200,
+  "montaz_parking_do": 3000,
+  "doplata_sasiednie_pomieszczenie": 300,
+  "doplata_15_30_m": 900,
+  "doplata_ponad_30_m": 2000,
+  "slupek": 2000,
+  "projekt_ekspertyza": 2500,
+  "dojazd_ponad_30_km": 200,
+  "urzadzenie_bez_ceny": 3500,
+  "nota": "Wycena orientacyjna. Dokładną cenę podajemy po bezpłatnej konsultacji i wizji lokalnej."
+}

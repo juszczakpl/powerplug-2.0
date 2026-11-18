@@ -40,8 +40,8 @@ content:
         options:
           collection: producenci
           search: nazwa
-          value: "{primary}"
-          label: "{primary}"
+          value: "{nazwa}"
+          label: "{nazwa}"
       - name: typ
         label: Rodzaj
         type: select
@@ -64,6 +64,7 @@ content:
             - { name: zaslepki, label: "Akcesorium — zaślepki" }
             - { name: slupki, label: "Akcesorium — słupki" }
             - { name: uchwyty, label: "Akcesorium — uchwyty" }
+            - { name: zarzadzanie, label: "Akcesorium — zarządzanie mocą" }
       - name: cena
         label: Cena brutto „od” (zł)
         description: Zostaw puste, jeśli cena ustalana indywidualnie. Kalkulator wyceny bierze cenę stąd.
@@ -186,7 +187,9 @@ content:
     fields:
       - { name: autor, label: Imię (i inicjał nazwiska), type: string, required: true, options: { maxlength: 40 } }
       - { name: miasto, label: Miejscowość, type: string, options: { maxlength: 40 } }
-      - { name: tresc, label: Treść opinii, type: text, required: true, options: { maxlength: 400 } }
+      - { name: rodzaj, label: Rodzaj realizacji (np. dom jednorodzinny), type: string, options: { maxlength: 50 } }
+      - { name: tresc, label: Treść opinii, type: text, required: true, options: { maxlength: 800 } }
+      - { name: zdjecie, label: Zdjęcie z realizacji, type: image, options: { media: zdjecia } }
       - name: ocena
         label: Ocena (1–5)
         type: number
@@ -194,3 +197,24 @@ content:
         options: { min: 1, max: 5 }
       - { name: data, label: Data, type: date }
       - { name: widoczna, label: Widoczna na stronie, type: boolean, default: true }
+
+  - name: cennik
+    label: Cennik kalkulatora
+    type: file
+    path: src/data/cennik.json
+    format: json
+    fields:
+      - { name: montaz_dom_od, label: "Montaż — dom/garaż prywatny: od (zł)", type: number }
+      - { name: montaz_dom_do, label: "Montaż — dom/garaż prywatny: do (zł)", type: number }
+      - { name: montaz_garaz_od, label: "Montaż — garaż podziemny wielostanowiskowy: od (zł)", type: number }
+      - { name: montaz_garaz_do, label: "Montaż — garaż podziemny wielostanowiskowy: do (zł)", type: number }
+      - { name: montaz_parking_od, label: "Montaż — parking zewnętrzny: od (zł)", type: number }
+      - { name: montaz_parking_do, label: "Montaż — parking zewnętrzny: do (zł)", type: number }
+      - { name: doplata_sasiednie_pomieszczenie, label: "Dopłata — stacja w sąsiednim pomieszczeniu (zł)", type: number }
+      - { name: doplata_15_30_m, label: "Dopłata — 15–30 m od rozdzielnicy (zł)", type: number }
+      - { name: doplata_ponad_30_m, label: "Dopłata — ponad 30 m od rozdzielnicy (zł)", type: number }
+      - { name: slupek, label: "Montaż na słupku — dopłata (zł)", type: number }
+      - { name: projekt_ekspertyza, label: "Projekt + ekspertyza (garaż wielostanowiskowy) (zł)", type: number }
+      - { name: dojazd_ponad_30_km, label: "Dojazd powyżej 30 km od Szczecina (zł)", type: number }
+      - { name: urzadzenie_bez_ceny, label: "Szacunkowa cena urządzenia, gdy klient nie wybrał modelu (zł)", type: number }
+      - { name: nota, label: "Dopisek pod wynikiem", type: text }

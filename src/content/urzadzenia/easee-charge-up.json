@@ -1,0 +1,52 @@
+{
+  "nazwa": "Easee Charge Up 22 kW 4G",
+  "producent": "Easee",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "7,4 kW",
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": null,
+  "opis": "Kompaktowa stacja do domu z łącznością Wi-Fi, Bluetooth i eSIM LTE. Easee Link równoważy obciążenie i fazy, a całością sterujesz z aplikacji.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "7,4 kW (1-faz.) / 22 kW (3-faz.)"
+    },
+    {
+      "nazwa": "Łączność",
+      "wartosc": "Wi-Fi, Bluetooth, eSIM LTE"
+    },
+    {
+      "nazwa": "Protokół",
+      "wartosc": "OCPP 1.6J"
+    },
+    {
+      "nazwa": "Autoryzacja",
+      "wartosc": "RFID / NFC"
+    },
+    {
+      "nazwa": "Wymiary",
+      "wartosc": "256 × 193 × 106 mm, 1,5 kg"
+    },
+    {
+      "nazwa": "Temperatura pracy",
+      "wartosc": "−30…+40 °C"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "5 lat"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 20
+}

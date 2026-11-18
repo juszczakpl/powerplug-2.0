@@ -1,0 +1,48 @@
+{
+  "nazwa": "Easee Charge Core 22 kW",
+  "producent": "Easee",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom",
+    "firma"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": null,
+  "opis": "Kompaktowa stacja z obsługą Equalizera i rozliczeń biznesowych — sprawdza się w domu i w firmie, w systemach liczących ponad 100 stacji.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "do 22 kW"
+    },
+    {
+      "nazwa": "Zarządzanie mocą",
+      "wartosc": "Easee Equalizer, Easee Link"
+    },
+    {
+      "nazwa": "Skalowanie",
+      "wartosc": "100+ stacji w systemie"
+    },
+    {
+      "nazwa": "Łączność",
+      "wartosc": "Wi-Fi, eSIM LTE"
+    },
+    {
+      "nazwa": "Protokół",
+      "wartosc": "OCPP 1.6J"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "5 lat"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 21
+}

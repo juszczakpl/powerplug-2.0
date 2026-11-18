@@ -1,0 +1,47 @@
+{
+  "nazwa": "Kabel Typ 2 32 A 22 kW — 5 / 7 / 10 m",
+  "producent": "S-Line",
+  "typ": "akcesorium",
+  "kategorie": [
+    "kable"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "22 kW"
+  ],
+  "zlacze": "Typ 2 / Typ 2",
+  "ip": "IP54",
+  "opis": "Szwedzki przewód do ładowania z elastycznego TPU, odporny na mróz i intensywne użytkowanie — ponad 10 000 cykli.",
+  "parametry": [
+    {
+      "nazwa": "Długość",
+      "wartosc": "5 / 7 / 10 m"
+    },
+    {
+      "nazwa": "Prąd",
+      "wartosc": "32 A, 22 kW"
+    },
+    {
+      "nazwa": "Materiał",
+      "wartosc": "TPU"
+    },
+    {
+      "nazwa": "Temperatura",
+      "wartosc": "−40…+55 °C"
+    },
+    {
+      "nazwa": "Trwałość",
+      "wartosc": "10 000+ cykli"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "2 lata"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 47
+}

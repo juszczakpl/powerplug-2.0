@@ -1,0 +1,28 @@
+---
+// Szablon podstron 50/50: lewa kolumna tekstu na poświacie, prawa połowa = zdjęcie (r-sm, do krawędzi ekranu).
+// Tekst i grafika nigdy się nie nakładają — bezpieczny dla treści bez nadzoru.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Breadcrumbs from '../ui/Breadcrumbs.astro';
+interface Props {
+  eyebrow?: string; title: string; accent?: string; lead?: string;
+  image: ImageMetadata; alt: string; crumbs: { label: string; href?: string }[];
+  position?: string;
+}
+const { eyebrow, title, accent, lead, image, alt, crumbs, position = 'center' } = Astro.props;
+---
+<section class="page-hero has-glow">
+  <div class="glow" style="--glow-size:52rem;left:-16rem;top:-12rem"></div>
+  <div class="page-hero__text">
+    <Breadcrumbs items={crumbs} />
+    <div class="page-hero__copy">
+      {eyebrow && <p class="t-eyebrow">{eyebrow}</p>}
+      <h1 class="t-h1">{title}{accent && <> <span class="t-accent">{accent}</span></>}</h1>
+      {lead && <p class="t-lead">{lead}</p>}
+      <slot />
+    </div>
+  </div>
+  <div class="page-hero__media media">
+    <Image src={image} alt={alt} widths={[640, 960, 1280, 1600]} sizes="(min-width: 900px) 50vw, 100vw" loading="eager" fetchpriority="high" style={`object-position:${position}`} />
+  </div>
+</section>

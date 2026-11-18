@@ -1,58 +1,78 @@
 ---
-// Strona główna — landing wg sekwencji „PowerPlug | WWW” (Figma 102:1396 → …).
-// Sekcje: 1 Bohater · 2 Problem (plątanina) · 3 Rozwiązanie (rozplątane + segmenty).
-import { getImage } from 'astro:assets';
-import { Image } from 'astro:assets';
+// Strona główna — landing wg sekwencji „PowerPlug | WWW” (Figma 102:1396 → 38:2580).
+// 1 Bohater · 2 Problem (plątanina → rozplątanie przy scrollu) · 3 Rozwiązanie (segmenty)
+// 4 Proces (6 kroków) · 5 Dlaczego PowerPlug · 6 Liczby i opinie · 7 FAQ · 8 CTA
+import { getImage, Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Bars from '../components/ui/Bars.astro';
 import Cable from '../components/ui/Cable.astro';
 import Icon from '../components/ui/Icon.astro';
+import Steps from '../components/sections/Steps.astro';
+import Why from '../components/sections/Why.astro';
+import Proof from '../components/sections/Proof.astro';
+import FaqSection from '../components/sections/FaqSection.astro';
+import CtaSection from '../components/sections/CtaSection.astro';
+import { faqOgolne } from '../data/faq';
+import { firma } from '../lib/firma';
 import heroBg from '../assets/brand/hero-man-charging.jpg';
 import heroCut from '../assets/brand/hero-man-cutout.png';
 import fotoDom from '../assets/brand/rozwiazanie-montaz.jpg';
-import fotoFirma from '../assets/uploads/realizacja-1709375462084.jpg';
-import fotoPubl from '../assets/uploads/realizacja-1720194729746.jpg';
+import fotoFirma from '../assets/uploads/realizacja-1719781723583.jpg';
+import fotoPubl from '../assets/uploads/realizacja-1730666776407.jpg';
 import '../styles/home.css';
 
 const cut = await getImage({ src: heroCut, width: 1800, format: 'webp' });
 
+// Pytania-pigułki: [tekst, x, y, obrót] — pozycja „chaosu”, z której wyrównują się przy scrollu
 const pytania = [
-  ['ile kW naprawdę potrzebuję?', -5, 1],
-  ['czy przyłącze wytrzyma?', 6, 0],
-  ['fotowoltaika i OCPP', 8, 2],
-  ['gwarancja a montaż', -4, 2],
-  ['jednofazowa czy trójfazowa?', 3, 0],
-  ['zgłoszenie do OSD', -12, 1],
+  ['ile kW naprawdę potrzebuję?', -60, 70, -9],
+  ['czy przyłącze wytrzyma?', 90, -40, 12],
+  ['fotowoltaika i OCPP', 160, 50, 34],
+  ['gwarancja a montaż', -140, -30, -16],
+  ['jednofazowa czy trójfazowa?', 40, 60, 6],
+  ['zgłoszenie do OSD', 120, -80, -24],
 ] as const;
 
 const segmenty = [
   {
     id: 'prywatnie', slowo: 'Prywatnie.', etykieta: 'Dla domu', ikona: 'home', foto: fotoDom,
-    alt: 'Monter PowerPlug instaluje wallbox na ścianie domu jednorodzinnego',
+    alt: 'Monter instaluje wallbox na ścianie domu jednorodzinnego',
     lead: 'Wallbox w garażu albo na podjeździe domu.',
     tekst: 'Dobieramy moc do Twojego auta i instalacji, sprawdzamy przyłącze, załatwiamy formalności i montujemy. Ładujesz w nocy, w swojej taryfie — bez szukania wolnej stacji w mieście.',
     href: '/ladowarka-samochodowa-do-domu/', cta: 'Ładowarki do domu',
   },
   {
     id: 'biznesowo', slowo: 'Biznesowo.', etykieta: 'Dla firm', ikona: 'building', foto: fotoFirma,
-    alt: 'Prace ziemne przy budowie stacji ładowania na parkingu firmy',
+    alt: 'Stacje ładowania na firmowym parkingu z oznakowanymi miejscami',
     lead: 'Stacje dla floty, pracowników i klientów.',
     tekst: 'Projektujemy, instalujemy i serwisujemy infrastrukturę ładowania dla firm i instytucji. Zarządzanie mocą i rozliczanie kosztów energii dla każdego pojazdu — już od jednego samochodu.',
     href: '/stacje-ladowania-dla-firm/', cta: 'Stacje dla firm',
   },
   {
     id: 'publicznie', slowo: 'Publicznie.', etykieta: 'Zarządcy', ikona: 'parking', foto: fotoPubl,
-    alt: 'Stacja ładowania i rozdzielnica w garażu wielostanowiskowym',
+    alt: 'Ładowarka w garażu podziemnym budynku wielorodzinnego',
     lead: 'Garaże wspólnot, spółdzielni i parkingi publiczne.',
     tekst: 'Rozwiązania o niskim koszcie budowy, ekspertyza dopuszczalności zgodna z ustawą o elektromobilności i obsługa płatności za ładowanie — jako jedna spójna instalacja.',
     href: '/miejsce-postojowe-ladowarka/', cta: 'Miejsca postojowe',
   },
 ] as const;
+
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Electrician', '@id': 'https://powerplug.pl/#firma',
+  name: 'PowerPlug', url: 'https://powerplug.pl/', telephone: firma.telefon, email: firma.email,
+  areaServed: ['Szczecin', 'Police', 'Gryfino', 'Goleniów', 'Stargard', 'Dobra', 'województwo zachodniopomorskie'],
+  address: { '@type': 'PostalAddress', addressLocality: 'Szczecin', addressRegion: 'zachodniopomorskie', addressCountry: 'PL' },
+  openingHours: 'Mo-Fr 09:00-17:00',
+  sameAs: [firma.social.facebook, firma.social.instagram, firma.social.linkedin],
+  description: 'Doradztwo, wizja lokalna, projekt, ekspertyza, montaż i serwis ładowarek samochodowych w Szczecinie i województwie zachodniopomorskim.',
+};
 ---
 <Base
   title="Montaż ładowarek samochodowych Szczecin i zachodniopomorskie | PowerPlug"
   description="Ładowarki samochodowe z montażem w Szczecinie i całym zachodniopomorskim. Doradztwo, wizja lokalna, projekt, ekspertyza, montaż i serwis wallboxów dla domu, firm i wspólnot."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+
   <!-- 1 | BOHATER -->
   <section class="home-hero has-glow" aria-labelledby="hero-title">
     <div class="glow" style="--glow-size:56rem;left:-18rem;top:-14rem"></div>
@@ -66,17 +86,21 @@ const segmenty = [
           <li class="chip"><Icon name="bolt" />Z głowy</li>
         </ul>
       </div>
-      <div class="home-hero__aside" aria-hidden="true"></div>
+      <!-- Górny rząd „rdzeni baterii”: matowe szkło, odwrócony kierunek względem pasów zdjęcia -->
+      <div class="home-hero__glass" aria-hidden="true">{[17, 8, 4, 2, 1].map((w) => <span style={`--w:${w}`} />)}</div>
       <div class="home-hero__visual">
         <Bars image={heroBg} alt="Kierowca podłącza samochód elektryczny do domowej ładowarki" widths={[1, 2, 4, 8, 17]} position="100%" height="clamp(14rem, 8rem + 16vw, 22.5rem)" />
-        <svg class="cable home-hero__ring" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet" data-draw aria-hidden="true" focusable="false"><path d="M400 30 C 640 30, 770 120, 770 215 C 770 320, 620 395, 400 395 C 180 395, 30 320, 30 215 C 30 120, 160 30, 400 30 Z" pathLength="1" /></svg>
         <img class="home-hero__cutout" src={cut.src} alt="" width="1800" height="1200" loading="eager" decoding="async" fetchpriority="high" />
-        <a class="btn-icon btn-icon--square btn-icon--lg home-hero__down" href="#problem"><Icon name="arrow-down" /><span class="sr-only">Przewiń do następnej sekcji</span></a>
+        <a class="home-hero__down" href="#problem"><Icon name="arrow-down" /><span class="sr-only">Przewiń do następnej sekcji</span></a>
       </div>
+      <!-- Kabel oplatający bohatera: jedna ścieżka na pierwszym planie, końce poza krawędzią ekranu -->
+      <svg class="cable home-hero__wrap" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMax meet" data-draw aria-hidden="true" focusable="false" style="--draw-dur:2.4s;--draw-delay:.5s">
+        <path pathLength="1" d="M1130 430 C 930 360, 600 300, 400 400 C 200 500, 250 660, 480 670 C 720 680, 930 610, 1130 590" />
+      </svg>
     </div>
   </section>
 
-  <!-- 2 | PROBLEM — plątanina -->
+  <!-- 2 | PROBLEM — plątanina, która rozplątuje się przy scrollu -->
   <section id="problem" class="section home-problem has-glow" aria-labelledby="problem-title">
     <div class="glow" style="--glow-size:60rem;left:50%;top:-6rem;translate:-50% 0"></div>
     <div class="container section-head section-head--center">
@@ -85,22 +109,17 @@ const segmenty = [
       <p class="t-body-l section-head__lead">Elektryka, sprzęt i montaż to trzy różne dziedziny. Pomyl się w jednej, a pozostałe dwie przestają mieć znaczenie.</p>
       <a class="btn btn--outline home-problem__down" href="#rozwiazanie" aria-label="Zobacz, jak możemy pomóc"><Icon name="arrow-down" /></a>
     </div>
-    <div class="home-tangle">
-      <Cable variant="tangle" class="home-tangle__cable" />
-      <ul class="home-tangle__tags" aria-label="Pytania, które zadaje sobie każdy przed montażem ładowarki">
-        {pytania.map(([t, rot, row]) => <li class="tag" style={`--rot:${rot}deg;--row:${row}`}>{t}</li>)}
+    <div class="home-tangle" data-untangle>
+      <Cable variant="tangle" class="home-tangle__chaos" draw={false} />
+      <Cable variant="band" class="home-tangle__calm" draw={false} />
+      <ul class="tag-cloud home-tangle__tags" aria-label="Pytania, które zadaje sobie każdy przed montażem ładowarki">
+        {pytania.map(([t, x, y, r]) => <li class="tag" data-x={x} data-y={y} data-r={r}>{t}</li>)}
       </ul>
     </div>
   </section>
 
-  <!-- 3 | ROZWIĄZANIE — rozplątane -->
+  <!-- 3 | ROZWIĄZANIE -->
   <section id="rozwiazanie" class="section home-solution" aria-labelledby="solution-title">
-    <div class="home-untangled" aria-hidden="true">
-      <div class="cable-band"><Cable variant="band" /></div>
-      <ul class="tag-cloud home-untangled__tags">
-        {pytania.map(([t]) => <li class="tag">{t}</li>)}
-      </ul>
-    </div>
     <div class="container">
       <h2 id="solution-title" class="t-h2 home-solution__title">
         <span class="home-solution__a">Skorzystaj z pomocy ekspertów branży elektromobilności,</span>{' '}
@@ -111,12 +130,12 @@ const segmenty = [
         <div class="home-segments__media">
           {segmenty.map((s, i) => (
             <div class="media home-segments__photo" data-panel={s.id} hidden={i !== 0}>
-              <Image src={s.foto} alt={s.alt} width={1100} sizes="(min-width: 900px) 50vw, 100vw" />
+              <Image src={s.foto} alt={s.alt} widths={[560, 900, 1200]} sizes="(min-width: 900px) 50vw, 100vw" />
             </div>
           ))}
           <ul class="segment home-segments__switch" aria-label="Wybierz rodzaj instalacji">
             {segmenty.map((s, i) => (
-              <li><button type="button" class="segment__item" data-tab={s.id} aria-pressed={i === 0 ? 'true' : 'false'} aria-current={i === 0 ? 'true' : undefined}><Icon name={s.ikona} />{s.etykieta}</button></li>
+              <li><button type="button" class="segment__item" data-tab={s.id} aria-pressed={i === 0 ? 'true' : 'false'}><Icon name={s.ikona} />{s.etykieta}</button></li>
             ))}
           </ul>
         </div>
@@ -132,29 +151,50 @@ const segmenty = [
               <a class="btn btn--text" href={s.href}>{s.cta} <Icon name="arrow-right" /></a>
             </div>
           ))}
-
         </div>
       </div>
     </div>
   </section>
+
+  <Steps />
+  <Why />
+  <Proof />
+  <FaqSection items={faqOgolne} title="Pytania, które słyszymy najczęściej" lead="Krótko i konkretnie. Jeśli Twojego pytania tu nie ma — zadzwoń, odpowiemy od ręki." />
+  <CtaSection zrodlo="strona-glowna" />
 </Base>
 
 <script>
-  // Przełącznik segmentów: słowo (Prywatnie./Biznesowo./Publicznie.) i kafelki sterują tym samym stanem.
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Segmenty: słowo (Prywatnie./Biznesowo./Publicznie.) i kafelki sterują tym samym stanem.
   document.querySelectorAll<HTMLElement>('[data-segments]').forEach((root) => {
     const set = (id: string) => {
       root.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== id; });
       root.querySelectorAll<HTMLElement>('[data-tab]').forEach((t) => {
         const on = t.dataset.tab === id;
-        if (t.getAttribute('role') === 'tab') t.setAttribute('aria-selected', String(on));
+        if (t.getAttribute('role') === 'tab') { t.setAttribute('aria-selected', String(on)); on ? t.setAttribute('aria-current', 'true') : t.removeAttribute('aria-current'); }
         else t.setAttribute('aria-pressed', String(on));
-        on ? t.setAttribute('aria-current', 'true') : t.removeAttribute('aria-current');
       });
     };
     root.querySelectorAll<HTMLElement>('[data-tab]').forEach((t) => {
-      const go = (e: Event) => { e.preventDefault(); set(t.dataset.tab!); };
-      t.addEventListener('click', go);
+      t.addEventListener('click', (e) => { if (t.getAttribute('role') === 'tab' && t.getAttribute('aria-selected') === 'true') return; e.preventDefault(); set(t.dataset.tab!); });
       if (t.getAttribute('role') === 'tab') t.addEventListener('pointerenter', () => set(t.dataset.tab!));
     });
   });
+
+  // Plątanina → porządek: jeden zestaw pigułek wyrównuje się w miarę scrollowania (scrub).
+  const stage = document.querySelector<HTMLElement>('[data-untangle]');
+  if (stage && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.registerPlugin(ScrollTrigger);
+    const lenis = (window as any).__lenis;
+    if (lenis) lenis.on('scroll', ScrollTrigger.update);
+    stage.classList.add('is-animated');
+    const k = innerWidth < 700 ? 0.45 : 1;
+    const tags = [...stage.querySelectorAll<HTMLElement>('.tag')];
+    const tl = gsap.timeline({ scrollTrigger: { trigger: stage, start: 'top 75%', end: 'bottom 45%', scrub: 0.8 } });
+    tags.forEach((t) => tl.fromTo(t, { x: Number(t.dataset.x) * k, y: Number(t.dataset.y) * k, rotate: Number(t.dataset.r) }, { x: 0, y: 0, rotate: 0, ease: 'power2.inOut', duration: 1 }, 0));
+    tl.fromTo(stage.querySelector('.home-tangle__chaos'), { opacity: 1 }, { opacity: 0, duration: 0.7, ease: 'none' }, 0.25);
+    tl.fromTo(stage.querySelector('.home-tangle__calm'), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'none' }, 0.4);
+  }
 </script>

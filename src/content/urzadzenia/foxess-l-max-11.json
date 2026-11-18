@@ -1,0 +1,47 @@
+{
+  "nazwa": "FoxESS EV Charger L MAX 11 kW",
+  "producent": "FoxESS",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "11 kW"
+  ],
+  "zlacze": "Kabel Typ 2, 5 m",
+  "ip": "IP55 / IK08",
+  "opis": "Trójfazowa ładowarka z kablem 5 m i przełączaniem faz 1↔3, która współpracuje z falownikiem FoxESS — idealna do domu z fotowoltaiką.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "11 kW (3-faz.)"
+    },
+    {
+      "nazwa": "Przewód",
+      "wartosc": "5 m"
+    },
+    {
+      "nazwa": "Przełączanie faz",
+      "wartosc": "1 ↔ 3"
+    },
+    {
+      "nazwa": "Fotowoltaika",
+      "wartosc": "współpraca z falownikiem FoxESS"
+    },
+    {
+      "nazwa": "Szczelność",
+      "wartosc": "IP55 / IK08"
+    },
+    {
+      "nazwa": "Gwarancja",
+      "wartosc": "2 lata"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 27
+}

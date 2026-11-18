@@ -12,37 +12,49 @@
 .home-hero__lead { max-width: 34rem; color: var(--emerald-950); }
 .home-hero__lead strong { font-weight: var(--fw-semibold); }
 .home-hero__chips .chip { padding-left: 0; }
-.home-hero__aside { display: none; }
+.home-hero__grid { position: relative; }
+.home-hero__glass { display: none; }
 .home-hero__visual { position: relative; }
-.home-hero__ring, .home-hero__cutout { display: none; }
-.home-hero__down { position: absolute; left: 0; bottom: 0; z-index: 3; }
+.home-hero__cutout, .home-hero__wrap { display: none; }
+/* Przycisk ↓ = dolna część najwęższego pasa maski (ta sama szerokość, dół zaokrąglony jak pas, góra prawie prosta) */
+.home-hero__down {
+  position: absolute; left: 0; bottom: 0; z-index: 3;
+  display: grid; place-items: center;
+  width: calc((100% - 4 * var(--grid-gap)) / 32); min-width: 1.75rem; height: clamp(3.25rem, 2.5rem + 2vw, 4.5rem);
+  border-radius: var(--r-xs) var(--r-xs) var(--r-xl) var(--r-xl);
+  background: var(--emerald-600); color: var(--emerald-0); text-decoration: none;
+  transition: background-color var(--dur), height .4s cubic-bezier(.22, 1, .36, 1);
+}
+.home-hero__down svg { width: min(1.25rem, 70%); height: auto; }
+.home-hero__down:hover { background: var(--emerald-700); height: clamp(3.75rem, 3rem + 2vw, 5rem); }
+@media (max-width: 639px) { .home-hero__down { border-radius: var(--r-xs) var(--r-xs) var(--r-lg) var(--r-lg); } }
 
 @media (min-width: 900px) {
   .home-hero__grid { grid-template-columns: 1.06fr .94fr; }
   .home-hero__copy { grid-column: 1; grid-row: 1; min-height: clamp(22rem, 12rem + 14vw, 27rem); }
-  .home-hero__aside { display: block; grid-column: 2; grid-row: 1; border-radius: var(--r-xl); background: rgb(237 248 240 / .7); }
+  /* Górny rząd „rdzeni” — matowe szkło, odwrócony kierunek (najgrubszy po lewej, za postacią) */
+  .home-hero__glass { display: flex; gap: var(--grid-gap); grid-column: 2; grid-row: 1; }
+  .home-hero__glass span { flex: var(--w) 0 0; border-radius: var(--r-xl); background: linear-gradient(180deg, rgb(205 235 213 / .75), rgb(230 243 234 / .5)); border: 1px solid rgb(255 255 255 / .8); box-shadow: inset 0 1px 0 rgb(255 255 255 / .8); backdrop-filter: blur(10px); }
   .home-hero__visual { grid-column: 1 / -1; grid-row: 2; }
   /* Wycięta postać leży dokładnie na zdjęciu z pasów (ta sama skala i dół) i „wychodzi” ponad nie */
   .home-hero__cutout { display: block; position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: auto; z-index: 2; pointer-events: none; }
-  /* Zamknięta pętla kabla wokół postaci — bez początku i końca, nigdy nad tekstem */
-  .home-hero__ring { display: block; position: absolute; z-index: 3; left: 47%; width: 50%; max-width: none; height: auto; aspect-ratio: 800 / 420; bottom: 20%; }
+  /* Kabel oplatający postać — jedna ścieżka na pierwszym planie, oba końce za prawą krawędzią ekranu */
+  .home-hero__wrap { display: block; position: absolute; z-index: 4; left: 50%; right: calc(-1 * var(--gutter) - 2px); bottom: 0; top: 0; width: auto; height: 100%; max-width: none; pointer-events: none; }
 }
 
 /* ── 2 | Problem — plątanina ─────────────────────────────── */
 .home-problem { padding-bottom: 0; }
 .home-problem__down { margin-top: var(--space-2); width: 3.5rem; padding: 0; }
-.home-tangle { position: relative; margin-top: var(--space-4); min-height: clamp(16rem, 10rem + 14vw, 24rem); display: grid; place-items: center; overflow: hidden; }
-.home-tangle__cable { left: -4%; top: 50%; translate: 0 -50%; width: 108%; max-width: none; height: auto; }
-.home-tangle__tags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4) var(--space-3); max-width: 58rem; padding: var(--space-6) var(--gutter); list-style: none; }
-.home-tangle__tags { gap: var(--space-5) var(--space-4); }
-.home-tangle__tags .tag { transform: translateY(calc(var(--row, 0) * .5rem - .5rem)) rotate(var(--rot, 0deg)); box-shadow: 0 10px 24px -12px rgb(10 16 14 / .45); }
-@media (max-width: 699px) { .home-tangle__tags .tag { transform: rotate(calc(var(--rot, 0deg) * .4)); } }
+.home-tangle { position: relative; margin-top: var(--space-6); min-height: clamp(16rem, 10rem + 14vw, 24rem); display: grid; place-items: center; overflow: hidden; }
+.home-tangle > .cable { position: absolute; left: 0; top: 50%; translate: 0 -50%; width: 100%; max-width: none; height: auto; }
+.home-tangle__chaos { opacity: 0; }  /* bez JS: od razu stan uporządkowany */
+.home-tangle.is-animated .home-tangle__chaos { opacity: 1; }
+.home-tangle.is-animated .home-tangle__calm { opacity: 0; }
+.home-tangle__tags { position: relative; z-index: 1; max-width: 58rem; padding: var(--space-6) var(--gutter); }
+.home-tangle__tags .tag { box-shadow: 0 10px 24px -12px rgb(10 16 14 / .45); will-change: transform; }
 
 /* ── 3 | Rozwiązanie — rozplątane ───────────────────────── */
-.home-solution { padding-top: var(--space-6); }
-.home-untangled { position: relative; display: grid; place-items: center; min-height: clamp(7rem, 4rem + 9vw, 13rem); margin-bottom: var(--space-7); }
-.home-untangled > .cable-band { position: absolute; top: 50%; left: 50%; translate: -50% -50%; margin: 0; }
-.home-untangled__tags { position: relative; z-index: 1; padding-inline: max(var(--gutter), calc(50% - 27rem)); }
+.home-solution { padding-top: var(--space-7); }
 
 .home-solution__title { margin: 0 0 var(--space-8); font-size: clamp(2rem, 1rem + 2.8vw, 3.5rem); line-height: 1.14; }
 .home-solution__a { color: var(--emerald-950); }
@@ -63,9 +75,4 @@
 .home-segments__switch .segment__item[aria-pressed="true"] { background: var(--emerald-50); box-shadow: inset 4px 0 0 0 var(--emerald-500); }
 @media (min-width: 900px) {
   .home-segments { grid-template-columns: 1fr 1fr; }
-  /* Figma: kafelki „schodkami” pod zdjęciem */
-  .home-segments__switch { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; }
-  .home-segments__switch li:nth-child(1) { transform: translateY(0); }
-  .home-segments__switch li:nth-child(2) { transform: translateY(-.75rem); }
-  .home-segments__switch li:nth-child(3) { transform: translateY(-1.5rem); }
 }

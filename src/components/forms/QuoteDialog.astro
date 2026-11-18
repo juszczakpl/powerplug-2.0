@@ -1,0 +1,15 @@
+---
+// Kalkulator jako okno dialogowe — otwierany z każdego linku do /wycena/ (i przycisków [data-wycena]).
+import QuoteForm from './QuoteForm.astro';
+import Icon from '../ui/Icon.astro';
+---
+<dialog class="quote-dialog" aria-labelledby="quote-dialog-title" data-quote-dialog>
+  <div class="quote-dialog__head">
+    <div>
+      <p class="t-eyebrow">Kalkulator wyceny</p>
+      <h2 id="quote-dialog-title" class="t-h4">Policz orientacyjny koszt w minutę</h2>
+    </div>
+    <button type="button" class="btn-icon btn-icon--lg quote-dialog__close" data-quote-close><Icon name="close" /><span class="sr-only">Zamknij</span></button>
+  </div>
+  <QuoteForm id="qd" />
+</dialog>

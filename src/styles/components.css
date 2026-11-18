@@ -219,7 +219,7 @@
 .word-stack { display: flex; flex-direction: column; list-style: none; padding: 0; font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: var(--fs-display); line-height: 1; letter-spacing: var(--tracking-display); }
 .word-stack a, .word-stack span { display: inline-flex; align-items: center; gap: .3em; color: var(--gray-300); text-decoration: none; transition: color var(--dur); }
 .word-stack a:hover, .word-stack [aria-current="true"] { color: var(--emerald-800); }
-.word-stack [aria-current="true"]::before { content: "→"; font-size: .55em; }
+.word-stack [aria-current="true"]::before { content: ""; flex: none; width: .5em; height: .42em; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 50'%3E%3Cpath d='M0 18h34V0l26 25-26 25V32H0z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 50'%3E%3Cpath d='M0 18h34V0l26 25-26 25V32H0z'/%3E%3C/svg%3E") center / contain no-repeat; } /* kanciasta strzałka w duchu Neulis */
 
 /* Pasek CTA */
 .cta-band { display: grid; gap: var(--space-5); align-items: center; padding: clamp(1.5rem, 1rem + 3vw, 3.5rem); border-radius: var(--r-md); background: var(--emerald-900); color: var(--emerald-25); overflow: hidden; position: relative; isolation: isolate; }

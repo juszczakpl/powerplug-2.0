@@ -1,0 +1,20 @@
+---
+// Domknięcie strony: zachęta + formularz oddzwonienia + telefon.
+import CallbackForm from '../forms/CallbackForm.astro';
+import Icon from '../ui/Icon.astro';
+import { firma } from '../../lib/firma';
+interface Props { title?: string; accent?: string; text?: string; zrodlo?: string }
+const { title = 'Nie wiesz, od czego zacząć?', accent = 'Oddzwonimy.', text = 'Zostaw imię i numer — porozmawiamy o Twoim miejscu, samochodzie i instalacji. Bez zobowiązań.', zrodlo } = Astro.props;
+---
+<section class="section" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-band cta-band--form">
+      <div class="stack" style="--stack:var(--space-4)">
+        <h2 id="cta-title" class="t-h3">{title} <span class="t-accent">{accent}</span></h2>
+        <p class="t-body-l" style="color:rgb(243 248 244 / .82)">{text}</p>
+        <p class="cta-band__phone"><Icon name="phone" /> <a href={firma.telefonHref}>{firma.telefon.replace('+48 ', '')}</a><span>{firma.godziny}</span></p>
+      </div>
+      <CallbackForm id={`cta-${zrodlo ?? 'x'}`} dark zrodlo={zrodlo} />
+    </div>
+  </div>
+</section>

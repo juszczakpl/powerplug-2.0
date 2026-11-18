@@ -1,0 +1,52 @@
+---
+// „Sześć kroków do pełnego ładowania” — kroki = usługi (Figma 104:1968). Zakładki 1–6 + panel.
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { uslugi } from '../../data/uslugi';
+interface Props { id?: string; naglowek?: boolean }
+const { id = 'proces', naglowek = true } = Astro.props;
+---
+<section id={id} class="section" aria-labelledby={`${id}-title`}>
+  <div class="container steps" data-steps>
+    {naglowek && (
+      <div class="section-head section-head--center">
+        <p class="t-eyebrow">Poznaj nasz proces <Icon name="arrow-down" size={16} /></p>
+        <h2 id={`${id}-title`} class="t-h2">Sześć kroków do pełnego ładowania. Zero niespodzianek po drodze.</h2>
+      </div>
+    )}
+    <ol class="steps-nav" role="tablist" aria-label="Kroki procesu">
+      {uslugi.map((u, i) => (
+        <li role="presentation"><button type="button" role="tab" id={`${id}-tab-${i}`} aria-controls={`${id}-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}><span class="step-num step-num--lg">{i + 1}</span><span class="sr-only">{u.nazwa}</span></button></li>
+      ))}
+    </ol>
+    {uslugi.map((u, i) => (
+      <div class="step-panel" id={`${id}-panel-${i}`} role="tabpanel" aria-labelledby={`${id}-tab-${i}`} hidden={i !== 0}>
+        <div class="media"><Image src={u.foto} alt={u.fotoAlt} widths={[480, 800, 1100]} sizes="(min-width: 900px) 50vw, 100vw" /></div>
+        <div class="step-panel__body">
+          <div class="step-panel__head"><span class="step-num">{i + 1}</span><h3 class="t-h3">{u.nazwa}</h3></div>
+          <p class="t-body-l">{u.krok}</p>
+          <p class="t-body t-muted">{u.lead}</p>
+          <a class="btn btn--text" href={u.href}>Więcej o: {u.nazwa.toLowerCase()} <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-steps]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const set = (k: number, focus = false) => {
+      tabs.forEach((t, i) => { t.setAttribute('aria-selected', String(i === k)); t.tabIndex = i === k ? 0 : -1; });
+      panels.forEach((p, i) => { p.hidden = i !== k; if (i === k) { p.classList.add('is-in'); } });
+      if (focus) tabs[k].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => set(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') set((i + 1) % tabs.length, true);
+        if (e.key === 'ArrowLeft') set((i - 1 + tabs.length) % tabs.length, true);
+      });
+    });
+  });
+</script>

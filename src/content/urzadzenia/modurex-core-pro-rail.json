@@ -1,0 +1,37 @@
+{
+  "nazwa": "ModuREX Core Pro Rail",
+  "producent": "ModuREX",
+  "typ": "akcesorium",
+  "kategorie": [
+    "slupki"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [],
+  "zlacze": "—",
+  "ip": "IP44 / IK10",
+  "opis": "Modułowy słupek na 1–4 ładowarki dowolnej marki, z szyną DIN na zabezpieczenia.",
+  "parametry": [
+    {
+      "nazwa": "Stacje",
+      "wartosc": "1–4, dowolna marka"
+    },
+    {
+      "nazwa": "Szyna DIN",
+      "wartosc": "4 × 6 modułów"
+    },
+    {
+      "nazwa": "Zaciski",
+      "wartosc": "do 35 mm²"
+    },
+    {
+      "nazwa": "Szczelność",
+      "wartosc": "IP44 / IK10"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 44
+}

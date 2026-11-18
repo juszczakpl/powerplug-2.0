@@ -1,0 +1,33 @@
+{
+  "nazwa": "ModuREX Core Ground Base",
+  "producent": "ModuREX",
+  "typ": "akcesorium",
+  "kategorie": [
+    "slupki"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [],
+  "zlacze": "—",
+  "ip": null,
+  "opis": "Prefabrykowany fundament ze stali ocynkowanej pod słupki ModuREX — montaż w 1–2 minuty.",
+  "parametry": [
+    {
+      "nazwa": "Materiał",
+      "wartosc": "stal ocynkowana"
+    },
+    {
+      "nazwa": "Masa",
+      "wartosc": "6,6 kg"
+    },
+    {
+      "nazwa": "Montaż",
+      "wartosc": "1–2 min"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 45
+}

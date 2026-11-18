@@ -1,0 +1,17 @@
+---
+// Okruszki + BreadcrumbList (JSON-LD). Ostatni element = bieżąca strona.
+interface Props { items: { label: string; href?: string }[] }
+const { items } = Astro.props;
+const all = [{ label: 'Start', href: '/' }, ...items];
+const site = Astro.site ?? new URL('https://powerplug.pl');
+const ld = {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: all.map((i, n) => ({ '@type': 'ListItem', position: n + 1, name: i.label, ...(i.href ? { item: new URL(i.href, site).href } : {}) })),
+};
+---
+<nav class="breadcrumbs" aria-label="Okruszki">
+  <ol>
+    {all.map((i, n) => <li>{i.href && n < all.length - 1 ? <a href={i.href}>{i.label}</a> : <span aria-current="page">{i.label}</span>}</li>)}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />

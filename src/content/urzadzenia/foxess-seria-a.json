@@ -1,0 +1,49 @@
+{
+  "nazwa": "FoxESS EV Charger seria A 11/22 kW",
+  "producent": "FoxESS",
+  "typ": "ladowarka",
+  "kategorie": [
+    "dom",
+    "firma"
+  ],
+  "cena": null,
+  "dostepnosc": "dostepny",
+  "widoczny": true,
+  "polecany": false,
+  "moc": [
+    "11 kW",
+    "22 kW"
+  ],
+  "zlacze": "Typ 2",
+  "ip": "IP65 / IK08",
+  "opis": "Ładowarka z kablem 6 m lub gniazdem, przekładnikami prądowymi bez dodatkowego licznika i protokołem OCPP. Opcjonalnie 4G i ISO 15118.",
+  "parametry": [
+    {
+      "nazwa": "Moc",
+      "wartosc": "11 / 22 kW"
+    },
+    {
+      "nazwa": "Wersje",
+      "wartosc": "kabel 6 m lub gniazdo"
+    },
+    {
+      "nazwa": "Pomiar",
+      "wartosc": "przekładniki CT bez dodatkowego licznika"
+    },
+    {
+      "nazwa": "Protokół",
+      "wartosc": "OCPP 1.6J / 2.0.1"
+    },
+    {
+      "nazwa": "Opcje",
+      "wartosc": "4G, ISO 15118"
+    },
+    {
+      "nazwa": "Szczelność",
+      "wartosc": "IP65 / IK08"
+    }
+  ],
+  "zdjecia": [],
+  "karta_pdf": null,
+  "kolejnosc": 28
+}
