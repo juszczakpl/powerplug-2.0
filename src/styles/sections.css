@@ -202,3 +202,13 @@
 .slider .testimonial__card { justify-content: flex-start; gap: var(--space-5); }
 .slider .testimonial__card .slider-controls { margin-top: auto; padding-top: var(--space-3); }
 @media (max-width: 767px) { .slider .testimonial .media { aspect-ratio: 4 / 3; min-height: 0; } }
+/* Formularz oddzwonienia: duet przycisków jak w nagłówku (odstęp 6px), wyrównany do prawej krawędzi ostatniego pola */
+.callback-form__actions { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.callback-form__actions .btn:not(.btn--primary) svg { display: none; }
+@media (max-width: 519px) {
+  .callback-form__actions { justify-content: flex-start; flex-wrap: nowrap; }
+  .callback-form__actions .btn--primary { flex: 1 1 auto; }
+  .callback-form__actions .btn:not(.btn--primary) { flex: none; aspect-ratio: 1; padding: 0; justify-content: center; }
+  .callback-form__actions .btn:not(.btn--primary) svg { display: block; }
+  .callback-form__actions .btn:not(.btn--primary) span { display: none; }
+}

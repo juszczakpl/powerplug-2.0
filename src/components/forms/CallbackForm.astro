@@ -1,6 +1,7 @@
 ---
 // Formularz „Poproś o kontakt” (Imię + Telefon) — zatwierdzony zamiast lead magnetu.
 import Icon from '../ui/Icon.astro';
+import { firma } from '../../lib/firma';
 interface Props { id?: string; dark?: boolean; zrodlo?: string }
 const { id = 'oddzwon', dark = false, zrodlo = '' } = Astro.props;
 ---
@@ -13,6 +14,9 @@ const { id = 'oddzwon', dark = false, zrodlo = '' } = Astro.props;
     <div class="field"><label class="field__label" for={`${id}-tel`}>Telefon</label><input class="input" id={`${id}-tel`} name="telefon" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9 +()\-]{9,}" /></div>
   </div>
   <p class="field__help">Oddzwonimy w godzinach pracy — zwykle tego samego dnia roboczego.</p>
-  <button class="btn btn--primary btn--lg" type="submit"><Icon name="plus" /><span>Poproś o kontakt</span></button>
+  <div class="callback-form__actions">
+    <button class="btn btn--primary btn--lg" type="submit"><Icon name="plus" /><span>Poproś o kontakt</span></button>
+    <a class:list={['btn btn--lg', dark ? 'btn--light' : 'btn--secondary']} href={firma.telefonHref} aria-label={`Zadzwoń: ${firma.telefon}`}><Icon name="phone" /><span>Zadzwoń</span></a>
+  </div>
   <div class="form__status" role="status" aria-live="polite"></div>
 </form>
