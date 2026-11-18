@@ -95,8 +95,12 @@ const ld = {
         <a class="home-hero__down" href="#problem"><Icon name="arrow-down" /><span class="sr-only">Przewiń do następnej sekcji</span></a>
       </div>
       <!-- Kabel oplatający bohatera: jedna ścieżka na pierwszym planie, końce poza krawędzią ekranu -->
-      <svg class="cable home-hero__wrap" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMax meet" data-draw aria-hidden="true" focusable="false" style="--draw-dur:2.4s;--draw-delay:.5s">
-        <path pathLength="1" d="M1130 430 C 930 360, 600 300, 400 400 C 200 500, 250 660, 480 670 C 720 680, 930 610, 1130 590" />
+      <!-- Kabel oplatający bohatera: tylna część za wycięciem (z-1), przednie odcinki nad nim (z-4) -->
+      <svg class="cable home-hero__wrap home-hero__wrap--back" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMax meet" data-draw aria-hidden="true" focusable="false" style="--draw-dur:2.6s;--draw-delay:.5s">
+        <path pathLength="1" d="M1130 260 C 850 300, 450 560, 230 740 C 180 780, 130 810, 140 840 C 150 870, 200 875, 300 872 C 500 866, 680 880, 800 888 C 920 896, 1020 905, 1130 920" />
+      </svg>
+      <svg class="cable home-hero__wrap" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMax meet" data-draw aria-hidden="true" focusable="false" style="--draw-dur:2.6s;--draw-delay:.5s">
+        <path pathLength="1" d="M1130 260 C 850 300, 450 560, 230 740 C 180 780, 130 810, 140 840" />
       </svg>
     </div>
   </section>
