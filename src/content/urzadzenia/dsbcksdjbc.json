@@ -4,7 +4,7 @@
   "typ": "ladowarka",
   "cena": 2300,
   "dostepnosc": "na-zamowienie",
-  "widoczny": false,
+  "widoczny": true,
   "polecany": false,
   "kolejnosc": 100
 }
