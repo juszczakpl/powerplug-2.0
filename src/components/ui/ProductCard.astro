@@ -25,6 +25,6 @@ const [statusLabel, statusClass] = statusy[status];
   </div>
   <div class="card__footer">
     <p class="price"><small>{price == null ? 'Cena' : 'Cena brutto'}</small>{price == null ? 'indywidualna' : `od ${price.toLocaleString('pl-PL')} zł`}</p>
-    <a href={slug ? `/wycena/?urzadzenie=${slug}` : `${href}#zapytanie`} data-wycena-urzadzenie={slug} class="btn btn--primary btn--sm" style="position:relative;z-index:2" aria-label={`Wyceń ${brand} ${name}`}><Icon name="plus" /><span>Wyceń</span></a>
+    <a href={href} class="btn btn--primary btn--dark btn--sm" style="position:relative;z-index:2" aria-label={`Więcej o ${brand ?? ''} ${name}`.replace('  ', ' ')}><Icon name="plus" /><span>Więcej</span></a>
   </div>
 </article>

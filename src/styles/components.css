@@ -23,6 +23,10 @@
 .btn--primary > svg:first-child { --pad: 5px; box-sizing: border-box; width: calc(var(--btn-h) - 2 * var(--pad)); height: calc(var(--btn-h) - 2 * var(--pad)); padding: calc((var(--btn-h) - 2 * var(--pad)) * .24); margin-left: calc(var(--pad) - 1.75rem); border-radius: 50%; background: transparent; border: 2px solid currentColor; color: var(--emerald-950); transition: transform .2s var(--ease-out, ease); } /* outline, nie solid */
 .btn--primary:hover > svg:first-child { transform: rotate(90deg); }
 .btn--primary:hover { background: var(--emerald-400); border-color: var(--emerald-400); }
+/* Half-pill w wersji czarnej (np. „Więcej” na kartach produktów) */
+.btn--primary.btn--dark { background: var(--emerald-950); border-color: var(--emerald-950); color: var(--emerald-0); }
+.btn--primary.btn--dark > svg:first-child { color: var(--emerald-0); }
+.btn--primary.btn--dark:hover { background: var(--emerald-800); border-color: var(--emerald-800); }
 /* Secondary = prostokąt z minimalnym zaokrągleniem — [Figma] emerald-950 / biały, r 3px */
 .btn--secondary { background: var(--emerald-950); color: var(--emerald-0); border-radius: var(--r-btn); font-weight: var(--fw-medium); padding-inline: 1rem; }
 .btn--secondary:hover { background: var(--emerald-800); }

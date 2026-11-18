@@ -213,3 +213,6 @@
   .callback-form__actions .btn:not(.btn--primary) svg { display: block; }
   .callback-form__actions .btn:not(.btn--primary) span { display: none; }
 }
+/* Katalog: karty w rzędzie równej wysokości, cena i „Więcej” zawsze na dole */
+.catalog [data-item]:not([hidden]) { display: flex; }
+.catalog [data-item] > .product-card { flex: 1; }
