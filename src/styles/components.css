@@ -109,6 +109,18 @@
   .site-header.is-compact .site-header__actions .btn--primary > span { max-width: 0; opacity: 0; }
   .site-header.is-compact .site-header__actions .btn--primary > svg:first-child { margin-left: 0; }
 }
+/* Zwinięty nagłówek: najechanie (lub fokus) rozwija z powrotem — „=” → pełna kapsuła menu, „+” → „Bezpłatna wycena” */
+@media (hover: hover) and (min-width: 1200px) {
+  .site-header.is-compact .nav-pill:is(:hover, :focus-within) .nav-pill__nav { grid-template-columns: 1fr; opacity: 1; visibility: visible; transition: grid-template-columns var(--hdr-dur) var(--hdr-ease), opacity .35s ease .08s, visibility 0s; }
+  .site-header.is-compact .nav-pill:is(:hover, :focus-within) { gap: var(--pill-gap); }
+  .site-header.is-compact .nav-pill:is(:hover, :focus-within) .nav-pill__logo { margin-right: 0; }
+  .site-header.is-compact .nav-pill:is(:hover, :focus-within) .nav-toggle--auto { width: 0; margin-left: calc(-1 * var(--pill-gap)); opacity: 0; transform: scale(.4) rotate(-90deg); pointer-events: none; }
+}
+@media (hover: hover) and (min-width: 720px) {
+  .site-header.is-compact .site-header__actions .btn--primary:is(:hover, :focus-visible) { padding: 0 1.5rem 0 1.75rem; gap: .5rem; }
+  .site-header.is-compact .site-header__actions .btn--primary:is(:hover, :focus-visible) > span { max-width: 14em; opacity: 1; }
+  .site-header.is-compact .site-header__actions .btn--primary:is(:hover, :focus-visible) > svg:first-child { margin-left: calc(5px - 1.75rem); }
+}
 @media (prefers-reduced-motion: reduce) { .nav-pill__nav, .nav-toggle--auto, .site-header__actions .btn--primary, .site-header__actions .btn--primary > span { transition: none !important; } }
 
 /* Menu pełnoekranowe (mobile + wariant „=” na desktopie) */
