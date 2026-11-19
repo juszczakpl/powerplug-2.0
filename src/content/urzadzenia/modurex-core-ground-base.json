@@ -5,13 +5,11 @@
   "kategorie": [
     "slupki"
   ],
-  "cena": null,
+  "cena": 524,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": null,
   "opis": "Prefabrykowany fundament ze stali ocynkowanej pod słupki ModuREX — montaż w 1–2 minuty.",
   "parametry": [
     {
@@ -27,7 +25,5 @@
       "wartosc": "1–2 min"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 45
 }
