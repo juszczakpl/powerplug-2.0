@@ -5,13 +5,11 @@
   "kategorie": [
     "zarzadzanie"
   ],
-  "cena": null,
+  "cena": 1399,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": null,
   "opis": "Moduł zarządzania obciążeniem: dzieli moc między dom i ładowarki, współpracuje z fotowoltaiką i pokazuje zużycie energii.",
   "parametry": [
     {
@@ -27,7 +25,5 @@
       "wartosc": "zużycie energii w aplikacji"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 40
 }
