@@ -6,16 +6,12 @@
     "firma",
     "publiczne"
   ],
-  "cena": null,
+  "cena": 5499,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
-  "moc": [
-    "1,4–22 kW"
-  ],
   "zlacze": "Typ 2",
-  "ip": null,
-  "opis": "Stacja dla biznesu: przełączanie faz 1↔3, licznik MID klasy B i do 101 ładowarek w jednym obwodzie.",
+  "opis": "Stacja dla biznesu: przełączanie faz 1↔3, licznik MID klasy B i do 101 ładowarek w jednym obwodzie. Zgodność z wymaganiami komunikacyjnymi EN ISO 15118-20:2022 dla prywatnych punktów ładowania.",
   "parametry": [
     {
       "nazwa": "Moc",
@@ -42,7 +38,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 23
 }
