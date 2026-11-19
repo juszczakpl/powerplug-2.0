@@ -7,7 +7,7 @@
     "firma"
   ],
   "cena": 3699,
-  "dostepnosc": "dostepny",
+  "dostepnosc": "na-zamowienie",
   "widoczny": true,
   "polecany": false,
   "moc": [
@@ -15,8 +15,6 @@
   ],
   "zlacze": "Typ 2",
   "ip": "IP54",
-  "opis": "",
-  "parametry": [],
   "zdjecia": [
     "/uploads/vool-charger-22kw.png"
   ],
