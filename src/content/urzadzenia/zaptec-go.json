@@ -5,7 +5,7 @@
   "kategorie": [
     "dom"
   ],
-  "cena": 3699,
+  "cena": 3199,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
@@ -14,9 +14,6 @@
   ],
   "zlacze": "Typ 2",
   "ip": "IP54",
-  "opis": "",
-  "parametry": [],
-  "zdjecia": [],
   "karta_pdf": "/pliki/zaptec-go.pdf",
   "kolejnosc": 7
 }
