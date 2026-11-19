@@ -1,11 +1,11 @@
 {
-  "nazwa": "Kabel Typ 2 32 A 22 kW — 5 / 7 / 10 m",
+  "nazwa": "Kabel S-Line Typ 2 32A 22kW — 7m",
   "producent": "S-Line",
   "typ": "akcesorium",
   "kategorie": [
     "kable"
   ],
-  "cena": null,
+  "cena": 739,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
@@ -18,7 +18,7 @@
   "parametry": [
     {
       "nazwa": "Długość",
-      "wartosc": "5 / 7 / 10 m"
+      "wartosc": "7m"
     },
     {
       "nazwa": "Prąd",
@@ -41,7 +41,5 @@
       "wartosc": "2 lata"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 47
 }
