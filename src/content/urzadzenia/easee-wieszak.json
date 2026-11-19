@@ -5,13 +5,10 @@
   "kategorie": [
     "uchwyty"
   ],
-  "cena": null,
-  "dostepnosc": "dostepny",
+  "dostepnosc": "na-zamowienie",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": null,
   "opis": "Wieszak na przewód do ładowania Typ 2 — porządek w garażu i na podjeździe.",
   "parametry": [
     {
@@ -19,7 +16,5 @@
       "wartosc": "przewody Typ 2"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 43
 }
