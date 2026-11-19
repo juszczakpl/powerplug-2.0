@@ -6,7 +6,7 @@
     "dom",
     "firma"
   ],
-  "cena": null,
+  "cena": 4199,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
@@ -14,7 +14,6 @@
     "22 kW"
   ],
   "zlacze": "Typ 2",
-  "ip": null,
   "opis": "Kompaktowa stacja z obsługą Equalizera i rozliczeń biznesowych — sprawdza się w domu i w firmie, w systemach liczących ponad 100 stacji.",
   "parametry": [
     {
@@ -42,7 +41,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 21
 }
