@@ -5,13 +5,11 @@
   "kategorie": [
     "slupki"
   ],
-  "cena": null,
-  "dostepnosc": "dostepny",
+  "cena": 1319,
+  "dostepnosc": "na-zamowienie",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": null,
   "opis": "Słupek z aluminium i stali nierdzewnej na jedną lub dwie stacje Easee, z wieszakami na kable.",
   "parametry": [
     {
@@ -27,7 +25,5 @@
       "wartosc": "do 25 mm²"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 42
 }
