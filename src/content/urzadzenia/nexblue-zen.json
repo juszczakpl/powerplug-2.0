@@ -5,13 +5,11 @@
   "kategorie": [
     "zarzadzanie"
   ],
-  "cena": null,
+  "cena": 899,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": null,
   "opis": "Inteligentny licznik i load balancer na szynę DIN — do 80 A albo do 1500 A z cewkami Rogowskiego.",
   "parametry": [
     {
@@ -27,7 +25,5 @@
       "wartosc": "3 lata"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 41
 }
