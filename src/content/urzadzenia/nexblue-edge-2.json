@@ -5,16 +5,16 @@
   "kategorie": [
     "dom"
   ],
-  "cena": null,
+  "cena": 3192,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
   "moc": [
-    "1,4–22 kW"
+    "22 kW"
   ],
   "zlacze": "Gniazdo Typ 2",
-  "ip": "IP54 / IK10",
-  "opis": "Stacja do domu i małych obiektów z gniazdem Typ 2, obsługą V2G i ISO 15118 oraz współpracą z fotowoltaiką. Do 5 jednostek w obwodzie.",
+  "ip": "IP54/IK10",
+  "opis": "Stacja do domu i małych obiektów z gniazdem Typ 2, obsługą V2G i ISO 15118 oraz współpracą z fotowoltaiką. Do 5 jednostek w obwodzie. Zgodność z wymaganiami komunikacyjnymi EN ISO 15118-20:2022 dla prywatnych punktów ładowania.",
   "parametry": [
     {
       "nazwa": "Moc",
@@ -45,7 +45,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 25
 }
