@@ -5,7 +5,7 @@
   "kategorie": [
     "firma"
   ],
-  "cena": null,
+  "cena": 4299,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
@@ -13,8 +13,7 @@
     "22 kW"
   ],
   "zlacze": "Typ 2",
-  "ip": null,
-  "opis": "Stacja z licznikiem MID do rozliczeń energii — do 3 stacji w jednym obwodzie.",
+  "opis": "Stacja z licznikiem MID do rozliczeń energii — do 3 stacji w jednym obwodzie. Zgodność z wymaganiami komunikacyjnymi EN ISO 15118-20:2022 dla prywatnych punktów ładowania.",
   "parametry": [
     {
       "nazwa": "Moc",
@@ -37,7 +36,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 22
 }
