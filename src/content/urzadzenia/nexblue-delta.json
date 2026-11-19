@@ -6,16 +6,16 @@
     "firma",
     "publiczne"
   ],
-  "cena": null,
+  "cena": 3799,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
   "moc": [
-    "1,4–22 kW"
+    "22 kW"
   ],
   "zlacze": "Typ 2",
-  "ip": "IP54 / IK10",
-  "opis": "Stacja premium dla obiektów komercyjnych — V2G, ISO 15118, OCPP i ponad 100 jednostek w jednym obwodzie.",
+  "ip": "IP54/IK10",
+  "opis": "Stacja premium dla obiektów komercyjnych — V2G, ISO 15118, OCPP i ponad 100 jednostek w jednym obwodzie.  Zgodność z wymaganiami komunikacyjnymi EN ISO 15118-20:2022 dla prywatnych punktów ładowania.",
   "parametry": [
     {
       "nazwa": "Moc",
@@ -42,7 +42,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 26
 }
