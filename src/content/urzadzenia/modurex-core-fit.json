@@ -5,13 +5,11 @@
   "kategorie": [
     "slupki"
   ],
-  "cena": null,
+  "cena": 199,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": null,
   "opis": "Adapter dopasowujący słupek ModuREX do konkretnego modelu stacji — dostępny do wszystkich stacji z naszej oferty.",
   "parametry": [
     {
@@ -19,7 +17,5 @@
       "wartosc": "wszystkie stacje z oferty PowerPlug"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 46
 }
