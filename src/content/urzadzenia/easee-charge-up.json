@@ -5,7 +5,7 @@
   "kategorie": [
     "dom"
   ],
-  "cena": null,
+  "cena": 3199,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
@@ -14,7 +14,6 @@
     "22 kW"
   ],
   "zlacze": "Typ 2",
-  "ip": null,
   "opis": "Kompaktowa stacja do domu z łącznością Wi-Fi, Bluetooth i eSIM LTE. Easee Link równoważy obciążenie i fazy, a całością sterujesz z aplikacji.",
   "parametry": [
     {
@@ -46,7 +45,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 20
 }
