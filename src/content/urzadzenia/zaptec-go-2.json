@@ -6,7 +6,7 @@
     "dom",
     "firma"
   ],
-  "cena": null,
+  "cena": 4249,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
@@ -14,8 +14,8 @@
     "22 kW"
   ],
   "zlacze": "Typ 2",
-  "ip": "IP54 / IK10",
-  "opis": "Nowa generacja Zaptec Go: licznik MID, wyświetlacz IPS, przełączanie 1/3 faz pod fotowoltaikę i sprzętowa gotowość na V2G.",
+  "ip": "IP54/IK10",
+  "opis": "Nowa generacja Zaptec Go: licznik MID, wyświetlacz IPS, przełączanie 1/3 faz pod fotowoltaikę i sprzętowa gotowość na V2G. Zgodność z wymaganiami komunikacyjnymi EN ISO 15118-20:2022 dla prywatnych punktów ładowania.",
   "parametry": [
     {
       "nazwa": "Moc",
@@ -42,7 +42,5 @@
       "wartosc": "5 lat"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 24
 }
