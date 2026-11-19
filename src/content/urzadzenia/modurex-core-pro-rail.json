@@ -5,13 +5,12 @@
   "kategorie": [
     "slupki"
   ],
-  "cena": null,
+  "cena": 1849,
   "dostepnosc": "dostepny",
   "widoczny": true,
   "polecany": false,
-  "moc": [],
   "zlacze": "—",
-  "ip": "IP44 / IK10",
+  "ip": "IP44/IK10",
   "opis": "Modułowy słupek na 1–4 ładowarki dowolnej marki, z szyną DIN na zabezpieczenia.",
   "parametry": [
     {
@@ -31,7 +30,5 @@
       "wartosc": "IP44 / IK10"
     }
   ],
-  "zdjecia": [],
-  "karta_pdf": null,
   "kolejnosc": 44
 }
