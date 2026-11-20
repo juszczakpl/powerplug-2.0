@@ -7,7 +7,7 @@ import Icon from '../../components/ui/Icon.astro';
 import ProductCard from '../../components/ui/ProductCard.astro';
 import Steps from '../../components/sections/Steps.astro';
 import CtaSection from '../../components/sections/CtaSection.astro';
-import { urzadzenia, formatCena, type Urzadzenie } from '../../lib/dane';
+import { urzadzenia, formatCena, zl, netto, type Urzadzenie } from '../../lib/dane';
 import { cmsImage } from '../../lib/cms-image';
 import { firma } from '../../lib/firma';
 export async function getStaticPaths() {
@@ -26,12 +26,12 @@ const kategorie: Record<string, string> = { dom: 'do domu', firma: 'do firmy', p
 const parametryKrotko = [d.moc.length ? `moc ${d.moc.join(' / ')}` : '', d.zlacze && d.zlacze !== '—' ? d.zlacze.toLowerCase() : '', d.ip].filter(Boolean).join(', ');
 const opis = d.opis || (lad ? `${nazwaH1} — stacja ładowania${parametryKrotko ? ` (${parametryKrotko})` : ''}. Sprawdzimy, czy pasuje do Twojego auta i instalacji, a potem zamontujemy i skonfigurujemy ją z pomiarami.` : `${nazwaH1} — akcesorium do stacji ładowania. Zapytaj o dostępność i dopasowanie do Twojej ładowarki.`);
 const title = `${nazwaH1}${d.moc.length && !/kW/.test(nazwaH1) ? ' ' + d.moc[d.moc.length - 1] : ''} — ${lad ? 'ładowarka z montażem' : 'akcesoria do ładowarek'} | PowerPlug`;
-const description = `${nazwaH1}${lad ? ' z montażem' : ''}. ${d.cena ? `Cena od ${d.cena.toLocaleString('pl-PL')} zł.` : 'Wycena indywidualna.'} ${opis.split(/(?<=\.)\s/)[0]}`;
+const description = `${nazwaH1}${lad ? ' z montażem' : ''}. ${d.cena ? `Cena ${zl(d.cena)} brutto (${zl(netto(d.cena))} netto).` : 'Wycena indywidualna.'} ${opis.split(/(?<=\.)\s/)[0]}`;
 const podobne = lista.filter((x) => x.id !== u.id && x.data.typ === d.typ && (x.producentDane?.id === u.producentDane?.id || x.data.kategorie.some((k) => d.kategorie.includes(k)))).slice(0, 4);
 const ld: Record<string, unknown> = {
   '@context': 'https://schema.org', '@type': 'Product', name: nazwaH1, description: opis, brand: { '@type': 'Brand', name: marka },
   category: lad ? 'Stacja ładowania samochodów elektrycznych' : 'Akcesoria do stacji ładowania',
-  ...(d.cena ? { offers: { '@type': 'AggregateOffer', priceCurrency: 'PLN', lowPrice: d.cena, availability: d.dostepnosc === 'niedostepny' ? 'https://schema.org/OutOfStock' : d.dostepnosc === 'na-zamowienie' ? 'https://schema.org/BackOrder' : 'https://schema.org/InStock', seller: { '@id': 'https://powerplug.pl/#firma', '@type': 'Organization', name: 'PowerPlug' } } } : {}),
+  ...(d.cena ? { offers: { '@type': 'Offer', priceCurrency: 'PLN', price: d.cena, availability: d.dostepnosc === 'niedostepny' ? 'https://schema.org/OutOfStock' : d.dostepnosc === 'na-zamowienie' ? 'https://schema.org/BackOrder' : 'https://schema.org/InStock', seller: { '@id': 'https://powerplug.pl/#firma', '@type': 'Organization', name: 'PowerPlug' } } } : {}),
 };
 ---
 <Base title={title} description={description}>
@@ -53,7 +53,7 @@ const ld: Record<string, unknown> = {
         <p class="t-lead">{opis}</p>
         {d.moc.length > 0 && <ul class="product-card__specs" style="font-size:var(--fs-body)">{[...d.moc, d.zlacze !== '—' ? d.zlacze : null, d.ip].filter(Boolean).map((s) => <li>{s}</li>)}</ul>}
         <div class="product-hero__price">
-          <p class="price price--lg"><small>{d.cena == null ? 'Cena' : 'Cena brutto'}</small>{d.cena == null ? 'indywidualna' : formatCena(d.cena)}</p>
+          <p class="price price--lg"><small>{d.cena == null ? 'Cena' : 'Cena brutto'}</small>{d.cena == null ? 'indywidualna' : formatCena(d.cena)}{d.cena != null && <span class="price__net">{zl(netto(d.cena))} netto</span>}</p>
           <div class="btn-group" style="margin-left:auto">
             {lad
               ? <a class="btn btn--primary" href={`/wycena/?urzadzenie=${u.id}`} data-wycena-urzadzenie={u.id}><Icon name="plus" /><span>Wyceń z montażem</span></a>

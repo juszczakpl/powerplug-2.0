@@ -37,7 +37,7 @@ const p = (n: string) => `${id}-${n}`;
       <label class="field__label" for={p('urz')}>Model ładowarki</label>
       <select class="select" id={p('urz')} name="urzadzenie">
         <option value="Nie wiem — proszę o dobór" data-id="">Nie wiem — doradźcie mi</option>
-        {opcje.map((o) => <option value={o.nazwa} data-id={o.id}>{o.nazwa}{o.cena ? ` — od ${o.cena.toLocaleString('pl-PL')} zł` : ''}</option>)}
+        {opcje.map((o) => <option value={o.nazwa} data-id={o.id}>{o.nazwa}{o.cena ? ` — ${o.cena.toLocaleString('pl-PL')} zł brutto` : ''}</option>)}
         <option value="Mam własną ładowarkę" data-id="wlasna">Mam już swoją ładowarkę</option>
       </select>
       <p class="field__help">Nie masz pewności? Wybierz „doradźcie mi” — dobierzemy model do Twojego auta i instalacji.</p>

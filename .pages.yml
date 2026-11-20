@@ -66,8 +66,8 @@ content:
             - { name: uchwyty, label: "Akcesorium — uchwyty" }
             - { name: zarzadzanie, label: "Akcesorium — zarządzanie mocą" }
       - name: cena
-        label: Cena brutto „od” (zł)
-        description: Zostaw puste, jeśli cena ustalana indywidualnie. Kalkulator wyceny bierze cenę stąd.
+        label: Cena brutto (zł)
+        description: Cena z VAT 23%. Cena netto liczy się na stronie automatycznie. Zostaw puste, jeśli cena ustalana indywidualnie. Kalkulator wyceny bierze cenę stąd.
         type: number
       - name: dostepnosc
         label: Dostępność

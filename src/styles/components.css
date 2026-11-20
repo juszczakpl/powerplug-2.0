@@ -353,3 +353,4 @@
 /* Pas na kabel — kabel nigdy nie biegnie pod tekstem w statycznym układzie; dostaje własną strefę */
 .cable-band { position: relative; pointer-events: none; width: 100vw; margin-inline: calc(50% - 50vw); } /* zawsze od krawędzi do krawędzi ekranu */
 .cable-band > .cable { position: relative; display: block; width: 100%; max-width: none; height: auto; }
+.price__net { display: block; margin-top: .35rem; font-family: var(--font-body); font-size: var(--fs-small); font-weight: var(--fw-regular); color: var(--color-text-muted); }

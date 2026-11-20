@@ -25,7 +25,7 @@ export const GET: APIRoute = async () => {
     ...miejscowosci.map((m) => `- [Montaż ładowarek ${m.nazwa}](${u}/montaz-ladowarek-${m.slug}/): ok. ${m.km} km od Szczecina`),
     '',
     '## Ładowarki w ofercie',
-    ...lad.map((x) => `- [${x.producentDane?.data.nazwa ?? ''} ${x.data.nazwa}](${u}/ladowarki/${x.id}/)${x.data.cena ? `: od ${x.data.cena} zł` : ''}`.replace('[ ', '[')),
+    ...lad.map((x) => `- [${x.producentDane?.data.nazwa ?? ''} ${x.data.nazwa}](${u}/ladowarki/${x.id}/)${x.data.cena ? `: ${x.data.cena} zł brutto` : ''}`.replace('[ ', '[')),
     '',
     '## Inne',
     `- [Kalkulator wyceny](${u}/wycena/)`,

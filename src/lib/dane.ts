@@ -37,5 +37,7 @@ export async function opinie() {
   return await getCollection('opinie', (o) => o.data.widoczna);
 }
 
-export const formatCena = (c?: number | null) =>
-  c == null ? 'Wycena indywidualna' : `od ${c.toLocaleString('pl-PL')} zł`;
+export const VAT = 0.23; // sprzęt: zawsze 23% VAT
+export const zl = (n: number) => `${Math.round(n).toLocaleString('pl-PL')} zł`;
+export const netto = (brutto: number) => Math.round(brutto / (1 + VAT));
+export const formatCena = (c?: number | null) => (c == null ? 'Wycena indywidualna' : zl(c));

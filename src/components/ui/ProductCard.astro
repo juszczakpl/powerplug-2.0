@@ -1,5 +1,6 @@
 ---
-// Karta urządzenia w pseudo-sklepie: zdjęcie, producent, nazwa, moce, cena „od”, CTA (grupa: kapsuła + prostokąt).
+import { zl, netto } from '../../lib/dane';
+// Karta urządzenia w pseudo-sklepie: zdjęcie, producent, nazwa, moce, cena brutto + netto (auto), CTA (grupa: kapsuła + prostokąt).
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Icon from './Icon.astro';
@@ -24,7 +25,7 @@ const [statusLabel, statusClass] = statusy[status];
     {specs.length > 0 && <ul class="product-card__specs">{specs.map((s) => <li>{s}</li>)}</ul>}
   </div>
   <div class="card__footer">
-    <p class="price"><small>{price == null ? 'Cena' : 'Cena brutto'}</small>{price == null ? 'indywidualna' : `od ${price.toLocaleString('pl-PL')} zł`}</p>
+    <p class="price"><small>{price == null ? 'Cena' : 'Cena brutto'}</small>{price == null ? 'indywidualna' : zl(price)}{price != null && <span class="price__net">{zl(netto(price))} netto</span>}</p>
     <a href={href} class="btn btn--primary btn--dark btn--sm" style="position:relative;z-index:2" aria-label={`Więcej o ${brand ?? ''} ${name}`.replace('  ', ' ')}><Icon name="plus" /><span>Więcej</span></a>
   </div>
 </article>
