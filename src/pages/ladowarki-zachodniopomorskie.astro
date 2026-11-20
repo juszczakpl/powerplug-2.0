@@ -9,7 +9,7 @@ import Icon from '../components/ui/Icon.astro';
 import { obszar } from '../data/oferta';
 import { miejscowosci } from '../data/lokalne';
 const faq = [
-  { q: 'Gdzie montujecie ładowarki?', a: 'W Szczecinie i całym województwie zachodniopomorskim. Najczęściej pracujemy w Szczecinie, Policach, Gryfinie, Goleniowie, Stargardzie i gminie Dobra.' },
+  { q: 'Gdzie montujecie ładowarki?', a: 'W Szczecinie i całym województwie zachodniopomorskim. Najczęściej pracujemy w Szczecinie i okolicach (Police, Gryfino, Goleniów, Stargard, gmina Dobra), ale dojeżdżamy też do Koszalina, Kołobrzegu, Świnoujścia, Szczecinka, Wałcza, Białogardu, Nowogardu, Pyrzyc i Gorzowa Wielkopolskiego.' },
   { q: 'Ile kosztuje dojazd?', a: 'W promieniu 30 km od Szczecina dojazd jest bez dopłaty. Dalsze lokalizacje obsługujemy regularnie — koszt dojazdu podajemy w wycenie.' },
 ];
 ---
@@ -23,7 +23,7 @@ const faq = [
         <div class="section-head"><p class="t-eyebrow">Mapa zasięgu</p><h2 class="t-h2">Kliknij miejscowość</h2><p class="t-body-l section-head__lead">Kropka na mapie i pozycja na liście prowadzą do strony z informacjami o montażu w danej okolicy.</p></div>
         <AreaList />
       </div>
-      <AreaMap />
+      <AreaMap zakres="region" />
     </div>
   </section>
   <FaqSection items={faq} />

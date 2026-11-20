@@ -1,26 +1,55 @@
 ---
-// Mapa zasięgu: Szczecin w centrum, pierścienie co 10 km (30 km = dojazd bez dopłaty),
-// miejscowości wg rzeczywistych współrzędnych. Kropki i lista prowadzą do stron lokalnych.
+// Mapa zasięgu. Dwa zakresy:
+// • „okolice” — Szczecin w centrum, pierścienie co 10 km (30 km = dojazd bez dopłaty), miejscowości do ~45 km,
+// • „region” — całe województwo (+ Gorzów Wlkp.): wszystkie miejscowości; okolice Szczecina jako kropki bez podpisów.
+// Współrzędne rzeczywiste (rzut równoodległościowy wokół Szczecina). Kropki i lista prowadzą do stron lokalnych.
 import { miejscowosci, SZCZECIN } from '../../data/lokalne';
-interface Props { active?: string }
-const { active } = Astro.props;
-const R = 46; // km od środka do krawędzi
+interface Props { active?: string; zakres?: 'okolice' | 'region' }
+const { active, zakres = 'okolice' } = Astro.props;
 const pt = (lat: number, lng: number) => ({ x: (lng - SZCZECIN.lng) * Math.cos((SZCZECIN.lat * Math.PI) / 180) * 111.32, y: -(lat - SZCZECIN.lat) * 110.57 });
-const kropki = miejscowosci.map((m) => ({ ...m, ...pt(m.lat, m.lng) }));
-const etykieta = (x: number) => (x > 20 ? 'end' : 'start');
+const BLISKO = 45;
+const region = zakres === 'region';
+const kropki = miejscowosci
+  .map((m) => ({ ...m, ...pt(m.lat, m.lng) }))
+  .filter((m) => region || m.km <= BLISKO);
+// okno widoku
+const vb = region ? { x: -48, y: -112, w: 216, h: 216 } : { x: -46, y: -46, w: 92, h: 92 };
+const s = vb.w / 92; // skala czcionek i kropek względem mapy okolic
+// podpisy: w regionie ukrywamy okolice Szczecina (byłyby na sobie), stronę podpisu ustalamy po położeniu
+const NA_LEWO = new Set(['kolobrzeg', 'szczecinek', 'walcz']);
+const podpis = (m: (typeof kropki)[number]) => {
+  if (region && m.km > 0 && m.km <= BLISKO) return null;
+  if (region) return NA_LEWO.has(m.slug) ? 'end' : 'start';
+  return m.x > 20 ? 'end' : 'start';
+};
+const opis = region ? 'Mapa zasięgu PowerPlug: województwo zachodniopomorskie i Gorzów Wielkopolski' : 'Mapa zasięgu PowerPlug: Szczecin i okolice do 40 km';
 ---
-<div class="area-map">
-  <svg viewBox={`${-R} ${-R} ${R * 2} ${R * 2}`} role="img" aria-label="Mapa zasięgu PowerPlug: Szczecin i okolice do 40 km">
-    {[40, 20, 10].map((r) => <circle class="area-map__ring" cx="0" cy="0" r={r} vector-effect="non-scaling-stroke" />)}
+<div class:list={['area-map', region && 'area-map--region']}>
+  <svg viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`} role="img" aria-label={opis}>
+    {!region && [40, 20, 10].map((r) => <circle class="area-map__ring" cx="0" cy="0" r={r} vector-effect="non-scaling-stroke" />)}
+    {region && [100].map((r) => <circle class="area-map__ring" cx="0" cy="0" r={r} vector-effect="non-scaling-stroke" />)}
     <circle class="area-map__ring area-map__ring--30" cx="0" cy="0" r="30" vector-effect="non-scaling-stroke" />
-    <text class="area-map__ring-label" x="0" y="-31.5" text-anchor="middle" style="font-size:2.2px">30 km — dojazd bez dopłaty</text>
-    <text class="area-map__ring-label" x="0" y="-41.5" text-anchor="middle" style="font-size:2.2px">40 km</text>
-    {kropki.map((m) => (
-      <a href={`/montaz-ladowarek-${m.slug}/`} class:list={['area-map__dot', m.km === 0 && 'area-map__dot--base', active === m.slug && 'is-active']} data-slug={m.slug} aria-label={`Montaż ładowarek — ${m.nazwa}`}>
-        <circle class="area-map__halo" cx={m.x} cy={m.y} r={m.km === 0 ? 4.2 : 3} />
-        <circle cx={m.x} cy={m.y} r={m.km === 0 ? 2 : 1.4} />
-        <text x={m.x + (etykieta(m.x) === 'end' ? -3 : 3)} y={m.y + 1} text-anchor={etykieta(m.x)} style="font-size:2.6px">{m.nazwa}</text>
-      </a>
-    ))}
+    {region ? (
+      <>
+        <text class="area-map__ring-label" x="0" y="-32.5" text-anchor="middle" style={`font-size:${2.2 * s}px`}>30 km — bez dopłaty</text>
+        <text class="area-map__ring-label" x="0" y="-102" text-anchor="middle" style={`font-size:${2.2 * s}px`}>100 km</text>
+      </>
+    ) : (
+      <>
+        <text class="area-map__ring-label" x="0" y="-31.5" text-anchor="middle" style="font-size:2.2px">30 km — dojazd bez dopłaty</text>
+        <text class="area-map__ring-label" x="0" y="-41.5" text-anchor="middle" style="font-size:2.2px">40 km</text>
+      </>
+    )}
+    {kropki.map((m) => {
+      const a = podpis(m);
+      const baza = m.km === 0;
+      return (
+        <a href={`/montaz-ladowarek-${m.slug}/`} class:list={['area-map__dot', baza && 'area-map__dot--base', active === m.slug && 'is-active']} data-slug={m.slug} aria-label={`Montaż ładowarek — ${m.nazwa}`}>
+          <circle class="area-map__halo" cx={m.x} cy={m.y} r={(baza ? 4.2 : 3) * (region ? s * 0.6 : 1)} />
+          <circle cx={m.x} cy={m.y} r={(baza ? 2 : 1.4) * (region ? s * 0.6 : 1)} />
+          {a && <text x={m.x + (a === 'end' ? -3 : 3) * (region ? s * 0.8 : 1)} y={m.y + 1 * (region ? s : 1)} text-anchor={a} style={`font-size:${2.6 * (region ? s * 0.75 : 1)}px`}>{m.nazwa === 'Gorzów Wielkopolski' ? 'Gorzów Wlkp.' : m.nazwa}</text>}
+        </a>
+      );
+    })}
   </svg>
 </div>

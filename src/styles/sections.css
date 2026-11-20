@@ -230,3 +230,5 @@
   .quote-nav [data-submit] > span { white-space: normal; text-align: left; line-height: 1.1; }
   .quote-nav [data-prev] { order: 2; }
 }
+.area-map--region svg { overflow: hidden; }
+@media (min-width: 1024px) { [data-area] .area-map { position: sticky; top: calc(var(--header-top) + var(--header-h) + var(--space-6)); align-self: start; } }

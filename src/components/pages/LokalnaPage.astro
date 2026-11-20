@@ -50,7 +50,7 @@ const ld = {
         )}
       </div>
       <div class="stack" style="--stack:var(--space-5)">
-        <AreaMap active={m.slug} />
+        <AreaMap active={m.slug} zakres={m.km > 45 ? 'region' : 'okolice'} />
         <p class="t-small t-muted" style="text-align:center">{m.km <= 30 ? 'W promieniu 30 km od Szczecina dojazd jest bez dopłaty.' : 'Poza promieniem 30 km koszt dojazdu podajemy w wycenie.'}</p>
       </div>
     </div>
